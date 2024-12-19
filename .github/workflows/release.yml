@@ -1,0 +1,56 @@
+name: Release to NuGet
+
+on:
+  release:
+    types: [published]
+
+env:
+  COREPROJECTNAME: "ModResults"
+  ORLEANSPROJECTNAME: "ModResults.Orleans"
+  MINIMALAPISPROJECTNAME: "ModResults.MinimalApis"
+  FLUENTVALIDATIONPROJECTNAME: "ModResults.FluentValidation"
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: | 
+          8.0.x
+          9.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build ${{ env.COREPROJECTNAME }} --configuration Release --no-restore
+      working-directory: src
+    - name: Build
+      run: dotnet build ${{ env.ORLEANSPROJECTNAME }} --configuration Release --no-restore
+      working-directory: src
+    - name: Build
+      run: dotnet build ${{ env.FLUENTVALIDATIONPROJECTNAME }} --configuration Release --no-restore
+      working-directory: src
+    - name: Build
+      run: dotnet build ${{ env.MINIMALAPISPROJECTNAME }} --configuration Release --no-restore
+      working-directory: src
+    - name: Package nuget core
+      run: dotnet pack ${{ env.COREPROJECTNAME }} --configuration Release --no-build -o:package
+      working-directory: src
+    - name: Package nuget Orleans Serialization
+      run: dotnet pack ${{ env.ORLEANSPROJECTNAME }} --configuration Release --no-build -o:package
+      working-directory: src
+    - name: Package nuget FluentValidation
+      run: dotnet pack ${{ env.FLUENTVALIDATIONPROJECTNAME }} --configuration Release --no-build -o:package
+      working-directory: src
+    - name: Package nuget MinimalApis
+      run: dotnet pack ${{ env.MINIMALAPISPROJECTNAME }} --configuration Release --no-build -o:package
+      working-directory: src
+    - name: Push to NuGet
+      run: dotnet nuget push ./package/*.nupkg --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
+      working-directory: src

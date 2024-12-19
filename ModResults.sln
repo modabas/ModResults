@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EF5E500D-5674-442A-9031-86FC6566A2D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{ACF98017-69FA-4D0C-9D05-29E7026B3DAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C680AD94-D5CB-4D15-B910-D9911821ABD7}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__SolutionItems", "__SolutionItems", "{6BA431AB-7E1E-4582-8AC3-44AE51B8B091}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModResults", "src\ModResults\ModResults.csproj", "{F16DBDDA-C007-4E90-BC42-E4A6FF201238}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModResults.FluentValidation", "src\ModResults.FluentValidation\ModResults.FluentValidation.csproj", "{5B62D866-33B7-415C-8EB6-76BE0B756520}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModResults.MinimalApis", "src\ModResults.MinimalApis\ModResults.MinimalApis.csproj", "{67104946-4262-4DF3-A800-67435A8E7B68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModResults.Orleans", "src\ModResults.Orleans\ModResults.Orleans.csproj", "{064DF5F9-C20B-4D31-98B7-C8B69562FF11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F16DBDDA-C007-4E90-BC42-E4A6FF201238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F16DBDDA-C007-4E90-BC42-E4A6FF201238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F16DBDDA-C007-4E90-BC42-E4A6FF201238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F16DBDDA-C007-4E90-BC42-E4A6FF201238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B62D866-33B7-415C-8EB6-76BE0B756520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B62D866-33B7-415C-8EB6-76BE0B756520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B62D866-33B7-415C-8EB6-76BE0B756520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B62D866-33B7-415C-8EB6-76BE0B756520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67104946-4262-4DF3-A800-67435A8E7B68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67104946-4262-4DF3-A800-67435A8E7B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67104946-4262-4DF3-A800-67435A8E7B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67104946-4262-4DF3-A800-67435A8E7B68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{064DF5F9-C20B-4D31-98B7-C8B69562FF11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{064DF5F9-C20B-4D31-98B7-C8B69562FF11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{064DF5F9-C20B-4D31-98B7-C8B69562FF11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{064DF5F9-C20B-4D31-98B7-C8B69562FF11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C680AD94-D5CB-4D15-B910-D9911821ABD7} = {ACF98017-69FA-4D0C-9D05-29E7026B3DAA}
+		{F16DBDDA-C007-4E90-BC42-E4A6FF201238} = {EF5E500D-5674-442A-9031-86FC6566A2D6}
+		{5B62D866-33B7-415C-8EB6-76BE0B756520} = {EF5E500D-5674-442A-9031-86FC6566A2D6}
+		{67104946-4262-4DF3-A800-67435A8E7B68} = {EF5E500D-5674-442A-9031-86FC6566A2D6}
+		{064DF5F9-C20B-4D31-98B7-C8B69562FF11} = {EF5E500D-5674-442A-9031-86FC6566A2D6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F45E2EB-11CB-4ADE-AAC3-7000FBCDF49E}
+	EndGlobalSection
+EndGlobal
