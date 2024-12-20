@@ -54,6 +54,11 @@ public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
     return new Result<TValue, TFailure>(value);
   }
 
+  public static Result<TValue, TFailure> Fail(TFailure failure)
+  {
+    return new Result<TValue, TFailure>(failure);
+  }
+
   public static Result<TValue, TFailure> Fail<TState>(IModResult<TFailure> result,
     Func<IModResult<TFailure>, TState, TFailure>? failureFuncOnOk,
     TState state)
