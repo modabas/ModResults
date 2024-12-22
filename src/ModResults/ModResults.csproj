@@ -9,6 +9,10 @@
     <Description>Result object implementation to return values or failures.</Description>
     <NuGetTarget></NuGetTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="assets\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
@@ -23,5 +27,4 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>  
-  
 </Project>

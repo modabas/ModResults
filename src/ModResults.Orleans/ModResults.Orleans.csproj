@@ -8,6 +8,10 @@
     <Description>Necessary serialization surrogates and converters of Result types for Microsoft Orleans projects.</Description>
     <NuGetTarget></NuGetTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="assets\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">

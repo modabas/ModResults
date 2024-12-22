@@ -8,6 +8,10 @@
     <Description>Methods to convert Result structures to minimal apis' IResult success/problem responses.</Description>
     <NuGetTarget></NuGetTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="assets\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
