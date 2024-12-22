@@ -6,15 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Authors>Melih Odabaş</Authors>
     <Description>Result object implementation to return values or failures.</Description>
-    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NuGetTarget></NuGetTarget>
   </PropertyGroup>
   
