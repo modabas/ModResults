@@ -28,9 +28,9 @@ Surrogate and converter implementations for Result and Result&lt;TValue&gt; obje
 
 ### Creating a Result or Result&lt;TValue&gt; instance
 
-Creating an Ok Result instance is done by calling Result.Ok() or Result&lt;TValue&gt;.Ok(TValue value) static methods. Result&lt;TValue&gt; also has an implicit operator to convert an instance of type TValue to a Result&lt;TValue&gt; in Ok state.
+An Ok Result instance can be created by calling Result.Ok() or Result&lt;TValue&gt;.Ok(TValue value) static methods. Result&lt;TValue&gt; also has an implicit operator to convert an instance of type TValue to a Result&lt;TValue&gt; in Ok state.
 
-Creating a Failed Result instance is done by calling [corresponding static method](./src/ModResults/FailedResult.cs) for each FailureType (i.e. Result.NotFound() or Result&lt;TValue&gt;.NotFound() for creating a Result object in Failed state with FailureType NotFound).
+A Failed Result instance can be created by calling [corresponding static method](./src/ModResults/FailedResult.cs) for each FailureType (i.e. Result.NotFound() or Result&lt;TValue&gt;.NotFound() for creating a Result object in Failed state with FailureType NotFound).
 
 ``` csharp
 public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest req, CancellationToken ct)
@@ -49,11 +49,11 @@ public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest re
 
 ### Checking state of a Result or Result&lt;TValue&gt; instance
 
-State of a result instance is either Ok or Failed. State can be checked from result.IsOk and result.IsFailed boolean properties.
+State of a result is either Ok or Failed. State of a result instance can be checked from IsOk and IsFailed boolean properties.
 
-If state is ok, Result&lt;TValue&gt; instance contains a not null Value property of type TValue.
+If state is Ok, Result&lt;TValue&gt; instance contains a not null Value property of type TValue.
 
-If state is failed, Result and Result&lt;TValue&gt; instances contain a not null Failure property of type Failure.
+If state is Failed, Result and Result&lt;TValue&gt; instances contain a not null Failure property of type Failure.
 
 ``` csharp
 public async Task<Result> PerformGetBookById(GetBookByIdRequest req, CancellationToken ct)
@@ -77,9 +77,9 @@ All types of Result implementations contain a Statement property which encapsula
 
 See various [WithFact](./src/ModResults/ResultFactExtensions.cs) and [WithWarning](./src/ModResults/ResultWarningExtensions.cs) extension methods to add fact and warning information to result instances.
 
-Default Failure implementation used in Result and Result&lt;TValue&gt; objects a collection of [Error](./src/ModResults/Error.cs) class.
+Default [Failure](./src/ModResults/Failure.cs) implementation used in Result and Result&lt;TValue&gt; objects, has a Type property holding [FailureType](./src/ModResults/FailureType.cs) and also contains a collection of [Errors](./src/ModResults/Error.cs).
 
-See various static methods of Result objects to create a [Failed Result](./src/ModResults/FailedResult.cs) containing Error information. Errors can only be attached to a Failed Result instance during Result instance creation and cannot be mutated afterwards.
+See various static methods of Result objects to [create a Failed Result](./src/ModResults/FailedResult.cs) containing Error information. Errors can only be attached to a Failed Result instance during Result instance creation and cannot be added or removed afterwards.
 
 ``` csharp
 public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest req, CancellationToken ct)
@@ -100,7 +100,7 @@ public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest re
 
 ### Creating a Failed Result or Result&lt;TValue&gt; instance from an exception
 
-Creating a Failed Result instance from an exception is done by calling [corresponding static method](./src/ModResults/FailedResult.cs) with an exception input parameter for each FailureType, or can be left to implicit operator which creates a Failed Result with FailureType CriticalError by default.
+A Failed Result instance can be created from an exception by calling [corresponding static method](./src/ModResults/FailedResult.cs) with an exception input parameter for each FailureType, or can be left to implicit operator which creates a Failed Result with FailureType CriticalError by default.
 
 Exception object is converted to an [Error](./src/ModResults/Error.cs) object and added to Error collection of [Failure](./src/ModResults/Failure.cs).
 
@@ -134,9 +134,9 @@ Any Failure information, Errors, Facts and Warnings are automatically copied to 
 
 ### Converting a Result instance to Result&lt;TValue&gt; or a Result&lt;TSourceValue&gt; instance to Result&lt;TValue&gt;
 
-These types of conversions require a TValue object creation for Ok state of output Result&lt;TValue&gt; object. Any Failure information, Errors, Facts and Warnings are automatically copied to output Result.
+These types of conversions require a TValue object creation for Ok state of output Result&lt;TValue&gt; object.
 
-There are various overloads of [ToResult() and ToResultAsync()](./src/ModResults/ResultExtensions.cs) extension methods that accepts TValue object factory functions and additional parameters for such conversions.
+There are various overloads of [ToResult() and ToResultAsync()](./src/ModResults/ResultExtensions.cs) extension methods that accepts TValue object factory functions and additional parameters for such conversions. Any Failure information, Errors, Facts and Warnings are automatically copied to output Result.
 
 ``` csharp
 public record Request(string Name);
@@ -204,3 +204,5 @@ app.MapPost("GetBookById/{Id}",
 }).Produces<GetBookByIdResponse>();
 
 ```
+
+If you are using Minimal Apis and want to map a Result or Result&lt;TValue&gt; to api response, do have a look at WebServiceEndpoint implementation in [ModEndpoints](https://github.com/modabas/ModEndpoints) project which can organize ASP.NET Core Minimal Apis in REPR format endpoints and is integrated with result pattern out of box, which will also handle response mapping.
