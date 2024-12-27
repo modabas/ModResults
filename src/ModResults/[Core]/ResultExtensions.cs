@@ -4,6 +4,9 @@ public static partial class ResultExtensions
   public static Result<TTargetValue, TFailure> ToResult<TValue, TFailure, TTargetValue>(
     this Result<TValue, TFailure> result,
     Func<TValue, TTargetValue> valueFuncOnOk)
+    where TValue : notnull
+    where TFailure : notnull
+    where TTargetValue : notnull
   {
     return result.Map<TValue, TFailure, Result<TTargetValue, TFailure>>(
       okResult => Result<TTargetValue, TFailure>.Ok(valueFuncOnOk(okResult.Value!))
@@ -15,6 +18,9 @@ public static partial class ResultExtensions
     this Result<TValue, TFailure> result,
     Func<TValue, TState, TTargetValue> valueFuncOnOk,
     TState state)
+    where TValue : notnull
+    where TFailure : notnull
+    where TTargetValue : notnull
   {
     return result.Map<TValue, TFailure, TState, Result<TTargetValue, TFailure>>(
       (okResult, state) => Result<TTargetValue, TFailure>.Ok(
@@ -31,6 +37,9 @@ public static partial class ResultExtensions
     Func<TValue, TState, CancellationToken, Task<TTargetValue>> valueFuncOnOk,
     TState state,
     CancellationToken ct)
+    where TValue : notnull
+    where TFailure : notnull
+    where TTargetValue : notnull
   {
     return await result.MapAsync<TValue, TFailure, TState, Result<TTargetValue, TFailure>>(
       async (okResult, state, ct) => Result<TTargetValue, TFailure>.Ok(

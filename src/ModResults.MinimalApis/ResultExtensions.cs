@@ -96,6 +96,7 @@ public static class ResultExtensions
   public static IResult ToResponse<TValue>(
     this Result<TValue> result,
     SuccessfulResponseType type = SuccessfulResponseType.Ok)
+    where TValue : notnull
   {
     if (result.IsOk)
     {
@@ -118,6 +119,7 @@ public static class ResultExtensions
   public static IResult ToCreatedOrErrorResponse<TValue>(
     this Result<TValue> result,
     string? uri)
+    where TValue : notnull
   {
     if (result.IsOk)
     {
@@ -132,6 +134,7 @@ public static class ResultExtensions
   public static IResult ToCreatedOrErrorResponse<TValue>(
     this Result<TValue> result,
     Uri? uri)
+    where TValue : notnull
   {
     if (result.IsOk)
     {
@@ -147,6 +150,7 @@ public static class ResultExtensions
     this Result<TValue> result,
     string? routeName,
     object? routeValues)
+    where TValue : notnull
   {
     if (result.IsOk)
     {
@@ -161,6 +165,7 @@ public static class ResultExtensions
   public static IResult ToAcceptedOrErrorResponse<TValue>(
     this Result<TValue> result,
     string? uri)
+    where TValue : notnull
   {
     if (result.IsOk)
     {
@@ -176,6 +181,7 @@ public static class ResultExtensions
     this Result<TValue> result,
     string? routeName,
     object? routeValues)
+    where TValue : notnull
   {
     if (result.IsOk)
     {

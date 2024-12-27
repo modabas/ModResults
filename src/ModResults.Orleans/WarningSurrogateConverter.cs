@@ -2,7 +2,7 @@
 
 [RegisterConverter]
 public sealed class WarningSurrogateConverter : IConverter<Warning, WarningSurrogate>,
-    IPopulator<Warning, WarningSurrogate>
+  IPopulator<Warning, WarningSurrogate>
 {
   public Warning ConvertFromSurrogate(in WarningSurrogate surrogate) =>
       new(surrogate.Message, surrogate.Code);

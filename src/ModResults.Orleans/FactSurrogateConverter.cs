@@ -2,7 +2,7 @@
 
 [RegisterConverter]
 public sealed class FactSurrogateConverter : IConverter<Fact, FactSurrogate>,
-    IPopulator<Fact, FactSurrogate>
+  IPopulator<Fact, FactSurrogate>
 {
   public Fact ConvertFromSurrogate(in FactSurrogate surrogate) =>
       new(surrogate.Message, surrogate.Code);

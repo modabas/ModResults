@@ -2,7 +2,7 @@
 
 [RegisterConverter]
 public sealed class FailureSurrogateConverter :
-    IConverter<Failure, FailureSurrogate>
+  IConverter<Failure, FailureSurrogate>
 {
   public Failure ConvertFromSurrogate(in FailureSurrogate surrogate)
   {

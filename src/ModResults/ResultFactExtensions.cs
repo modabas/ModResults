@@ -28,6 +28,7 @@ public static partial class ResultFactExtensions
   public static Result<TValue> WithFacts<TValue>(
     this Result<TValue> result,
     IEnumerable<Fact> facts)
+    where TValue : notnull
   {
     result.Statements.AddFacts(facts);
     return result;
@@ -36,6 +37,7 @@ public static partial class ResultFactExtensions
   public static Result<TValue> WithFacts<TValue>(
     this Result<TValue> result,
     IEnumerable<string> messages)
+    where TValue : notnull
   {
     result.Statements.AddFacts(messages.Select(m => new Fact(m)));
     return result;
@@ -44,6 +46,7 @@ public static partial class ResultFactExtensions
   public static Result<TValue> WithFactsFrom<TValue>(
     this Result<TValue> result,
     IModResult fromResult)
+    where TValue : notnull
   {
     result.WithFacts(fromResult.Statements.Facts);
     return result;
@@ -61,11 +64,13 @@ public static partial class ResultFactExtensions
   }
 
   public static Result<TValue> WithFact<TValue>(this Result<TValue> result, Fact fact)
+    where TValue : notnull
   {
     result.Statements.AddFact(fact);
     return result;
   }
   public static Result<TValue> WithFact<TValue>(this Result<TValue> result, string message)
+    where TValue : notnull
   {
     result.Statements.AddFact(new Fact(message));
     return result;

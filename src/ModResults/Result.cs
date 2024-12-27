@@ -61,11 +61,14 @@ public sealed partial class Result : IModResult<Failure>
   }
 
   public static Result<TValue> Ok<TValue>(TValue value)
+    where TValue : notnull
   {
     return Result<TValue>.Ok(value);
   }
 
   public static Result<TValue, TFailure> Ok<TValue, TFailure>(TValue value)
+    where TValue : notnull
+    where TFailure : notnull
   {
     return Result<TValue, TFailure>.Ok(value);
   }
@@ -83,6 +86,7 @@ public sealed partial class Result : IModResult<Failure>
 }
 
 public sealed partial class Result<TValue> : IModResult<TValue, Failure>
+  where TValue : notnull
 {
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]

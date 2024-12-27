@@ -2,7 +2,7 @@
 
 [RegisterConverter]
 public sealed class StatementsSurrogateConverter :
-    IConverter<Statements, StatementsSurrogate>
+  IConverter<Statements, StatementsSurrogate>
 {
   public Statements ConvertFromSurrogate(in StatementsSurrogate surrogate)
   {

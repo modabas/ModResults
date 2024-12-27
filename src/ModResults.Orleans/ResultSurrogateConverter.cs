@@ -2,7 +2,7 @@
 
 [RegisterConverter]
 public sealed class ResultSurrogateConverter :
-    IConverter<Result, ResultSurrogate>
+  IConverter<Result, ResultSurrogate>
 {
   public Result ConvertFromSurrogate(in ResultSurrogate surrogate)
   {
@@ -26,7 +26,8 @@ public sealed class ResultSurrogateConverter :
 
 [RegisterConverter]
 public sealed class ResultSurrogateConverter<TValue> :
-    IConverter<Result<TValue>, ResultSurrogate<TValue>>
+  IConverter<Result<TValue>, ResultSurrogate<TValue>>
+  where TValue : notnull
 {
   public Result<TValue> ConvertFromSurrogate(in ResultSurrogate<TValue> surrogate)
   {

@@ -12,6 +12,7 @@ public static class ValidationResultExtensions
   }
 
   public static Result<TValue> ToInvalidResult<TValue>(this ValidationResult validationResult)
+    where TValue : notnull
   {
     return Result<TValue>.Invalid(
       validationResult.GetValidationErrors().ToArray());

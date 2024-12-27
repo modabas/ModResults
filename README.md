@@ -24,9 +24,9 @@ Default implementations to convert Result and Result&lt;TValue&gt; instances in 
 
 Surrogate and converter implementations for Result and Result&lt;TValue&gt; objects to be used in Microsoft.Orleans projects.
 
-## Usage
+## How To
 
-### Creating a Result or Result&lt;TValue&gt; instance
+### Create a Result or Result&lt;TValue&gt; instance
 
 An Ok Result instance can be created by calling Result.Ok() or Result&lt;TValue&gt;.Ok(TValue value) static methods. Result&lt;TValue&gt; also has an implicit operator to convert an instance of type TValue to a Result&lt;TValue&gt; in Ok state.
 
@@ -47,7 +47,7 @@ public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest re
 }
 ```
 
-### Checking state of a Result or Result&lt;TValue&gt; instance
+### Check state of a Result or Result&lt;TValue&gt; instance
 
 State of a result is either Ok or Failed. State of a result instance can be checked from IsOk and IsFailed boolean properties.
 
@@ -71,7 +71,7 @@ public async Task<Result> PerformGetBookById(GetBookByIdRequest req, Cancellatio
 }
 ```
 
-### Adding information to Result instances
+### Add information to Result instances
 
 All types of Result implementations contain a Statement property which encapsulates collections of [Fact](./src/ModResults/[Core]/Fact.cs) and [Warning](./src/ModResults/[Core]/Warning.cs) classes.
 
@@ -98,7 +98,7 @@ public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest re
 }
 ```
 
-### Creating a Failed Result or Result&lt;TValue&gt; instance from an exception
+### Create a Failed Result or Result&lt;TValue&gt; instance from an exception
 
 A Failed Result instance can be created from an exception by calling [corresponding static method](./src/ModResults/FailedResult.cs) with an exception input parameter for each FailureType, or can be left to implicit operator which creates a Failed Result with FailureType CriticalError by default.
 
@@ -126,13 +126,13 @@ public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest re
 }
 ```
 
-### Converting Result&lt;TValue&gt; to Result
+### Convert Result&lt;TValue&gt; to Result
 
 Converting a Result&lt;TValue&gt; object to Result is straightforward, and can be achieved by calling parameterless ToResult() method of Result&lt;TValue&gt; instance or can be left to implicit operator.
 
 Any Failure information, Errors, Facts and Warnings are automatically copied to output Result.
 
-### Converting a Result instance to Result&lt;TValue&gt; or a Result&lt;TSourceValue&gt; instance to Result&lt;TValue&gt;
+### Convert a Result instance to Result&lt;TValue&gt; or a Result&lt;TSourceValue&gt; instance to Result&lt;TValue&gt;
 
 These types of conversions require a TValue object creation for Ok state of output Result&lt;TValue&gt; object.
 
@@ -158,7 +158,7 @@ private async Task<Result<string>> GetMeAResultOfString(string name, Cancellatio
 }
 ```
 
-### Mapping Result and Result&lt;TValue&gt; instances to another object type (usually not a Result)
+### Map Result and Result&lt;TValue&gt; instances to another object type (usually not a Result)
 
 These types of conversions require two seperate output object factory functions for Ok state and Failed state of input Result object.
 
@@ -184,7 +184,7 @@ ToResult extension methods described previously, also use these Map methods unde
 }
 ```
 
-### Converting Result or Result&lt;TValue&gt; object to Minimal Apis [Microsoft.AspNetCore.Http.IResult](https://source.dot.net/#Microsoft.AspNetCore.Http.Abstractions/HttpResults/IResult.cs,a98b52b37fb3344b)
+### Convert Result or Result&lt;TValue&gt; object to Minimal Apis [Microsoft.AspNetCore.Http.IResult](https://source.dot.net/#Microsoft.AspNetCore.Http.Abstractions/HttpResults/IResult.cs,a98b52b37fb3344b)
 
 ModResults.MinimalApis project contains ToResponse() method implementations to convert Result and Result&lt;TValue&gt; instances in either Ok or Failed state to Microsoft.AspNetCore.Http.IResult.
 

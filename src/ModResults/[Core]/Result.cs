@@ -3,6 +3,8 @@
 namespace ModResults;
 
 public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
+  where TValue : notnull
+  where TFailure : notnull
 {
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]

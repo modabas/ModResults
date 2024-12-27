@@ -2,7 +2,7 @@
 
 [RegisterConverter]
 public sealed class ErrorSurrogateConverter : IConverter<Error, ErrorSurrogate>,
-    IPopulator<Error, ErrorSurrogate>
+  IPopulator<Error, ErrorSurrogate>
 {
   public Error ConvertFromSurrogate(in ErrorSurrogate surrogate) =>
       new(surrogate.Message,
