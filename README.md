@@ -4,19 +4,16 @@
 [![Nuget](https://img.shields.io/nuget/dt/ModResults)](https://www.nuget.org/packages/ModResults/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/modabas/ModResults/blob/main/LICENSE.txt)
 
-Result Pattern that provides a structured way to represent success or failure with optional details, enhancing readability and maintainability in codebases and designed to be used either in-process or over the network.
+Result Pattern that provides a structured way to represent success or failure with optional details, enhancing readability and maintainability in codebases and designed to be used either in-process or over the network. It is robust, leveraging nullability annotations, immutability (init properties), and factory methods for clarity.
 
-It is robust, leveraging nullability annotations, immutability (init properties), and factory methods for clarity.
+ModResult package contains [Result and Result&lt;TValue&gt;](./src/ModResults/Result.cs) implementations with a default [Failure](./src/ModResults/Failure.cs) implementation which are ready to be used out of the box. It also contains a [Result&lt;TValue, TFailure&gt;](./src/ModResults/[Core]/Result.cs) implementation, but this requires further development for a custom failure class at least.
 
-ModResult package contains [Result and Result&lt;TValue&gt;](./src/ModResults/Result.cs) implementations with a default [Failure](./src/ModResults/Failure.cs) implementation which are ready to be used out of the box.
+Additional packages provide out of the box extensions for Result objects to be used in various scenarios:
+- To create invalid Result and Result&lt;TValue&gt; instances from failed [FluentValidations.Results.ValidationResult](https://github.com/FluentValidation/FluentValidation) objects, ModResults.FluentValidations package contains default implementations.
 
-It also contains a [Result&lt;TValue, TFailure&gt;](./src/ModResults/[Core]/Result.cs) implementation, but this requires further development for a custom failure class at least.
+- To convert Result and Result&lt;TValue&gt; instances in either Ok or any [FailureType](./src/ModResults/FailureType.cs) state to Microsoft.AspNetCore.Http.IResult, ModResults.MinimalApis package provide default implementations.
 
-To convert failed [FluentValidations.Results.ValidationResult](https://github.com/FluentValidation/FluentValidation) instances to invalid Result and Result&lt;TValue&gt; objects reside in ModResults.FluentValidations package contains default implementations.
-
-Also to convert Result and Result&lt;TValue&gt; instances in either Ok or any [FailureType](./src/ModResults/FailureType.cs) state to Microsoft.AspNetCore.Http.IResult, ModResults.MinimalApis package provide default implementations.
-
-To be able to use Result and Result&lt;TValue&gt; objects in [Microsoft.Orleans](https://github.com/dotnet/orleans) projects, surrogate and converter implementations required by Orleans serializer are implemented in ModResults.Orleans package.
+- To be able to use Result and Result&lt;TValue&gt; objects in [Microsoft.Orleans](https://github.com/dotnet/orleans) projects, surrogate and converter implementations required by Orleans serializer are implemented in ModResults.Orleans package.
 
 ## How To
 
