@@ -3,6 +3,13 @@
 namespace ModResults.MinimalApis;
 public static class ResultExtensions
 {
+  /// <summary>
+  /// Converts <see cref="Result"/> to a response of type <see cref="IResult"/> based on its state and failure type.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="type">Kind of HTTP 2XX success response to be created if result is in Ok state.</param>
+  /// <returns></returns>
+  /// <exception cref="System.ComponentModel.InvalidEnumArgumentException"></exception>
   public static IResult ToResponse(
     this Result result,
     SuccessfulResponseType type = SuccessfulResponseType.NoContent)
@@ -25,6 +32,14 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result"/> to a created or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="IResult"/> will be a created response.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="uri">The Uri with the location at which the status of requested content can be monitored.</param>
+  /// <returns></returns>
   public static IResult ToCreatedOrErrorResponse(this Result result, string? uri)
   {
     if (result.IsOk)
@@ -37,6 +52,14 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result"/> to a created or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="IResult"/> will be a created response.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="uri">The Uri with the location at which the status of requested content can be monitored.</param>
+  /// <returns></returns>
   public static IResult ToCreatedOrErrorResponse(this Result result, Uri? uri)
   {
     if (result.IsOk)
@@ -49,6 +72,15 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result"/> to a created or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="IResult"/> will be a created response.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="routeName">The name of the route to use for generating Url.</param>
+  /// <param name="routeValues">The route data to use for generating Url.</param>
+  /// <returns></returns>
   public static IResult ToCreatedOrErrorResponse(
     this Result result,
     string? routeName,
@@ -64,6 +96,14 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result"/> to an accepted or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="IResult"/> will be an accepted response.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="uri">The Uri with the location at which the status of requested content can be monitored.</param>
+  /// <returns></returns>
   public static IResult ToAcceptedOrErrorResponse(
     this Result result,
     string? uri)
@@ -78,6 +118,15 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result"/> to an accepted or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="IResult"/> will be an accepted response.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="routeName">The name of the route to use for generating Url.</param>
+  /// <param name="routeValues">The route data to use for generating Url.</param>
+  /// <returns></returns>
   public static IResult ToAcceptedOrErrorResponse(
     this Result result,
     string? routeName,
@@ -93,6 +142,14 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result{TValue}"/> to a response of type <see cref="IResult"/> based on its state and failure type.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="type">Kind of HTTP 2XX success response to be created if result is in Ok state.</param>
+  /// <returns></returns>
+  /// <exception cref="System.ComponentModel.InvalidEnumArgumentException"></exception>
   public static IResult ToResponse<TValue>(
     this Result<TValue> result,
     SuccessfulResponseType type = SuccessfulResponseType.Ok)
@@ -116,6 +173,15 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result{TValue}"/> to a created or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result{TValue}"/> is in Ok state, the returned <see cref="IResult"/> will be a created response.
+  /// If source <see cref="Result{TValue}"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="uri">The Uri with the location at which the status of requested content can be monitored.</param>
+  /// <returns></returns>
   public static IResult ToCreatedOrErrorResponse<TValue>(
     this Result<TValue> result,
     string? uri)
@@ -131,6 +197,15 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result{TValue}"/> to a created or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result{TValue}"/> is in Ok state, the returned <see cref="IResult"/> will be a created response.
+  /// If source <see cref="Result{TValue}"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="uri">The Uri with the location at which the status of requested content can be monitored.</param>
+  /// <returns></returns>
   public static IResult ToCreatedOrErrorResponse<TValue>(
     this Result<TValue> result,
     Uri? uri)
@@ -146,6 +221,16 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result{TValue}"/> to a created or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result{TValue}"/> is in Ok state, the returned <see cref="IResult"/> will be a created response.
+  /// If source <see cref="Result{TValue}"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="routeName">The name of the route to use for generating Url.</param>
+  /// <param name="routeValues">The route data to use for generating Url.</param>
+  /// <returns></returns>
   public static IResult ToCreatedOrErrorResponse<TValue>(
     this Result<TValue> result,
     string? routeName,
@@ -162,6 +247,15 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result{TValue}"/> to an accepted or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result{TValue}"/> is in Ok state, the returned <see cref="IResult"/> will be an accepted response.
+  /// If source <see cref="Result{TValue}"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="uri">The Uri with the location at which the status of requested content can be monitored.</param>
+  /// <returns></returns>
   public static IResult ToAcceptedOrErrorResponse<TValue>(
     this Result<TValue> result,
     string? uri)
@@ -177,6 +271,16 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts <see cref="Result{TValue}"/> to an accepted or an error response of type <see cref="IResult"/> based on its state and failure type.
+  /// If source <see cref="Result{TValue}"/> is in Ok state, the returned <see cref="IResult"/> will be an accepted response.
+  /// If source <see cref="Result{TValue}"/> is in Fail state, the returned <see cref="IResult"/> will be an error response.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="routeName">The name of the route to use for generating Url.</param>
+  /// <param name="routeValues">The route data to use for generating Url.</param>
+  /// <returns></returns>
   public static IResult ToAcceptedOrErrorResponse<TValue>(
     this Result<TValue> result,
     string? routeName,
@@ -193,6 +297,12 @@ public static class ResultExtensions
     }
   }
 
+  /// <summary>
+  /// Converts a Failed <see cref="Result"/> to an error response of type <see cref="IResult"/> based on its failure type.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <returns></returns>
+  /// <exception cref="NotSupportedException">Thrown if result is in Ok state.</exception>
   public static IResult ToErrorResponse(this IModResult<Failure> result)
   {
     if (result.IsOk)
