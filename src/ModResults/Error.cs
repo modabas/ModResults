@@ -1,17 +1,41 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
 namespace ModResults;
+
+/// <summary>
+/// Contains error info for a failed <see cref="Result"/> or <see cref="Result{TValue}"/>"/>
+/// </summary>
 public class Error
 {
+  /// <summary>
+  /// The <see cref="Error"/> instance that causes the current error.
+  /// </summary>
   public Error? InnerError { get; set; }
 
+  /// <summary>
+  /// The error message.
+  /// </summary>
   public string Message { get; set; }
 
+  /// <summary>
+  /// A value indicating whether the error is from an exception.
+  /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(ExceptionTypeName))]
   public bool IsFromException => ExceptionTypeName is not null;
 
+  /// <summary>
+  /// The <see cref="Exception"/> type name that is used to construct this <see cref="Error"/> instance from.
+  /// </summary>
   public string? ExceptionTypeName { get; set; }
+
+  /// <summary>
+  /// Error code.
+  /// </summary>
   public string? Code { get; set; }
+
+  /// <summary>
+  /// Property name associated with the error.
+  /// </summary>
   public string? PropertyName { get; set; }
 
   public Error(string errorMessage,
@@ -59,6 +83,11 @@ public class Error
   {
   }
 
+  /// <summary>
+  /// Gets the default error code for the specified <see cref="FailureType"/>.
+  /// </summary>
+  /// <param name="failureType"></param>
+  /// <returns></returns>
   public static string? GetDefaultCode(FailureType failureType)
   {
     return failureType switch
