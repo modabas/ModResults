@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Net.Http.Headers;
 
 namespace ModResults;
+
+/// <summary>
+/// A business result that represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
+/// </summary>
 public sealed partial class Result : IModResult<Failure>
 {
   private readonly bool _isOk;
@@ -121,6 +124,10 @@ public sealed partial class Result : IModResult<Failure>
   }
 }
 
+/// <summary>
+/// A business result that represents the outcome of an operation, encapsulating either successful value of type <typeparamref name="TValue"/> or failure states, along with associated error messages and additional information.
+/// </summary>
+/// <typeparam name="TValue"></typeparam>
 public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   where TValue : notnull
 {

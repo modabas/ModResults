@@ -107,7 +107,7 @@ public static class ResultInterfaceErrorExtensions
   /// <returns></returns>
   public static bool HasErrorWithException<TException>(
     this IModResult<Failure> result,
-    bool includeAssignableFrom = false) 
+    bool includeAssignableFrom = false)
     where TException : Exception
   {
     return result.Failure?.Errors.Any(e => e.HasException<TException>(includeAssignableFrom)) ?? false;
@@ -124,7 +124,7 @@ public static class ResultInterfaceErrorExtensions
   public static bool HasErrorWithException<TException>(
     this IModResult<Failure> result,
     out ReadOnlyCollection<Error> errors,
-    bool includeAssignableFrom = false) 
+    bool includeAssignableFrom = false)
     where TException : Exception
   {
     errors = result.GetErrorsWithException<TException>(includeAssignableFrom);
@@ -140,7 +140,7 @@ public static class ResultInterfaceErrorExtensions
   /// <returns></returns>
   public static ReadOnlyCollection<Error> GetErrorsWithException<TException>(
     this IModResult<Failure> result,
-    bool includeAssignableFrom = false) 
+    bool includeAssignableFrom = false)
     where TException : Exception
   {
     return result.GetErrorsWithExceptionInternal<TException>(includeAssignableFrom).ToList().AsReadOnly();
