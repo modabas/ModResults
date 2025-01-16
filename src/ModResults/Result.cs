@@ -1,10 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Net.Http.Headers;
 
 namespace ModResults;
 public sealed partial class Result : IModResult<Failure>
 {
   private readonly bool _isOk;
 
+  /// <summary>
+  /// Gets if state of result instance is Ok.
+  /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
   public bool IsOk
   {
@@ -12,13 +16,23 @@ public sealed partial class Result : IModResult<Failure>
     init => _isOk = value;
   }
 
+  /// <summary>
+  /// Gets if state of result instance is Failed.
+  /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailed => !IsOk;
 
+  /// <summary>
+  /// Contains failure info for a failed <see cref="Result"/> instance. Not null when <see cref="IsFailed"/> is true.
+  /// </summary>
   public Failure? Failure { get; init; }
 
   private readonly Statements _statements =
     new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
+
+  /// <summary>
+  /// Contains facts and warnings for the result.
+  /// </summary>
   public Statements Statements { get { return _statements; } init { _statements = value; } }
 
   private Result(bool isOk)
@@ -55,17 +69,34 @@ public sealed partial class Result : IModResult<Failure>
     Statements = statements;
   }
 
+  /// <summary>
+  /// Creates a <see cref="Result"/> in Ok state.
+  /// </summary>
+  /// <returns></returns>
   public static Result Ok()
   {
     return new Result(true);
   }
 
+  /// <summary>
+  /// Creates a <see cref="Result{TValue}"/> in Ok state containing input value.
+  /// </summary>
+  /// <typeparam name="TValue">Type of the input value.</typeparam>
+  /// <param name="value">Value that will be encapsulated in an Ok <see cref="Result{TValue}"/>.</param>
+  /// <returns></returns>
   public static Result<TValue> Ok<TValue>(TValue value)
     where TValue : notnull
   {
     return Result<TValue>.Ok(value);
   }
 
+  /// <summary>
+  /// Creates a <see cref="Result{TValue, TFailure}"/> in Ok state containing input value.
+  /// </summary>
+  /// <typeparam name="TValue">Type of the input value.</typeparam>
+  /// <typeparam name="TFailure">Type of the failure property of result object.</typeparam>
+  /// <param name="value">Value that will be encapsulated in an Ok <see cref="Result{TValue, TFailure}"/>.</param>
+  /// <returns></returns>
   public static Result<TValue, TFailure> Ok<TValue, TFailure>(TValue value)
     where TValue : notnull
     where TFailure : notnull
@@ -73,6 +104,11 @@ public sealed partial class Result : IModResult<Failure>
     return Result<TValue, TFailure>.Ok(value);
   }
 
+  /// <summary>
+  /// Creates a failed <see cref="Result"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>, copying over Statements and any Failure information.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <returns></returns>
   public static Result Fail(IModResult<Failure> result)
   {
     if (result.Failure is null)
@@ -88,20 +124,36 @@ public sealed partial class Result : IModResult<Failure>
 public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   where TValue : notnull
 {
+  /// <summary>
+  /// Gets if state of result instance is Ok.
+  /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
   public bool IsOk => !IsFailed;
 
+  /// <summary>
+  /// Gets if state of result instance is Failed.
+  /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailed => Value is null;
 
+  /// <summary>
+  /// Contains encapsulated value for an Ok <see cref="Result{TValue}"/> instance. Not null when <see cref="IsOk"/> is true.
+  /// </summary>
   public TValue? Value { get; init; }
 
+  /// <summary>
+  /// Contains failure info for a failed <see cref="Result{TValue}"/> instance. Not null when <see cref="IsFailed"/> is true.
+  /// </summary>
   public Failure? Failure { get; init; }
 
   private readonly Statements _statements =
     new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
+
+  /// <summary>
+  /// Contains facts and warnings for the result.
+  /// </summary>
   public Statements Statements { get { return _statements; } init { _statements = value; } }
 
   private Result(TValue value)
@@ -138,11 +190,21 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
     Statements = statements;
   }
 
+  /// <summary>
+  /// Creates a <see cref="Result{TValue}"/> in Ok state containing input value.
+  /// </summary>
+  /// <param name="value">Value that will be encapsulated in an Ok <see cref="Result{TValue}"/>.</param>
+  /// <returns></returns>
   public static Result<TValue> Ok(TValue value)
   {
     return new Result<TValue>(value);
   }
 
+  /// <summary>
+  /// Creates a failed <see cref="Result{TValue}"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>, copying over Statements and any Failure information.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <returns></returns>
   public static Result<TValue> Fail(IModResult<Failure> result)
   {
     if (result.Failure is null)
@@ -154,11 +216,19 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
         .WithStatementsFrom(result);
   }
 
+  /// <summary>
+  /// Creates a <see cref="Result{TValue}"/> in Ok state containing input value.
+  /// </summary>
+  /// <param name="value">Value that will be encapsulated in an Ok <see cref="Result{TValue}"/>.</param>
   public static implicit operator Result<TValue>(TValue value)
   {
     return Ok(value);
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result{TValue}"/> to a <see cref="Result"/>.
+  /// </summary>
+  /// <param name="resultOfTValue">Source <see cref="Result{TValue}"/>.</param>
   public static implicit operator Result(Result<TValue> resultOfTValue)
   {
     return resultOfTValue.ToResult();
