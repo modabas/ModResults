@@ -1,6 +1,15 @@
 ﻿namespace ModResults;
 public static partial class ResultExtensions
 {
+  /// <summary>
+  /// Converts a <see cref="Result"/> to a <see cref="Result{TValue}"/>, copying over Statements.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="Result{TValue}"/> will be in Ok state with the provided value.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="Result{TValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="valueOnOk">Value to be encapsulated by returning <see cref="Result{TValue}"/> if in Ok state.</param>
+  /// <returns></returns>
   public static Result<TValue> ToResult<TValue>(
     this Result result,
     TValue valueOnOk)
@@ -12,6 +21,17 @@ public static partial class ResultExtensions
       failResult => Result<TValue>.Fail(failResult));
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result"/> to a <see cref="Result{TValue}"/>, copying over Statements.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="Result{TValue}"/> will be in Ok state with the result of value function as value.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="Result{TValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
+  /// <typeparam name="TState"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="state">Argument value to pass into value function.</param>
+  /// <returns></returns>
   public static Result<TValue> ToResult<TState, TValue>(
     this Result result,
     Func<TState, TValue> valueFuncOnOk,
@@ -25,6 +45,18 @@ public static partial class ResultExtensions
       state);
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result"/> to a <see cref="Result{TValue}"/>, copying over Statements.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="Result{TValue}"/> will be in Ok state with the result of value function as value.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="Result{TValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
+  /// <typeparam name="TState"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="state">Argument value to pass into value function.</param>
+  /// <param name="ct"></param>
+  /// <returns></returns>
   public static async Task<Result<TValue>> ToResultAsync<TState, TValue>(
     this Result result,
     Func<TState, CancellationToken, Task<TValue>> valueFuncOnOk,
@@ -40,6 +72,13 @@ public static partial class ResultExtensions
       ct);
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result{TValue}"/> to a <see cref="Result"/>, copying over Statements.
+  /// If source <see cref="Result{TValue}"/> is in Fail state, the returned <see cref="Result"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <returns></returns>
   public static Result ToResult<TValue>(
     this Result<TValue> result)
     where TValue : notnull
@@ -49,6 +88,16 @@ public static partial class ResultExtensions
       failResult => Result.Fail(failResult));
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result{TSourceValue}"/> to a <see cref="Result{TTargetValue}"/>, copying over Statements.
+  /// If source <see cref="Result{TSourceValue}"/> is in Ok state, the returned <see cref="Result{TTargetValue}"/> will be in Ok state with the result of value function as value.
+  /// If source <see cref="Result{TSourceValue}"/> is in Fail state, the returned <see cref="Result{TTargetValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
+  /// <typeparam name="TSourceValue"></typeparam>
+  /// <typeparam name="TTargetValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <returns></returns>
   public static Result<TTargetValue> ToResult<TSourceValue, TTargetValue>(
     this Result<TSourceValue> result,
     Func<TSourceValue, TTargetValue> valueFuncOnOk)
@@ -61,6 +110,18 @@ public static partial class ResultExtensions
       failResult => Result<TTargetValue>.Fail(failResult));
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result{TSourceValue}"/> to a <see cref="Result{TTargetValue}"/>, copying over Statements.
+  /// If source <see cref="Result{TSourceValue}"/> is in Ok state, the returned <see cref="Result{TTargetValue}"/> will be in Ok state with the result of value function as value.
+  /// If source <see cref="Result{TSourceValue}"/> is in Fail state, the returned <see cref="Result{TTargetValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
+  /// <typeparam name="TSourceValue"></typeparam>
+  /// <typeparam name="TState"></typeparam>
+  /// <typeparam name="TTargetValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="state">Argument value to pass into value function.</param>
+  /// <returns></returns>
   public static Result<TTargetValue> ToResult<TSourceValue, TState, TTargetValue>(
     this Result<TSourceValue> result,
     Func<TSourceValue, TState, TTargetValue> valueFuncOnOk,
@@ -78,6 +139,19 @@ public static partial class ResultExtensions
       state);
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result{TSourceValue}"/> to a <see cref="Result{TTargetValue}"/>, copying over Statements.
+  /// If source <see cref="Result{TSourceValue}"/> is in Ok state, the returned <see cref="Result{TTargetValue}"/> will be in Ok state with the result of value function as value.
+  /// If source <see cref="Result{TSourceValue}"/> is in Fail state, the returned <see cref="Result{TTargetValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
+  /// <typeparam name="TSourceValue"></typeparam>
+  /// <typeparam name="TState"></typeparam>
+  /// <typeparam name="TTargetValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="state">Argument value to pass into value function.</param>
+  /// <param name="ct"></param>
+  /// <returns></returns>
   public static async Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TState, TTargetValue>(
     this Result<TSourceValue> result,
     Func<TSourceValue, TState, CancellationToken, Task<TTargetValue>> valueFuncOnOk,

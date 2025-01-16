@@ -41,7 +41,7 @@ public static class ErrorExtensions
   /// Checks whether the error has specified error code.
   /// </summary>
   /// <param name="error"></param>
-  /// <param name="code">Error code to check.</param>
+  /// <param name="code">Error code to check for.</param>
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasCode(this Error error, string code, StringComparison comparisonType)

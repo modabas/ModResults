@@ -3,6 +3,11 @@
 namespace ModResults;
 public static class ResultInterfaceExtensions
 {
+  /// <summary>
+  /// Dumps the state, failure type, errors, facts and warnings of the result as a formatted string.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <returns></returns>
   public static string DumpMessages(this IModResult<Failure> result)
   {
     var sb = new StringBuilder();
@@ -32,6 +37,11 @@ public static class ResultInterfaceExtensions
     return sb.ToString();
   }
 
+  /// <summary>
+  /// Dumps the state, facts and warnings of the result as a formatted string.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <returns></returns>
   public static string DumpStatements(this IModResult result)
   {
     var sb = new StringBuilder();
