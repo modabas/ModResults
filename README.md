@@ -6,9 +6,9 @@
 
 Result Pattern that provides a structured way to represent success or failure with optional details, enhancing readability and maintainability in codebases and designed to be used either in-process or over the network with serialization/deserialization. It is robust, leveraging nullability annotations, immutability (init properties), and factory methods for clarity.
 
-A business result represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
-
-[Result and Result&lt;TValue&gt;](./src/ModResults/Result.cs) implementations with a default [Failure](./src/ModResults/Failure.cs) state implementation are in ModResults package. This package also contains a [Result&lt;TValue, TFailure&gt;](./src/ModResults/[Core]/Result.cs) base implementation, which requires further development for a custom failure class at least, but is suitable for extending for development needs.
+A business result represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information. ModResults package contains various business result implementations:
+- [Result and Result&lt;TValue&gt;](./src/ModResults/Result.cs) implementations are ready to be used out of the box having a default [Failure](./src/ModResults/Failure.cs) state implementation.
+- [Result&lt;TValue, TFailure&gt;](./src/ModResults/[Core]/Result.cs) base implementation, which requires further development for a custom failure state at least, is suitable for extending for development needs.
 
 Additional packages provide out of the box extensions for Result objects to be used in various scenarios:
 - To create invalid Result and Result&lt;TValue&gt; instances from failed [FluentValidations.Results.ValidationResult](https://github.com/FluentValidation/FluentValidation) objects, ModResults.FluentValidations package contains default implementations.
