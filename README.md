@@ -4,9 +4,11 @@
 [![Nuget](https://img.shields.io/nuget/dt/ModResults)](https://www.nuget.org/packages/ModResults/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/modabas/ModResults/blob/main/LICENSE.txt)
 
-Result Pattern that provides a structured way to represent success or failure with optional details, enhancing readability and maintainability in codebases and designed to be used either in-process or over the network. It is robust, leveraging nullability annotations, immutability (init properties), and factory methods for clarity.
+Result Pattern that provides a structured way to represent success or failure with optional details, enhancing readability and maintainability in codebases and designed to be used either in-process or over the network with serialization/deserialization. It is robust, leveraging nullability annotations, immutability (init properties), and factory methods for clarity.
 
-ModResult package contains [Result and Result&lt;TValue&gt;](./src/ModResults/Result.cs) implementations with a default [Failure](./src/ModResults/Failure.cs) implementation which are ready to be used out of the box. It also contains a [Result&lt;TValue, TFailure&gt;](./src/ModResults/[Core]/Result.cs) implementation, but this requires further development for a custom failure class at least.
+A business result represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
+
+[Result and Result&lt;TValue&gt;](./src/ModResults/Result.cs) implementations with a default [Failure](./src/ModResults/Failure.cs) state implementation are in ModResults package. This package also contains a [Result&lt;TValue, TFailure&gt;](./src/ModResults/[Core]/Result.cs) base implementation, which requires further development for a custom failure class at least, but is suitable for extending for development needs.
 
 Additional packages provide out of the box extensions for Result objects to be used in various scenarios:
 - To create invalid Result and Result&lt;TValue&gt; instances from failed [FluentValidations.Results.ValidationResult](https://github.com/FluentValidation/FluentValidation) objects, ModResults.FluentValidations package contains default implementations.
@@ -15,13 +17,15 @@ Additional packages provide out of the box extensions for Result objects to be u
 
 - To be able to use Result and Result&lt;TValue&gt; objects in [Microsoft.Orleans](https://github.com/dotnet/orleans) projects, surrogate and converter implementations required by Orleans serializer are implemented in ModResults.Orleans package.
 
+- Both Result and Result&lt;TValue&gt; objects can be serialized to or deserialized from Json without need for any special configuration or dependency.
+
 ## How To
 
 ### Create a Result or Result&lt;TValue&gt; instance
 
 An Ok Result instance can be created by calling Result.Ok() or Result&lt;TValue&gt;.Ok(TValue value) static methods. Result&lt;TValue&gt; also has an implicit operator to convert an instance of type TValue to a Result&lt;TValue&gt; in Ok state.
 
-A Failed Result instance can be created by calling [corresponding static method](./src/ModResults/FailedResult.cs) for each FailureType (i.e. Result.NotFound() or Result&lt;TValue&gt;.NotFound() for creating a Result object in Failed state with FailureType NotFound).
+A Failed Result instance can be created by calling [corresponding static method](./src/ModResults/FailedResult.cs) for each FailureType (i.e. Result.NotFound() or Result&lt;TValue&gt;.NotFound() for creating a Result object in Failed state with FailureType.NotFound).
 
 ``` csharp
 public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest req, CancellationToken ct)
@@ -151,9 +155,11 @@ private async Task<Result<string>> GetMeAResultOfString(string name, Cancellatio
 
 ### Map Result and Result&lt;TValue&gt; instances to another object type (usually not a Result)
 
-These types of conversions require two seperate output object factory functions for Ok state and Failed state of input Result object.
+Map functions convert a Result or Result&lt;TValue&gt; to a specified type parameter TReturn instance.
 
-There are various overloads of [Map() and MapAsync()](./src/ModResults/ResultMapExtensions.cs) extension methods that accepts object factory functions and additional parameters for such conversions.
+These types of conversions require two seperate output TReturn value functions for Ok state and Failed state of input Result object.
+
+There are various overloads of [Map() and MapAsync()](./src/ModResults/ResultMapExtensions.cs) extension methods that accepts value functions and additional arguments to pass into both value functions for such conversions.
 
 ToResult extension methods described previously, also use these Map methods underneath.
 
@@ -196,4 +202,8 @@ app.MapPost("GetBookById/{Id}",
 
 ```
 
-If you are using Minimal Apis and want to map a Result or Result&lt;TValue&gt; to api response, do have a look at WebServiceEndpoint implementation in [ModEndpoints](https://github.com/modabas/ModEndpoints) project which can organize ASP.NET Core Minimal Apis in REPR format endpoints and is integrated with result pattern out of box, which will also handle response mapping.
+If you are using Minimal Apis and want to map a Result or Result&lt;TValue&gt; to api response, do have a look at WebServiceEndpoint implementation in [ModEndpoints](https://github.com/modabas/ModEndpoints) project which organizes ASP.NET Core Minimal Apis in REPR format endpoints and is integrated with result pattern out of box, which will also handle response mapping.
+
+### Use Result or Result&lt;TValue&gt; objects in [Microsoft.Orleans](https://github.com/dotnet/orleans) projects
+
+Just include ModResults.Orleans package as project dependency to use Result and Result&lt;TValue&gt; objects in Orleans grains.
