@@ -1,5 +1,5 @@
 ﻿namespace ModResults;
-public static partial class ResultExtensions
+public static partial class ResultConversionExtensions
 {
   /// <summary>
   /// Converts a <see cref="Result"/> to a <see cref="Result{TValue}"/>, copying over Statements.
