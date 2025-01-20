@@ -11,25 +11,41 @@ public static class ErrorExtensions
   public static bool HasException<TException>(this Error error, bool includeAssignableFrom = false)
     where TException : Exception
   {
+    return error.HasException(typeof(TException), includeAssignableFrom);
+  }
+
+  /// <summary>
+  /// Checks whether the error has been constructed from an exception of the specified type.
+  /// </summary>
+  /// <param name="error"></param>
+  /// <param name="exceptionType">Exception type</param>
+  /// <param name="includeAssignableFrom">If true, checks whether ,nput exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <returns></returns>
+  public static bool HasException(this Error error, Type exceptionType, bool includeAssignableFrom = false)
+  {
+    if (!typeof(Exception).IsAssignableFrom(exceptionType))
+    {
+      return false;
+    }
     if (!error.IsFromException)
     {
       return false;
     }
-    var errorType = Type.GetType(error.ExceptionTypeName);
-    if (errorType is null)
+    var errorExceptionType = Type.GetType(error.ExceptionTypeName);
+    if (errorExceptionType is null)
     {
       return false;
     }
     if (includeAssignableFrom)
     {
-      if (typeof(TException).IsAssignableFrom(errorType))
+      if (exceptionType.IsAssignableFrom(errorExceptionType))
       {
         return true;
       }
     }
     else
     {
-      if (errorType == typeof(TException))
+      if (errorExceptionType == exceptionType)
       {
         return true;
       }

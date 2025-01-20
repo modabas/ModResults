@@ -528,6 +528,15 @@ public partial class Result
   {
     return Result.CriticalError(exception);
   }
+
+  /// <summary>
+  /// Creates a <see cref="Result"/> in Failed state with input failure type.
+  /// </summary>
+  /// <param name="failureType">Failure type that will be encapsulated in a Failed <see cref="Result"/>.</param>
+  public static implicit operator Result(FailureType failureType)
+  {
+    return new Result(failureType);
+  }
 }
 
 
@@ -1058,5 +1067,14 @@ public partial class Result<TValue>
   public static implicit operator Result<TValue>(Exception exception)
   {
     return Result<TValue>.CriticalError(exception);
+  }
+
+  /// <summary>
+  /// Creates a <see cref="Result{TValue}"/> in Failed state with input failure type.
+  /// </summary>
+  /// <param name="failureType">Failure type that will be encapsulated in a Failed <see cref="Result{TValue}"/>.</param>
+  public static implicit operator Result<TValue>(FailureType failureType)
+  {
+    return new Result<TValue>(failureType);
   }
 }
