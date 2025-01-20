@@ -115,6 +115,62 @@ public static class ResultInterfaceErrorExtensions
   }
 
   /// <summary>
+  /// Checks if the result has an <see cref="Error"/> constructed from an exception of the specified type.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="exceptionType">Exception type</param>
+  /// <param name="includeAssignableFrom">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <returns></returns>
+  public static bool HasErrorWithException(
+    this IModResult<Failure> result,
+    Type exceptionType,
+    bool includeAssignableFrom = false)
+  {
+    return result.Failure?.Errors.Any(e => e.HasException(exceptionType, includeAssignableFrom)) ?? false;
+  }
+
+  /// <summary>
+  /// Checks if the result has an <see cref="Error"/> constructed from an exception of the specified type, returning matching errors as out parameter.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="exceptionType">Exception type</param>
+  /// <param name="errors"></param>
+  /// <param name="includeAssignableFrom">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <returns></returns>
+  public static bool HasErrorWithException(
+    this IModResult<Failure> result,
+    Type exceptionType,
+    out ReadOnlyCollection<Error> errors,
+    bool includeAssignableFrom = false)
+  {
+    errors = result.GetErrorsWithException(exceptionType, includeAssignableFrom);
+    return errors.Count > 0;
+  }
+
+  /// <summary>
+  /// Gets all errors constructed from an exception of the specified type.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="exceptionType">Exception type</param>
+  /// <param name="includeAssignableFrom">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <returns></returns>
+  public static ReadOnlyCollection<Error> GetErrorsWithException(
+    this IModResult<Failure> result,
+    Type exceptionType,
+    bool includeAssignableFrom = false)
+  {
+    return result.GetErrorsWithExceptionInternal(exceptionType, includeAssignableFrom).ToList().AsReadOnly();
+  }
+
+  private static IEnumerable<Error> GetErrorsWithExceptionInternal(
+    this IModResult<Failure> result,
+    Type exceptionType,
+    bool includeAssignableFrom = false)
+  {
+    return result.Failure?.Errors.Where(e => e.HasException(exceptionType, includeAssignableFrom)) ?? [];
+  }
+
+  /// <summary>
   /// Checks if the result is failed with a specific <see cref="FailureType"/>.
   /// </summary>
   /// <param name="result"></param>
@@ -153,5 +209,20 @@ public static class ResultInterfaceErrorExtensions
     where TException : Exception
   {
     return result.IsFailed && result.HasErrorWithException<TException>(includeAssignableFrom);
+  }
+
+  /// <summary>
+  /// Checks if the result has an <see cref="Error"/> constructed from an exception of the specified type.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="exceptionType">Exception type</param>
+  /// <param name="includeAssignableFrom"></param>
+  /// <returns></returns>
+  public static bool IsFailedWith(
+    this IModResult<Failure> result,
+    Type exceptionType,
+    bool includeAssignableFrom = false)
+  {
+    return result.IsFailed && result.HasErrorWithException(exceptionType, includeAssignableFrom);
   }
 }
