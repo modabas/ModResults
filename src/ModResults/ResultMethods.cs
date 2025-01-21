@@ -66,7 +66,6 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="failureType"></param>
   /// <returns></returns>
-  [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailedWith(FailureType failureType)
   {
@@ -79,7 +78,6 @@ public partial class Result<TValue>
   /// <param name="errorCode">Error code to check for.</param>
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
-  [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailedWith(
     string errorCode,
@@ -94,7 +92,6 @@ public partial class Result<TValue>
   /// <typeparam name="TException"></typeparam>
   /// <param name="includeAssignableFrom"></param>
   /// <returns></returns>
-  [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailedWith<TException>(
     bool includeAssignableFrom = false)
@@ -109,7 +106,6 @@ public partial class Result<TValue>
   /// <param name="exceptionType">Exception type</param>
   /// <param name="includeAssignableFrom"></param>
   /// <returns></returns>
-  [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailedWith(
     Type exceptionType,
