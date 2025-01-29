@@ -38,18 +38,20 @@ public sealed partial class Result : IModResult<Failure>
   /// </summary>
   public Statements Statements { get { return _statements; } init { _statements = value; } }
 
-  private Result(bool isOk)
+  private Result()
   {
-    _isOk = isOk;
+    _isOk = true;
   }
 
-  private Result(FailureType failureType, IEnumerable<Error> errors) : this(false)
+  private Result(FailureType failureType, IEnumerable<Error> errors)
   {
+    _isOk = false;
     Failure = new Failure(failureType, errors.ToList().AsReadOnly());
   }
 
-  private Result(FailureType failureType) : this(false)
+  private Result(FailureType failureType)
   {
+    _isOk = false;
     Failure = new Failure(failureType, Definitions.EmptyErrors);
   }
 
@@ -78,7 +80,7 @@ public sealed partial class Result : IModResult<Failure>
   /// <returns></returns>
   public static Result Ok()
   {
-    return new Result(true);
+    return new Result();
   }
 
   /// <summary>
