@@ -1,6 +1,7 @@
 ﻿namespace ModResults.Orleans;
 
 [GenerateSerializer]
+[Alias("ModResults.Orleans.FailureSurrogate")]
 public struct FailureSurrogate
 {
   [Id(0)]

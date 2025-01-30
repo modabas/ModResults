@@ -1,6 +1,7 @@
 ﻿namespace ModResults.Orleans;
 
 [GenerateSerializer]
+[Alias("ModResults.Orleans.ResultSurrogate")]
 public struct ResultSurrogate
 {
   [Id(0)]
@@ -14,6 +15,7 @@ public struct ResultSurrogate
 }
 
 [GenerateSerializer]
+[Alias("ModResults.Orleans.ResultSurrogate`1")]
 public struct ResultSurrogate<TValue>
 {
   [Id(0)]
