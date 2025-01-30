@@ -7,17 +7,11 @@ namespace ModResults;
 /// </summary>
 public sealed partial class Result : IModResult<Failure>
 {
-  private readonly bool _isOk;
-
   /// <summary>
   /// Gets if state of result instance is Ok.
   /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public bool IsOk
-  {
-    get => _isOk;
-    init => _isOk = value;
-  }
+  public bool IsOk { get; init; }
 
   /// <summary>
   /// Gets if state of result instance is Failed.
@@ -40,18 +34,18 @@ public sealed partial class Result : IModResult<Failure>
 
   private Result()
   {
-    _isOk = true;
+    IsOk = true;
   }
 
   private Result(FailureType failureType, IEnumerable<Error> errors)
   {
-    _isOk = false;
+    IsOk = false;
     Failure = new Failure(failureType, errors.ToList().AsReadOnly());
   }
 
   private Result(FailureType failureType)
   {
-    _isOk = false;
+    IsOk = false;
     Failure = new Failure(failureType, Definitions.EmptyErrors);
   }
 
@@ -70,7 +64,7 @@ public sealed partial class Result : IModResult<Failure>
       }
       Failure = failure;
     }
-    _isOk = isOk;
+    IsOk = isOk;
     Statements = statements;
   }
 
