@@ -49,7 +49,14 @@ public sealed partial class Result : IModResult<Failure>
     Failure = new Failure(failureType, Definitions.EmptyErrors);
   }
 
-  //intended as single public constructor to be used from json deserialization
+  /// <summary>
+  /// This constructor is intended as single public constructor to be used from Json deserialization.
+  /// Use provided static methods to create instances of <see cref="Result"/>.
+  /// </summary>
+  /// <param name="isOk"></param>
+  /// <param name="failure"></param>
+  /// <param name="statements"></param>
+  /// <exception cref="ArgumentNullException"></exception>
   public Result(
     bool isOk,
     Failure? failure,
@@ -174,7 +181,14 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
     Failure = new Failure(failureType, Definitions.EmptyErrors);
   }
 
-  //intended as single public constructor to be used from json deserialization
+  /// <summary>
+  /// This constructor is intended as single public constructor to be used from Json deserialization.
+  /// Use provided static methods to create instances of <see cref="Result{TValue}"/>.
+  /// </summary>
+  /// <param name="value"></param>
+  /// <param name="failure"></param>
+  /// <param name="statements"></param>
+  /// <exception cref="ArgumentNullException"></exception>
   public Result(
     TValue? value,
     Failure? failure,
