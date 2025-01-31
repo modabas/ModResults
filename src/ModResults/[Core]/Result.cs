@@ -25,6 +25,7 @@ public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
   private Result(TValue value)
   {
     Value = value;
+    Failure = null;
   }
 
   private Result(TFailure failure)

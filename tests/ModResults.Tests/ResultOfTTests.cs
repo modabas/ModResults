@@ -8,13 +8,13 @@ public class ResultOfTTests
 
   public ResultOfTTests()
   {
-    fact1 = new Fact("Fact 1", "F1");
+    fact1 = new Fact();
     fact2 = new Fact("Fact 2", "F2");
     fact3 = new Fact("Fact 3", "F3");
-    warning1 = new Warning("Warning 1", "W1");
+    warning1 = new Warning();
     warning2 = new Warning("Warning 2", "W2");
     warning3 = new Warning("Warning 3", "W3");
-    error1 = new Error("Error 1", code: "E1");
+    error1 = new Error();
     error2 = new Error("Error 2", code: "E2");
     error3 = new Error("Error 3", code: "E3");
     error4 = new Error(new InvalidOperationException("Error 4"));
@@ -25,13 +25,13 @@ public class ResultOfTTests
   public void OkResultWithValueStruct()
   {
     // Arrange
-    var result = Result<ValueStruct>.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." });
+    var resultOfT = Result<ValueStruct>.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." });
 
     // Act
-    var isOk = result.IsOk;
-    var isFailed = result.IsFailed;
-    var failure = result.Failure;
-    ValueStruct? value = result.Value;
+    var isOk = resultOfT.IsOk;
+    var isFailed = resultOfT.IsFailed;
+    var failure = resultOfT.Failure;
+    ValueStruct? value = resultOfT.Value;
 
     // Assert
     Assert.True(isOk);
@@ -39,7 +39,20 @@ public class ResultOfTTests
     Assert.Null(failure);
     Assert.NotNull(value);
     Assert.Equal(42, value?.Number);
-    Assert.Equal("Meaning of life.", value?.String); 
+    Assert.Equal("Meaning of life.", value?.String);
+    Assert.False(resultOfT.IsFailedWith(FailureType.Error));
+    Assert.False(resultOfT.IsFailedWith(FailureType.Unspecified));
+    Assert.False(resultOfT.IsFailedWith("E2"));
+    Assert.False(resultOfT.IsFailedWith("e2"));
+    Assert.False(resultOfT.IsFailedWith<ApplicationException>());
+    Assert.False(resultOfT.IsFailedWith(typeof(InvalidOperationException)));
+    Assert.False(resultOfT.IsFailedWith<InvalidCastException>());
+    Assert.False(resultOfT.IsFailedWith<Exception>());
+    Assert.False(resultOfT.IsFailedWith(typeof(Exception)));
+    Assert.False(resultOfT.IsFailedWith<Exception>(true));
+    Assert.False(resultOfT.IsFailedWith(typeof(Exception), true));
+
+
   }
 
   [Fact]
@@ -103,18 +116,24 @@ public class ResultOfTTests
 
     // Assert
     Assert.False(isOk);
-    Assert.True(isFailed);
+    Assert.Equal("Error 5", failure?.Errors[1].Message);
     Assert.NotNull(failure);
     Assert.Equal(2, failure?.Errors.Count);
     Assert.Equal("Error 2", failure?.Errors[0].Message);
     Assert.Equal("Error 5", failure?.Errors[1].Message);
+    Assert.True(resultOfT.HasError("E2"));
+    Assert.False(resultOfT.HasError("e2"));
     Assert.Equal(3, resultOfT.Statements.Facts.Count);
-    Assert.Equal("Fact 1", resultOfT.Statements.Facts[0].Message);
+    Assert.Equal(string.Empty, resultOfT.Statements.Facts[0].Message);
     Assert.Equal("Fact 2", resultOfT.Statements.Facts[1].Message);
     Assert.Equal("Fact 3", resultOfT.Statements.Facts[2].Message);
+    Assert.True(resultOfT.HasFact("F3"));
+    Assert.False(resultOfT.HasFact("f3"));
     Assert.Equal(2, resultOfT.Statements.Warnings.Count);
-    Assert.Equal("Warning 1", resultOfT.Statements.Warnings[0].Message);
+    Assert.Equal(string.Empty, resultOfT.Statements.Warnings[0].Message);
     Assert.Equal("Warning 2", resultOfT.Statements.Warnings[1].Message);
+    Assert.True(resultOfT.HasWarning("W2"));
+    Assert.False(resultOfT.HasWarning("w2"));
     Assert.True(resultOfT.IsFailedWith(FailureType.Unavailable));
     Assert.False(resultOfT.IsFailedWith(FailureType.Unspecified));
     Assert.True(resultOfT.IsFailedWith("E2"));
@@ -146,15 +165,16 @@ public class ResultOfTTests
     Assert.True(isFailed);
     Assert.NotNull(failure);
     Assert.Equal(5, failure?.Errors.Count);
-    Assert.Equal("Error 1", failure?.Errors[0].Message);
+    Assert.Equal(string.Empty, failure?.Errors[0].Message);
     Assert.Equal("Error 2", failure?.Errors[1].Message);
     Assert.Equal("Error 3", failure?.Errors[2].Message);
     Assert.Equal("Error 4", failure?.Errors[3].Message);
     Assert.Equal("Error 5", failure?.Errors[4].Message);
+    Assert.True(isFailed);
     Assert.Single(resultOfT.Statements.Facts);
     Assert.Equal("Fact 3", resultOfT.Statements.Facts[0].Message);
     Assert.Equal(3, resultOfT.Statements.Warnings.Count);
-    Assert.Equal("Warning 1", resultOfT.Statements.Warnings[0].Message);
+    Assert.Equal(string.Empty, resultOfT.Statements.Warnings[0].Message);
     Assert.Equal("Warning 2", resultOfT.Statements.Warnings[1].Message);
     Assert.Equal("Warning 3", resultOfT.Statements.Warnings[2].Message);
     Assert.True(resultOfT.IsFailedWith(FailureType.Error));
@@ -162,10 +182,12 @@ public class ResultOfTTests
     Assert.True(resultOfT.IsFailedWith("E2"));
     Assert.False(resultOfT.IsFailedWith("e2"));
     Assert.True(resultOfT.IsFailedWith<ApplicationException>());
-    Assert.True(resultOfT.IsFailedWith<InvalidOperationException>());
+    Assert.True(resultOfT.IsFailedWith(typeof(InvalidOperationException)));
     Assert.False(resultOfT.IsFailedWith<InvalidCastException>());
     Assert.False(resultOfT.IsFailedWith<Exception>());
+    Assert.False(resultOfT.IsFailedWith(typeof(Exception)));
     Assert.True(resultOfT.IsFailedWith<Exception>(true));
+    Assert.True(resultOfT.IsFailedWith(typeof(Exception), true));
   }
 
   [Fact]
@@ -190,14 +212,14 @@ public class ResultOfTTests
     Assert.True(isFailed);
     Assert.NotNull(failure);
     Assert.Equal(3, failure?.Errors.Count);
-    Assert.Equal("Error 1", failure?.Errors[0].Message);
+    Assert.Equal(string.Empty, failure?.Errors[0].Message);
     Assert.Equal("Error 2", failure?.Errors[1].Message);
     Assert.Equal("Error 5", failure?.Errors[2].Message);
     Assert.Equal(2, resultOfT.Statements.Facts.Count);
-    Assert.Equal("Fact 1", resultOfT.Statements.Facts[0].Message);
+    Assert.Equal(string.Empty, resultOfT.Statements.Facts[0].Message);
     Assert.Equal("Fact 2", resultOfT.Statements.Facts[1].Message);
     Assert.Single(resultOfT.Statements.Warnings);
-    Assert.Equal("Warning 1", resultOfT.Statements.Warnings[0].Message);
+    Assert.Equal(string.Empty, resultOfT.Statements.Warnings[0].Message);
     Assert.True(resultOfT.IsFailedWith(FailureType.Unspecified));
     Assert.False(resultOfT.IsFailedWith(FailureType.Conflict));
     Assert.True(resultOfT.IsFailedWith("E2"));

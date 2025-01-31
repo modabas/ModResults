@@ -34,6 +34,7 @@ public sealed partial class Result : IModResult<Failure>
 
   private Result()
   {
+    Failure = null;
   }
 
   private Result(FailureType failureType, IEnumerable<Error> errors)
@@ -155,6 +156,7 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   private Result(TValue value)
   {
     Value = value;
+    Failure = null;
   }
 
   private Result(FailureType failureType, IEnumerable<Error> errors)
