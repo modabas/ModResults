@@ -4,7 +4,7 @@ namespace ModResults;
 
 public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
   where TValue : notnull
-  where TFailure : notnull
+  where TFailure : class
 {
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
@@ -12,7 +12,7 @@ public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
 
   [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public bool IsFailed => Value is null;
+  public bool IsFailed => Failure is not null;
 
   public TValue? Value { get; init; }
 
@@ -38,16 +38,13 @@ public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
     TFailure? failure,
     Statements statements)
   {
-    if (value is null)
+    //by design Failure cannot be null if value is null
+    if (value is null && failure is null)
     {
-      //by design Failure cannot be null if value is null
-      if (failure is null)
-      {
-        throw new ArgumentNullException(nameof(failure));
-      }
-      Failure = failure;
+      throw new ArgumentNullException(nameof(failure));
     }
     Value = value;
+    Failure = failure;
     Statements = statements;
   }
 

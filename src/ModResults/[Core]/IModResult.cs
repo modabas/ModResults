@@ -7,14 +7,14 @@ public interface IModResult
 }
 
 public interface IModResult<TFailure> : IModResult
-  where TFailure : notnull
+  where TFailure : class
 {
   public TFailure? Failure { get; }
 }
 
 public interface IModResult<TValue, TFailure> : IModResult<TFailure>
   where TValue : notnull
-  where TFailure : notnull
+  where TFailure : class
 {
   public TValue? Value { get; }
 }

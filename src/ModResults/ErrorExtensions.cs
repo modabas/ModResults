@@ -6,12 +6,12 @@ public static class ErrorExtensions
   /// </summary>
   /// <typeparam name="TException">Exception type</typeparam>
   /// <param name="error"></param>
-  /// <param name="includeAssignableFrom">If true, checks whether ,nput exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
-  public static bool HasException<TException>(this Error error, bool includeAssignableFrom = false)
+  public static bool HasException<TException>(this Error error, bool includeAssignableTo = false)
     where TException : Exception
   {
-    return error.HasException(typeof(TException), includeAssignableFrom);
+    return error.HasException(typeof(TException), includeAssignableTo);
   }
 
   /// <summary>
@@ -19,9 +19,9 @@ public static class ErrorExtensions
   /// </summary>
   /// <param name="error"></param>
   /// <param name="exceptionType">Exception type</param>
-  /// <param name="includeAssignableFrom">If true, checks whether ,nput exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
-  public static bool HasException(this Error error, Type exceptionType, bool includeAssignableFrom = false)
+  public static bool HasException(this Error error, Type exceptionType, bool includeAssignableTo = false)
   {
     if (!typeof(Exception).IsAssignableFrom(exceptionType))
     {
@@ -36,7 +36,7 @@ public static class ErrorExtensions
     {
       return false;
     }
-    if (includeAssignableFrom)
+    if (includeAssignableTo)
     {
       if (exceptionType.IsAssignableFrom(errorExceptionType))
       {

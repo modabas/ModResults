@@ -11,13 +11,13 @@ public sealed partial class Result : IModResult<Failure>
   /// Gets if state of result instance is Ok.
   /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public bool IsOk { get; init; }
+  public bool IsOk => !IsFailed;
 
   /// <summary>
   /// Gets if state of result instance is Failed.
   /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public bool IsFailed => !IsOk;
+  public bool IsFailed => Failure is not null;
 
   /// <summary>
   /// Contains failure info for a failed <see cref="Result"/> instance. Not null when <see cref="IsFailed"/> is true.
@@ -34,18 +34,15 @@ public sealed partial class Result : IModResult<Failure>
 
   private Result()
   {
-    IsOk = true;
   }
 
   private Result(FailureType failureType, IEnumerable<Error> errors)
   {
-    IsOk = false;
     Failure = new Failure(failureType, errors.ToList().AsReadOnly());
   }
 
   private Result(FailureType failureType)
   {
-    IsOk = false;
     Failure = new Failure(failureType, Definitions.EmptyErrors);
   }
 
@@ -53,25 +50,14 @@ public sealed partial class Result : IModResult<Failure>
   /// This constructor is intended as single public constructor to be used from Json deserialization.
   /// Use provided static methods to create instances of <see cref="Result"/>.
   /// </summary>
-  /// <param name="isOk"></param>
   /// <param name="failure"></param>
   /// <param name="statements"></param>
   /// <exception cref="ArgumentNullException"></exception>
   public Result(
-    bool isOk,
     Failure? failure,
     Statements statements)
   {
-    if (!isOk)
-    {
-      //by design Failure cannot be null if result is failed
-      if (failure is null)
-      {
-        throw new ArgumentNullException(nameof(failure));
-      }
-      Failure = failure;
-    }
-    IsOk = isOk;
+    Failure = failure;
     Statements = statements;
   }
 
@@ -105,7 +91,7 @@ public sealed partial class Result : IModResult<Failure>
   /// <returns></returns>
   public static Result<TValue, TFailure> Ok<TValue, TFailure>(TValue value)
     where TValue : notnull
-    where TFailure : notnull
+    where TFailure : class
   {
     return Result<TValue, TFailure>.Ok(value);
   }
@@ -146,7 +132,7 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public bool IsFailed => Value is null;
+  public bool IsFailed => Failure is not null;
 
   /// <summary>
   /// Contains encapsulated value for an Ok <see cref="Result{TValue}"/> instance. Not null when <see cref="IsOk"/> is true.
@@ -194,16 +180,13 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
     Failure? failure,
     Statements statements)
   {
-    if (value is null)
+    //by design Failure cannot be null if value is null
+    if (value is null && failure is null)
     {
-      //by design Failure cannot be null if value is null
-      if (failure is null)
-      {
-        throw new ArgumentNullException(nameof(failure));
-      }
-      Failure = failure;
+      throw new ArgumentNullException(nameof(failure));
     }
     Value = value;
+    Failure = failure;
     Statements = statements;
   }
 

@@ -5,12 +5,9 @@
 public struct ResultSurrogate
 {
   [Id(0)]
-  public bool IsOk;
-
-  [Id(1)]
   public Failure? Failure;
 
-  [Id(2)]
+  [Id(1)]
   public Statements Statements;
 }
 

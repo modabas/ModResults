@@ -7,7 +7,6 @@ public sealed class ResultSurrogateConverter :
   public Result ConvertFromSurrogate(in ResultSurrogate surrogate)
   {
     return new Result(
-        surrogate.IsOk,
         surrogate.Failure,
         surrogate.Statements);
   }
@@ -17,7 +16,6 @@ public sealed class ResultSurrogateConverter :
     return new ResultSurrogate()
     {
       Failure = value.Failure,
-      IsOk = value.IsOk,
       Statements = value.Statements
     };
   }

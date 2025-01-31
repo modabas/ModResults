@@ -5,7 +5,7 @@ public static partial class ResultConversionExtensions
     this Result<TValue, TFailure> result,
     Func<TValue, TTargetValue> valueFuncOnOk)
     where TValue : notnull
-    where TFailure : notnull
+    where TFailure : class
     where TTargetValue : notnull
   {
     return result.Map<TValue, TFailure, Result<TTargetValue, TFailure>>(
@@ -19,7 +19,7 @@ public static partial class ResultConversionExtensions
     Func<TValue, TState, TTargetValue> valueFuncOnOk,
     TState state)
     where TValue : notnull
-    where TFailure : notnull
+    where TFailure : class
     where TTargetValue : notnull
   {
     return result.Map<TValue, TFailure, TState, Result<TTargetValue, TFailure>>(
@@ -38,7 +38,7 @@ public static partial class ResultConversionExtensions
     TState state,
     CancellationToken ct)
     where TValue : notnull
-    where TFailure : notnull
+    where TFailure : class
     where TTargetValue : notnull
   {
     return await result.MapAsync<TValue, TFailure, TState, Result<TTargetValue, TFailure>>(

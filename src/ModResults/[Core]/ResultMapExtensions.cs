@@ -6,7 +6,7 @@ public static partial class ResultMapExtensions
     Func<Result<TValue, TFailure>, TReturn> mapFuncOnOk,
     Func<Result<TValue, TFailure>, TReturn> mapFuncOnFail)
     where TValue : notnull
-    where TFailure : notnull
+    where TFailure : class
   {
     return result.IsOk ? mapFuncOnOk(result) : mapFuncOnFail(result);
   }
@@ -17,7 +17,7 @@ public static partial class ResultMapExtensions
     Func<Result<TValue, TFailure>, TState, TReturn> mapFuncOnFail,
     TState state)
     where TValue : notnull
-    where TFailure : notnull
+    where TFailure : class
   {
     return result.IsOk ? mapFuncOnOk(result, state) :
       mapFuncOnFail(result, state);
@@ -30,7 +30,7 @@ public static partial class ResultMapExtensions
     TState state,
     CancellationToken ct)
     where TValue : notnull
-    where TFailure : notnull
+    where TFailure : class
   {
     return result.IsOk ? await mapFuncOnOk(result, state, ct) :
       await mapFuncOnFail(result, state, ct);
