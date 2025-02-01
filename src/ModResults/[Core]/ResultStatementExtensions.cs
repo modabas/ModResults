@@ -69,7 +69,7 @@ public static class ResultStatementExtensions
     this Result<TValue, TFailure> result,
     Statements statements)
     where TValue : notnull
-    where TFailure : class
+    where TFailure : notnull
   {
     return result.WithFacts(statements.Facts).WithWarnings(statements.Warnings);
   }
@@ -86,7 +86,7 @@ public static class ResultStatementExtensions
     this Result<TValue, TFailure> result,
     IModResult fromResult)
     where TValue : notnull
-    where TFailure : class
+    where TFailure : notnull
   {
     return result.WithStatements(fromResult.Statements);
   }

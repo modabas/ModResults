@@ -54,6 +54,7 @@ public class ResultTests
     var warnings = new List<Warning> { warning1 };
     var errors = new List<Error> { error1, error2, error5 };
     var resultOfT = new Result<ValueStruct>(
+      false,
       default,
       new Failure(FailureType.Forbidden, errors),
       new Statements(facts, warnings));
@@ -87,4 +88,17 @@ public class ResultTests
     Assert.True(result.IsFailedWith<Exception>(true));
     Assert.True(result.IsFailedWith(typeof(Exception), true));
   }
+
+  [Fact]
+  public void CtorThrowsArgumentNullExceptionWhenFailureIsNull()
+  {
+    // Arrange
+    var facts = new List<Fact> { fact1, fact2 };
+    var warnings = new List<Warning> { warning1 };
+    // Act
+    void act() => new Result(false, null, new Statements(facts, warnings));
+    // Assert
+    Assert.Throws<ArgumentNullException>(act);
+  }
+
 }

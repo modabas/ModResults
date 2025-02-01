@@ -5,9 +5,12 @@
 public struct ResultSurrogate
 {
   [Id(0)]
-  public Failure? Failure;
+  public bool IsOk;
 
   [Id(1)]
+  public Failure? Failure;
+
+  [Id(2)]
   public Statements Statements;
 }
 
@@ -16,11 +19,14 @@ public struct ResultSurrogate
 public struct ResultSurrogate<TValue>
 {
   [Id(0)]
-  public TValue? Value;
+  public bool IsOk;
 
   [Id(1)]
-  public Failure? Failure;
+  public TValue? Value;
 
   [Id(2)]
+  public Failure? Failure;
+
+  [Id(3)]
   public Statements Statements;
 }

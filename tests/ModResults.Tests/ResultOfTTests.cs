@@ -105,6 +105,7 @@ public class ResultOfTTests
     var warnings = new List<Warning> { warning1, warning2 };
     var errors = new List<Error> { error2, error5 };
     var result2 = new Result(
+      false,
       new Failure(FailureType.Unavailable, errors),
       new Statements(facts, warnings));
     var resultOfT = Result<ValueStruct>.Fail(result2);
@@ -151,6 +152,7 @@ public class ResultOfTTests
     var warnings = new List<Warning> { warning1, warning2, warning3 };
     var errors = new List<Error> { error1, error2, error3, error4, error5 };
     var result2 = new Result(
+      false,
       new Failure(FailureType.Error, errors),
       new Statements(facts, warnings));
     var resultOfT = Result<ValueClass>.Fail(result2);
@@ -198,6 +200,7 @@ public class ResultOfTTests
     var warnings = new List<Warning> { warning1 };
     var errors = new List<Error> { error1, error2, error5 };
     var result2 = new Result(
+      false,
       new Failure(FailureType.Unspecified, errors),
       new Statements(facts, warnings));
     var resultOfT = Result<ValueRecord>.Fail(result2);
@@ -229,5 +232,40 @@ public class ResultOfTTests
     Assert.True(resultOfT.IsFailedWith<Exception>(true));
   }
 
+  [Fact]
+  public void CtorThrowsArgumentNullExceptionWhenValueClassIsNull()
+  {
+    // Arrange
+    var facts = new List<Fact> { fact1, fact2 };
+    var warnings = new List<Warning> { warning1 };
+    // Act
+    void act() => new Result<ValueClass>(true, null, null, new Statements(facts, warnings));
+    // Assert
+    Assert.Throws<ArgumentNullException>(act);
+  }
+
+  [Fact]
+  public void CtorThrowsArgumentNullExceptionWhenValueRecordIsNull()
+  {
+    // Arrange
+    var facts = new List<Fact> { fact1, fact2 };
+    var warnings = new List<Warning> { warning1 };
+    // Act
+    void act() => new Result<ValueRecord>(true, null, null, new Statements(facts, warnings));
+    // Assert
+    Assert.Throws<ArgumentNullException>(act);
+  }
+
+  [Fact]
+  public void CtorThrowsArgumentNullExceptionWhenFailureIsNull()
+  {
+    // Arrange
+    var facts = new List<Fact> { fact1, fact2 };
+    var warnings = new List<Warning> { warning1 };
+    // Act
+    void act() => new Result<ValueRecord>(false, null, null, new Statements(facts, warnings));
+    // Assert
+    Assert.Throws<ArgumentNullException>(act);
+  }
 }
 
