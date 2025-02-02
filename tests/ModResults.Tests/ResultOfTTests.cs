@@ -117,6 +117,7 @@ public class ResultOfTTests
 
     // Assert
     Assert.False(isOk);
+    Assert.True(isFailed);
     Assert.Equal("Error 5", failure?.Errors[1].Message);
     Assert.NotNull(failure);
     Assert.Equal(2, failure?.Errors.Count);
