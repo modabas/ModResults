@@ -90,6 +90,8 @@ public class ResultJsonSerializationTests
     Assert.False(result.IsFailedWith(typeof(Exception)));
     Assert.True(result.IsFailedWith<Exception>(true));
     Assert.True(result.IsFailedWith(typeof(Exception), true));
+    Assert.False(result.IsFailedWith(typeof(ArgumentException)));
+    Assert.False(result.IsFailedWith<ArgumentException>(true));
   }
 
 }
