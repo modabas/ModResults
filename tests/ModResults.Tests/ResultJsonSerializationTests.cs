@@ -36,7 +36,8 @@ public class ResultJsonSerializationTests
     // Arrange
     var facts = new List<Fact> { fact1, fact2, fact3 };
     var warnings = new List<Warning> { warning1, warning2, warning3 };
-    var resultOriginal = Result.Ok().WithFacts(facts).WithWarnings(warnings);
+    var statements = new Statements(facts, warnings);
+    var resultOriginal = Result.Ok().WithStatements(statements);
 
     // Act
     var jsonString = JsonSerializer.Serialize(resultOriginal, jsonSerializerOptions);

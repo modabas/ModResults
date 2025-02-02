@@ -36,10 +36,10 @@ public class ResultOfTSerializationTests
     // Arrange
     var facts = new List<Fact> { fact3, fact2, fact1 };
     var warnings = new List<Warning> { warning1, warning3 };
+    var statements = new Statements(facts, warnings);
     var resultOfTOriginal = Result<ValueStruct>.Ok(
       new ValueStruct() { Number = 42, String = "Meaning of life." })
-      .WithFacts(facts)
-      .WithWarnings(warnings);
+      .WithStatements(statements);
 
     // Act
     var jsonString = JsonSerializer.Serialize(resultOfTOriginal, jsonSerializerOptions);
