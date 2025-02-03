@@ -39,6 +39,11 @@ jobs:
     - name: Build
       run: dotnet build ${{ env.MINIMALAPISPROJECTNAME }} --configuration Release --no-restore
       working-directory: src
+
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+      working-directory: src
+
     - name: Package nuget core
       run: dotnet pack ${{ env.COREPROJECTNAME }} --configuration Release --no-build -o:package
       working-directory: src
