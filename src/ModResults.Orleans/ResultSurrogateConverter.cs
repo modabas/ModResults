@@ -7,17 +7,17 @@ public sealed class ResultSurrogateConverter :
   public Result ConvertFromSurrogate(in ResultSurrogate surrogate)
   {
     return new Result(
-        surrogate.IsOk,
-        surrogate.Failure,
-        surrogate.Statements);
+      surrogate.IsOk,
+      surrogate.Failure,
+      surrogate.Statements);
   }
 
   public ResultSurrogate ConvertToSurrogate(in Result value)
   {
     return new ResultSurrogate()
     {
-      Failure = value.Failure,
       IsOk = value.IsOk,
+      Failure = value.Failure,
       Statements = value.Statements
     };
   }
@@ -32,15 +32,17 @@ public sealed class ResultSurrogateConverter<TValue> :
   public Result<TValue> ConvertFromSurrogate(in ResultSurrogate<TValue> surrogate)
   {
     return new Result<TValue>(
-        surrogate.Value,
-        surrogate.Failure,
-        surrogate.Statements);
+      surrogate.IsOk,
+      surrogate.Value,
+      surrogate.Failure,
+      surrogate.Statements);
   }
 
   public ResultSurrogate<TValue> ConvertToSurrogate(in Result<TValue> value)
   {
     return new ResultSurrogate<TValue>()
     {
+      IsOk = value.IsOk,
       Failure = value.Failure,
       Value = value.Value,
       Statements = value.Statements

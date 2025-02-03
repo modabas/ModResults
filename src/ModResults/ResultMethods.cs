@@ -33,28 +33,28 @@ public partial class Result
   /// Checks if the result has an <see cref="ModResults.Error"/> constructed from an exception of the specified type.
   /// </summary>
   /// <typeparam name="TException"></typeparam>
-  /// <param name="includeAssignableFrom"></param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailedWith<TException>(
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
     where TException : Exception
   {
-    return IsFailed && this.HasErrorWithException<TException>(includeAssignableFrom);
+    return IsFailed && this.HasErrorWithException<TException>(includeAssignableTo);
   }
 
   /// <summary>
   /// Checks if the result has an <see cref="ModResults.Error"/> constructed from an exception of the specified type.
   /// </summary>
   /// <param name="exceptionType">Exception type</param>
-  /// <param name="includeAssignableFrom"></param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailedWith(
     Type exceptionType,
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
   {
-    return IsFailed && this.HasErrorWithException(exceptionType, includeAssignableFrom);
+    return IsFailed && this.HasErrorWithException(exceptionType, includeAssignableTo);
   }
 
 }
@@ -90,27 +90,27 @@ public partial class Result<TValue>
   /// Checks if the result has an <see cref="ModResults.Error"/> constructed from an exception of the specified type.
   /// </summary>
   /// <typeparam name="TException"></typeparam>
-  /// <param name="includeAssignableFrom"></param>
+  /// <param name="includeAssignableTo"></param>
   /// <returns></returns>
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailedWith<TException>(
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
     where TException : Exception
   {
-    return IsFailed && this.HasErrorWithException<TException>(includeAssignableFrom);
+    return IsFailed && this.HasErrorWithException<TException>(includeAssignableTo);
   }
 
   /// <summary>
   /// Checks if the result has an <see cref="ModResults.Error"/> constructed from an exception of the specified type.
   /// </summary>
   /// <param name="exceptionType">Exception type</param>
-  /// <param name="includeAssignableFrom"></param>
+  /// <param name="includeAssignableTo"></param>
   /// <returns></returns>
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public bool IsFailedWith(
     Type exceptionType,
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
   {
-    return IsFailed && this.HasErrorWithException(exceptionType, includeAssignableFrom);
+    return IsFailed && this.HasErrorWithException(exceptionType, includeAssignableTo);
   }
 }

@@ -64,14 +64,14 @@ public static class ResultInterfaceErrorExtensions
   /// </summary>
   /// <typeparam name="TException"></typeparam>
   /// <param name="result"></param>
-  /// <param name="includeAssignableFrom">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static bool HasErrorWithException<TException>(
     this IModResult<Failure> result,
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
     where TException : Exception
   {
-    return result.Failure?.Errors.Any(e => e.HasException<TException>(includeAssignableFrom)) ?? false;
+    return result.Failure?.Errors.Any(e => e.HasException<TException>(includeAssignableTo)) ?? false;
   }
 
   /// <summary>
@@ -80,15 +80,15 @@ public static class ResultInterfaceErrorExtensions
   /// <typeparam name="TException"></typeparam>
   /// <param name="result"></param>
   /// <param name="errors"></param>
-  /// <param name="includeAssignableFrom">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static bool HasErrorWithException<TException>(
     this IModResult<Failure> result,
     out ReadOnlyCollection<Error> errors,
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
     where TException : Exception
   {
-    errors = result.GetErrorsWithException<TException>(includeAssignableFrom);
+    errors = result.GetErrorsWithException<TException>(includeAssignableTo);
     return errors.Count > 0;
   }
 
@@ -97,21 +97,21 @@ public static class ResultInterfaceErrorExtensions
   /// </summary>
   /// <typeparam name="TException"></typeparam>
   /// <param name="result"></param>
-  /// <param name="includeAssignableFrom">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static ReadOnlyCollection<Error> GetErrorsWithException<TException>(
     this IModResult<Failure> result,
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
     where TException : Exception
   {
-    return result.GetErrorsWithExceptionInternal<TException>(includeAssignableFrom).ToList().AsReadOnly();
+    return result.GetErrorsWithExceptionInternal<TException>(includeAssignableTo).ToList().AsReadOnly();
   }
 
   private static IEnumerable<Error> GetErrorsWithExceptionInternal<TException>(
     this IModResult<Failure> result,
-    bool includeAssignableFrom = false) where TException : Exception
+    bool includeAssignableTo = false) where TException : Exception
   {
-    return result.Failure?.Errors.Where(e => e.HasException<TException>(includeAssignableFrom)) ?? [];
+    return result.Failure?.Errors.Where(e => e.HasException<TException>(includeAssignableTo)) ?? [];
   }
 
   /// <summary>
@@ -119,14 +119,14 @@ public static class ResultInterfaceErrorExtensions
   /// </summary>
   /// <param name="result"></param>
   /// <param name="exceptionType">Exception type</param>
-  /// <param name="includeAssignableFrom">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static bool HasErrorWithException(
     this IModResult<Failure> result,
     Type exceptionType,
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
   {
-    return result.Failure?.Errors.Any(e => e.HasException(exceptionType, includeAssignableFrom)) ?? false;
+    return result.Failure?.Errors.Any(e => e.HasException(exceptionType, includeAssignableTo)) ?? false;
   }
 
   /// <summary>
@@ -135,15 +135,15 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="result"></param>
   /// <param name="exceptionType">Exception type</param>
   /// <param name="errors"></param>
-  /// <param name="includeAssignableFrom">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static bool HasErrorWithException(
     this IModResult<Failure> result,
     Type exceptionType,
     out ReadOnlyCollection<Error> errors,
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
   {
-    errors = result.GetErrorsWithException(exceptionType, includeAssignableFrom);
+    errors = result.GetErrorsWithException(exceptionType, includeAssignableTo);
     return errors.Count > 0;
   }
 
@@ -152,21 +152,21 @@ public static class ResultInterfaceErrorExtensions
   /// </summary>
   /// <param name="result"></param>
   /// <param name="exceptionType">Exception type</param>
-  /// <param name="includeAssignableFrom">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+  /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static ReadOnlyCollection<Error> GetErrorsWithException(
     this IModResult<Failure> result,
     Type exceptionType,
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
   {
-    return result.GetErrorsWithExceptionInternal(exceptionType, includeAssignableFrom).ToList().AsReadOnly();
+    return result.GetErrorsWithExceptionInternal(exceptionType, includeAssignableTo).ToList().AsReadOnly();
   }
 
   private static IEnumerable<Error> GetErrorsWithExceptionInternal(
     this IModResult<Failure> result,
     Type exceptionType,
-    bool includeAssignableFrom = false)
+    bool includeAssignableTo = false)
   {
-    return result.Failure?.Errors.Where(e => e.HasException(exceptionType, includeAssignableFrom)) ?? [];
+    return result.Failure?.Errors.Where(e => e.HasException(exceptionType, includeAssignableTo)) ?? [];
   }
 }

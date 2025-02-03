@@ -7,17 +7,11 @@ namespace ModResults;
 /// </summary>
 public sealed partial class Result : IModResult<Failure>
 {
-  private readonly bool _isOk;
-
   /// <summary>
   /// Gets if state of result instance is Ok.
   /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public bool IsOk
-  {
-    get => _isOk;
-    init => _isOk = value;
-  }
+  public bool IsOk { get; init; }
 
   /// <summary>
   /// Gets if state of result instance is Failed.
@@ -40,37 +34,42 @@ public sealed partial class Result : IModResult<Failure>
 
   private Result()
   {
-    _isOk = true;
+    IsOk = true;
+    Failure = null;
   }
 
   private Result(FailureType failureType, IEnumerable<Error> errors)
   {
-    _isOk = false;
+    IsOk = false;
     Failure = new Failure(failureType, errors.ToList().AsReadOnly());
   }
 
   private Result(FailureType failureType)
   {
-    _isOk = false;
+    IsOk = false;
     Failure = new Failure(failureType, Definitions.EmptyErrors);
   }
 
-  //intended as single public constructor to be used from json deserialization
+  /// <summary>
+  /// This constructor is intended as single public constructor to be used from Json deserialization.
+  /// Use provided static methods to create instances of <see cref="Result"/>.
+  /// </summary>
+  /// <param name="isOk"></param>
+  /// <param name="failure"></param>
+  /// <param name="statements"></param>
+  /// <exception cref="ArgumentNullException"></exception>
   public Result(
     bool isOk,
     Failure? failure,
     Statements statements)
   {
-    if (!isOk)
+    //by design Failure cannot be null if isOk is false
+    if (!isOk && failure is null)
     {
-      //by design Failure cannot be null if result is failed
-      if (failure is null)
-      {
-        throw new ArgumentNullException(nameof(failure));
-      }
-      Failure = failure;
+      throw new ArgumentNullException(nameof(failure));
     }
-    _isOk = isOk;
+    IsOk = isOk;
+    Failure = failure;
     Statements = statements;
   }
 
@@ -138,14 +137,14 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public bool IsOk => !IsFailed;
+  public bool IsOk { get; init; }
 
   /// <summary>
   /// Gets if state of result instance is Failed.
   /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public bool IsFailed => Value is null;
+  public bool IsFailed => !IsOk;
 
   /// <summary>
   /// Contains encapsulated value for an Ok <see cref="Result{TValue}"/> instance. Not null when <see cref="IsOk"/> is true.
@@ -167,35 +166,50 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
 
   private Result(TValue value)
   {
+    IsOk = true;
     Value = value;
   }
 
   private Result(FailureType failureType, IEnumerable<Error> errors)
   {
+    IsOk = false;
     Failure = new Failure(failureType, errors.ToList().AsReadOnly());
   }
 
   private Result(FailureType failureType)
   {
+    IsOk = false;
     Failure = new Failure(failureType, Definitions.EmptyErrors);
   }
 
-  //intended as single public constructor to be used from json deserialization
+  /// <summary>
+  /// This constructor is intended as single public constructor to be used from Json deserialization.
+  /// Use provided static methods to create instances of <see cref="Result{TValue}"/>.
+  /// </summary>
+  /// <param name="isOk"></param>
+  /// <param name="value"></param>
+  /// <param name="failure"></param>
+  /// <param name="statements"></param>
+  /// <exception cref="ArgumentNullException"></exception>
   public Result(
+    bool isOk,
     TValue? value,
     Failure? failure,
     Statements statements)
   {
-    if (value is null)
+    //by design Value cannot be null if isOk is true
+    if (isOk && value is null)
     {
-      //by design Failure cannot be null if value is null
-      if (failure is null)
-      {
-        throw new ArgumentNullException(nameof(failure));
-      }
-      Failure = failure;
+      throw new ArgumentNullException(nameof(value));
     }
+    //by design Failure cannot be null if isOk is false
+    if (!isOk && failure is null)
+    {
+      throw new ArgumentNullException(nameof(failure));
+    }
+    IsOk = isOk;
     Value = value;
+    Failure = failure;
     Statements = statements;
   }
 
