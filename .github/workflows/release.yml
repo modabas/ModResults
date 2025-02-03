@@ -9,6 +9,8 @@ env:
   ORLEANSPROJECTNAME: "ModResults.Orleans"
   MINIMALAPISPROJECTNAME: "ModResults.MinimalApis"
   FLUENTVALIDATIONPROJECTNAME: "ModResults.FluentValidation"
+
+  CORETESTSPROJECTNAME: "ModResults.Tests"
   
 jobs:
   build:
@@ -41,8 +43,8 @@ jobs:
       working-directory: src
 
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
-      working-directory: src
+      run: dotnet test ${{ env.CORETESTSPROJECTNAME }} --no-restore --verbosity normal
+      working-directory: tests
 
     - name: Package nuget core
       run: dotnet pack ${{ env.COREPROJECTNAME }} --configuration Release --no-build -o:package
