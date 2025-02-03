@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace ModResults.Tests;
+﻿namespace ModResults.Tests;
 public class FailedResultTests
 {
   private readonly Error error1, error2;

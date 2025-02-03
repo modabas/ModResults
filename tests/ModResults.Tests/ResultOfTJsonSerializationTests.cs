@@ -2,14 +2,14 @@
 using System.Text.Json.Serialization;
 
 namespace ModResults.Tests;
-public class ResultOfTSerializationTests
+public class ResultOfTJsonSerializationTests
 {
   private readonly Fact fact1, fact2, fact3;
   private readonly Warning warning1, warning2, warning3;
   private readonly Error error1, error2, error3, error4, error5;
   private readonly JsonSerializerOptions jsonSerializerOptions;
 
-  public ResultOfTSerializationTests()
+  public ResultOfTJsonSerializationTests()
   {
     jsonSerializerOptions = new()
     {
