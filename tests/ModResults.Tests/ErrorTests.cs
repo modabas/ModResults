@@ -76,7 +76,7 @@ public class ErrorTests
     var error1 = new Error(ex1, 10, "E1", "P1");
     var error2 = new Error("Error 2", code: "E2");
     var error3 = new Error(ex2, 10, "E3", "P3");
-    var errors = new List<Error> { error1, error2 ,error3 };
+    var errors = new List<Error> { error1, error2, error3 };
     var result = Result.Forbidden(errors.ToArray());
 
 
