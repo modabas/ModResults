@@ -11,6 +11,7 @@ env:
   FLUENTVALIDATIONPROJECTNAME: "ModResults.FluentValidation"
 
   CORETESTSPROJECTNAME: "ModResults.Tests"
+  ORLEANSTESTSPROJECTNAME: "ModResults.Orleans.Tests"
   
 jobs:
   build:
@@ -44,6 +45,9 @@ jobs:
 
     - name: Test
       run: dotnet test ${{ env.CORETESTSPROJECTNAME }} --no-restore --verbosity normal
+      working-directory: tests
+    - name: Test
+      run: dotnet test ${{ env.ORLEANSTESTSPROJECTNAME }} --no-restore --verbosity normal
       working-directory: tests
 
     - name: Package nuget core
