@@ -121,7 +121,7 @@ public class ResultTests
     var warnings = new List<Warning> { warning1 };
     var resultOfT = new Result<ValueStruct>(
       true,
-      new ValueStruct() { Number = 42, String="Meaning of life."},
+      new ValueStruct() { Number = 42, String = "Meaning of life." },
       null,
       new Statements(facts, warnings));
 

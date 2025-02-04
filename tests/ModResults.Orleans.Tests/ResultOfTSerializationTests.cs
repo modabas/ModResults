@@ -1,16 +1,14 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using Orleans.TestingHost;
+﻿using Orleans.TestingHost;
 
 namespace ModResults.Orleans.Tests;
 
 
 [Collection(ClusterCollection.Name)]
-public class ResultOfTJsonSerializationTests
+public class ResultOfTSerializationTests
 {
   private readonly TestCluster _cluster;
 
-  public ResultOfTJsonSerializationTests(ClusterFixture fixture)
+  public ResultOfTSerializationTests(ClusterFixture fixture)
   {
     _cluster = fixture.Cluster;
   }
