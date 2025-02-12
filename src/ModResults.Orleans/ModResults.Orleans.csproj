@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="assets\README.md" Pack="true" PackagePath="\"/>
+    <None Include="assets\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   
   <ItemGroup>
@@ -18,7 +18,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Orleans.Sdk" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Orleans.Sdk" Version="9.1.1" />
   </ItemGroup>
 
   <ItemGroup>
