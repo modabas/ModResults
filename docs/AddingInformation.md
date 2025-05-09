@@ -1,4 +1,4 @@
-# Add information to Result instances
+## Add information to Result instances
 
 All types of Result implementations contain a Statement property which encapsulates collections of [Fact](../src/ModResults/[Core]/Fact.cs) and [Warning](../src/ModResults/[Core]/Warning.cs) classes.
 

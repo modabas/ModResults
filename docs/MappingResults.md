@@ -1,4 +1,4 @@
-# Map Result and Result&lt;TValue&gt; instances to another object type (usually not a Result)
+## Map Result and Result&lt;TValue&gt; instances to another object type (usually not a Result)
 
 Map functions convert a Result or Result&lt;TValue&gt; to a specified type parameter TReturn instance.
 
