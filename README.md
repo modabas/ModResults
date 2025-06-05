@@ -16,15 +16,28 @@ ModResults provides a structured way to represent success or failure with option
   - `ModResults.FluentValidation` bridges FluentValidation with ModResults for unified validation error handling.
   - `ModResults.MinimalApis` provides extensions to convert Result and Result&lt;TValue&gt; instances to ASP.NET Core Minimal APIs' IResult responses with proper HTTP status codes and response formatting.
   - `ModResults.Orleans` provides surrogate and converter implementations required by the Orleans serializer.
-- **Serialization**: JSON serialization/deserialization without special configuration.
+- **Serialization**: System.Text.Json serialization/deserialization support without need for special configuration.
 
 ---
 
 ## 🛠️ How To Use
 
-### Creating a Result or Result<TValue> Instance
+### Creating a Result or Result&lt;TValue&gt; Instance
+
 - **Success**: Use `Result.Ok()` or `Result<TValue>.Ok(TValue value)`.
-- **Failure**: Use static methods like `Result.NotFound()` or `Result<TValue>.NotFound()`.
+- **Failure**: Use static factory methods like `Result.NotFound()` or `Result<TValue>.Invalid()` to create failed results with a specific failure type.
+
+For each failure type (like Error, Forbidden, Unauthorized, etc.), there are several overloads that creates a failed result with the given FailureType:
+- No parameters:
+Creates a failed result with the given FailureType and no errors.
+-	String[] errorMessages:
+Converts each string to an Error and includes them in the result.
+-	Error[] errors:
+Directly includes the provided Error objects in the result.
+-	Exception[] exceptions:
+Converts each exception to an Error and includes them in the result.
+
+These methods make it easy and consistent to create failed results with detailed error information, categorized by failure type, for both non-generic and generic result types.
 
 ``` csharp
 public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest req, CancellationToken ct)
@@ -45,8 +58,8 @@ public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest re
 
 A result can either be in an Ok or Failed state.  
 
-- **Ok State**: The `Result<TValue>` instance contains a non-null `Value` of type `TValue`.  
-- **Failed State**: Both `Result` and `Result<TValue>` instances contain a non-null `Failure` of type `Failure`.
+- **Ok State**: The `Result<TValue>` instance contains a non-null `Value` property of type `TValue`.
+- **Failed State**: Both `Result` and `Result<TValue>` instances contain a non-null `Failure` property.
 
 ``` csharp
 public async Task<Result> PerformGetBookById(GetBookByIdRequest req, CancellationToken ct)
@@ -64,15 +77,13 @@ public async Task<Result> PerformGetBookById(GetBookByIdRequest req, Cancellatio
 }
 ```
 
-### Advanced Topics  
+### Explore More Features
 
-For more advanced examples, refer to the following:  
+For further examples showcasing other functionalities, refer to the following:
 
-- [Adding Information to Results](./docs/AddingInformation.md)
-- [Create a Failed Result from Exceptions](./docs/HandlingExceptions.md)
+- [Adding Information to Result Objects](./docs/AddingInformation.md)
+- [Create a Failed Result from Exception](./docs/HandlingExceptions.md)
 - [Converting a Result to Another Result](./docs/ConvertingResults.md)
 - [Mapping Results into Other Objects](./docs/MappingResults.md)
 - [Minimal API Integration](./docs/MinimalApiIntegration.md): If you're utilizing Minimal APIs and need to map a `Result` or `Result<TValue>` to an API response, consider exploring the `WebServiceEndpoint` implementation in the [ModEndpoints](https://github.com/modabas/ModEndpoints) project. This project organizes ASP.NET Core Minimal APIs into REPR format endpoints and seamlessly integrates with the result pattern, including automatic response mapping.
-- **Microsoft Orleans Integration**: Include ModResults.Orleans package as project dependency to use Result and Result&lt;TValue&gt; objects in Orleans grains.
-
----
+- **Microsoft Orleans Serialization Support**: Include ModResults.Orleans package as project dependency to use `Result` and `Result<TValue>` objects in Orleans grains.
