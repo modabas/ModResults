@@ -39,6 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{02EA681E-C
 		docs\AddingInformation.md = docs\AddingInformation.md
 		docs\ConvertingResults.md = docs\ConvertingResults.md
 		docs\HandlingExceptions.md = docs\HandlingExceptions.md
+		docs\ImplicitOperators.md = docs\ImplicitOperators.md
 		docs\MappingResults.md = docs\MappingResults.md
 		docs\MinimalApiIntegration.md = docs\MinimalApiIntegration.md
 	EndProjectSection
