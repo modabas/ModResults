@@ -4,19 +4,20 @@
 [![Nuget](https://img.shields.io/nuget/dt/ModResults)](https://www.nuget.org/packages/ModResults/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/modabas/ModResults/blob/main/LICENSE.txt)
 
-ModResults provides a structured way to represent success or failure with optional details, enhancing readability and maintainability in codebases. It is designed for both in-process and networked scenarios with serialization/deserialization support. The library leverages nullability annotations, immutability, and factory methods for clarity.
+ModResults implements the Result pattern, providing a structured way to represent the outcome of operations as either success or failure. Instead of using exceptions or loosely-typed error codes, ModResults encapsulates operation results in strongly-typed objects to improve code readability, maintainability, and error handling. Uses nullability annotations for safer, more predictable code.
 
 ## ✨ Features
 
 - **Result Pattern**: Encapsulates success or failure states with associated error messages and additional information.
+- **East-to-Use**: Simplifies error handling and result management with a clear API.
+- **Serialization**: System.Text.Json serialization support without need for special configuration. Microsoft.Orleans serialization support via `ModResults.Orleans` package.
 - **Ready-to-Use Implementations**:
   - `Result` and `Result<TValue>` with a default `Failure` state.
   - `Result<TValue, TFailure>` for custom failure states.
 - **📦 Extension Packages for Various Scenarios**: 
   - `ModResults.FluentValidation` bridges FluentValidation with ModResults for unified validation error handling.
   - `ModResults.MinimalApis` provides extensions to convert Result and Result&lt;TValue&gt; instances to ASP.NET Core Minimal APIs' IResult responses with proper HTTP status codes and response formatting.
-  - `ModResults.Orleans` provides surrogate and converter implementations required by the Orleans serializer.
-- **Serialization**: System.Text.Json serialization/deserialization support without need for special configuration.
+  - `ModResults.Orleans` provides necessary surrogate, converter and populator implementations required by the Orleans serializer.
 
 ---
 
@@ -61,7 +62,7 @@ A result can be either in an Ok or Failed state.
 - **Ok State**: If the `IsOk` property is true (`IsFailed` is false), a `Result<TValue>` instance will have a non-null `Value` property of type `TValue`.
 - **Failed State**: If the `IsOk` property is false (`IsFailed` is true), both `Result` and `Result<TValue>` instances will have a non-null `Failure` property.
 
->**Note**: In a nullable context, compiler will not issue "may be null" warnings in these scenarios, as the library uses nullability annotations.
+>**Note**: When using nullable contexts, the compiler will not generate "may be null" warnings in these cases, as the library leverages conditional attributes to assist null-state analysis.
 
 ``` csharp
 public async Task<Result> PerformGetBookById(GetBookByIdRequest req, CancellationToken ct)
@@ -88,5 +89,4 @@ For further examples showcasing other functionalities, refer to the following:
 - [Create a Failed Result from Exception](./docs/HandlingExceptions.md)
 - [Converting a Result to Another Result](./docs/ConvertingResults.md)
 - [Mapping Results into Other Objects](./docs/MappingResults.md)
-- [Minimal API Integration](./docs/MinimalApiIntegration.md): If you're utilizing Minimal APIs and need to map a `Result` or `Result<TValue>` to an API response, consider exploring the `WebServiceEndpoint` implementation in the [ModEndpoints](https://github.com/modabas/ModEndpoints) project. This project organizes ASP.NET Core Minimal APIs into REPR format endpoints and seamlessly integrates with the result pattern, including automatic response mapping.
-- **Microsoft Orleans Serialization Support**: Include ModResults.Orleans package as project dependency to use `Result` and `Result<TValue>` objects in Orleans grains.
+- [Minimal API Integration](./docs/MinimalApiIntegration.md): If you are using Minimal APIs and want to convert a `Result` or `Result<TValue>` into an API response, check out the `WebResultEndpoint` in the [ModEndpoints](https://github.com/modabas/ModEndpoints) project. This project structures ASP.NET Core Minimal APIs as REPR format endpoints and integrates smoothly with the result pattern, providing automatic response mapping.
