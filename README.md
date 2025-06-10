@@ -30,11 +30,11 @@ ModResults provides a structured way to represent success or failure with option
 For each failure type (like Error, Forbidden, Unauthorized, etc.), there are several overloads that creates a failed result with the given FailureType:
 - No parameters:
 Creates a failed result with the given FailureType and no errors.
--	String[] errorMessages:
+- String[] errorMessages:
 Converts each string to an Error and includes them in the result.
--	Error[] errors:
+- Error[] errors:
 Directly includes the provided Error objects in the result.
--	Exception[] exceptions:
+- Exception[] exceptions:
 Converts each exception to an Error and includes them in the result.
 
 These methods make it easy and consistent to create failed results with detailed error information, categorized by failure type, for both non-generic and generic result types.
@@ -56,10 +56,12 @@ public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest re
 
 ### Checking the State of a Result
 
-A result can either be in an Ok or Failed state.  
+A result can be either in an Ok or Failed state.
 
-- **Ok State**: The `Result<TValue>` instance contains a non-null `Value` property of type `TValue`.
-- **Failed State**: Both `Result` and `Result<TValue>` instances contain a non-null `Failure` property.
+- **Ok State**: If the `IsOk` property is true (`IsFailed` is false), a `Result<TValue>` instance will have a non-null `Value` property of type `TValue`.
+- **Failed State**: If the `IsOk` property is false (`IsFailed` is true), both `Result` and `Result<TValue>` instances will have a non-null `Failure` property.
+
+>**Note**: In a nullable context, compiler will not issue "may be null" warnings in these scenarios, as the library uses nullability annotations.
 
 ``` csharp
 public async Task<Result> PerformGetBookById(GetBookByIdRequest req, CancellationToken ct)
@@ -81,6 +83,7 @@ public async Task<Result> PerformGetBookById(GetBookByIdRequest req, Cancellatio
 
 For further examples showcasing other functionalities, refer to the following:
 
+- [Implicit Operators and QoL Features](./docs/ImplicitOperators.md)
 - [Adding Information to Result Objects](./docs/AddingInformation.md)
 - [Create a Failed Result from Exception](./docs/HandlingExceptions.md)
 - [Converting a Result to Another Result](./docs/ConvertingResults.md)
