@@ -13,6 +13,7 @@
 
 - `Result.Ok(TValue value)` static method for creating a successful `Result<TValue>` instead of calling `Result<TValue>.Ok(TValue value)`,
 - Static factory methods for creating failed results with specific failure types, such as `Result.NotFound()`, `Result<TValue>.Invalid()`, etc.
+- Static `Fail` method to create a failed `Result` or `Result<TValue>` from another `Result` or `Result<TValue>` instance, copying all Failure information, Errors, Facts, and Warnings.
 - `Result<TValue>` to `Result` using `ToResult()` method,
 - `Result` to `Result<TValue>` using `ToResult()` method with a factory function for `TValue`,
 - Extension methods like `ToResultAsync()` or `MapAsync()` for asynchronous conversions,
