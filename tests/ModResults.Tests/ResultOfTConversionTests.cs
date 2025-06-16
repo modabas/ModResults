@@ -290,13 +290,12 @@ public class ResultOfTConversionTests
       .WithFacts([fact1, fact2, fact3])
       .WithWarnings([warning1, warning2, warning3]);
     //Act
-    var resultOfT = await resultOriginal.ToResultAsync<ValueStruct, string, ValueClass>(
-      async (source, state, ct) =>
+    var resultOfT = await resultOriginal.ToResultAsync<ValueStruct, ValueClass>(
+      async (source, ct) =>
       {
-        await Task.Delay(1);
-        return new ValueClass() { Number = source.Number, String = source.String + state };
+        await Task.Delay(1, ct);
+        return new ValueClass() { Number = source.Number, String = source.String + "." };
       },
-      ("."),
       default);
 
     // Assert
@@ -343,10 +342,110 @@ public class ResultOfTConversionTests
       .WithWarnings([warning1, warning2, warning3]);
 
     //Act
+    var resultOfT = await resultOriginal.ToResultAsync<ValueStruct, ValueClass>(
+      async (source, ct) =>
+      {
+        await Task.Delay(1, ct);
+        return new ValueClass() { Number = source.Number, String = source.String + "." };
+      },
+      default);
+
+    // Assert
+    Assert.NotNull(resultOfT);
+    Assert.False(resultOfT.IsOk);
+    Assert.True(resultOfT.IsFailed);
+    Assert.NotNull(resultOfT.Failure);
+    Assert.Null(resultOfT.Value);
+    Assert.Equal(3, resultOfT.Statements.Facts.Count);
+    Assert.Equal(string.Empty, resultOfT.Statements.Facts[0].Message);
+    Assert.Equal("Fact 2", resultOfT.Statements.Facts[1].Message);
+    Assert.Equal("Fact 3", resultOfT.Statements.Facts[2].Message);
+    Assert.True(resultOfT.HasFact("F3"));
+    Assert.False(resultOfT.HasFact("f3"));
+    Assert.Equal(3, resultOfT.Statements.Warnings.Count);
+    Assert.Equal(string.Empty, resultOfT.Statements.Warnings[0].Message);
+    Assert.Equal("Warning 2", resultOfT.Statements.Warnings[1].Message);
+    Assert.Equal("Warning 3", resultOfT.Statements.Warnings[2].Message);
+    Assert.Equal(4, resultOfT.Failure.Errors.Count);
+    Assert.Equal("Error 1", resultOfT.Failure.Errors[0].Message);
+    Assert.Equal("Error 2", resultOfT.Failure.Errors[1].Message);
+    Assert.True(resultOfT.IsFailedWith(FailureType.Error));
+    Assert.False(resultOfT.IsFailedWith(FailureType.Unspecified));
+    Assert.False(resultOfT.IsFailedWith("Failure.Error"));
+    Assert.True(resultOfT.IsFailedWith("E2"));
+    Assert.False(resultOfT.IsFailedWith("e2"));
+    Assert.False(resultOfT.IsFailedWith(typeof(Exception)));
+    Assert.True(resultOfT.IsFailedWith<Exception>(true));
+    Assert.True(resultOfT.IsFailedWith<InvalidOperationException>());
+    Assert.True(resultOfT.IsFailedWith<ApplicationException>());
+  }
+
+  [Fact]
+  public async Task OkResultOfTToResultWithValueFuncOnOkAndStateAsync()
+  {
+    //Arrange
+    var resultOriginal = Result
+      .Ok(new ValueStruct() { Number = 42, String = "Meaning of life" })
+      .WithFacts([fact1, fact2, fact3])
+      .WithWarnings([warning1, warning2, warning3]);
+    //Act
     var resultOfT = await resultOriginal.ToResultAsync<ValueStruct, string, ValueClass>(
       async (source, state, ct) =>
       {
-        await Task.Delay(1);
+        await Task.Delay(1, ct);
+        return new ValueClass() { Number = source.Number, String = source.String + state };
+      },
+      ("."),
+      default);
+
+    // Assert
+    Assert.True(resultOfT.IsOk);
+    Assert.False(resultOfT.IsFailed);
+    Assert.Null(resultOfT.Failure);
+    Assert.NotNull(resultOfT.Value);
+    Assert.Equal(42, resultOfT.Value.Number);
+    Assert.Equal("Meaning of life.", resultOfT.Value.String);
+    Assert.Equal(3, resultOfT.Statements.Facts.Count);
+    Assert.Equal(string.Empty, resultOfT.Statements.Facts[0].Message);
+    Assert.Equal("Fact 2", resultOfT.Statements.Facts[1].Message);
+    Assert.Equal("Fact 3", resultOfT.Statements.Facts[2].Message);
+    Assert.True(resultOfT.HasFact("F3"));
+    Assert.False(resultOfT.HasFact("f3"));
+    Assert.Equal(3, resultOfT.Statements.Warnings.Count);
+    Assert.Equal(string.Empty, resultOfT.Statements.Warnings[0].Message);
+    Assert.Equal("Warning 2", resultOfT.Statements.Warnings[1].Message);
+    Assert.Equal("Warning 3", resultOfT.Statements.Warnings[2].Message);
+    Assert.False(resultOfT.IsFailedWith(FailureType.Error));
+    Assert.False(resultOfT.IsFailedWith(FailureType.Unspecified));
+    Assert.False(resultOfT.IsFailedWith("E2"));
+    Assert.False(resultOfT.IsFailedWith("e2"));
+    Assert.False(resultOfT.IsFailedWith<ApplicationException>());
+    Assert.False(resultOfT.IsFailedWith(typeof(InvalidOperationException)));
+    Assert.False(resultOfT.IsFailedWith<InvalidCastException>());
+    Assert.False(resultOfT.IsFailedWith<Exception>());
+    Assert.False(resultOfT.IsFailedWith(typeof(Exception)));
+    Assert.False(resultOfT.IsFailedWith<Exception>(true));
+    Assert.False(resultOfT.IsFailedWith(typeof(Exception), true));
+  }
+
+  [Fact]
+  public async Task FailedResultOfTToResultWithValueFuncOnOkAndStateAsync()
+  {
+    //Arrange
+    var resultOriginal = Result<ValueStruct>
+      .Error(
+        error1,
+        error2,
+        new Error(ex1),
+        new Error(ex2))
+      .WithFacts([fact1, fact2, fact3])
+      .WithWarnings([warning1, warning2, warning3]);
+
+    //Act
+    var resultOfT = await resultOriginal.ToResultAsync<ValueStruct, string, ValueClass>(
+      async (source, state, ct) =>
+      {
+        await Task.Delay(1, ct);
         return new ValueClass() { Number = source.Number, String = source.String + state };
       },
       ("."),
