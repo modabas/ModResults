@@ -993,6 +993,95 @@ public class FailedResultOfTTests
   }
 
   [Fact]
+  public void PaymentRequired()
+  {
+    // Arrange
+    var result = Result<ValueClass>.PaymentRequired();
+
+    // Assert
+    Assert.NotNull(result);
+    Assert.False(result.IsOk);
+    Assert.True(result.IsFailed);
+    Assert.NotNull(result.Failure);
+    Assert.Empty(result.Failure.Errors);
+    Assert.True(result.IsFailedWith(FailureType.PaymentRequired));
+    Assert.False(result.IsFailedWith(FailureType.Unspecified));
+    Assert.False(result.IsFailedWith("Failure.PaymentRequired"));
+    Assert.False(result.IsFailedWith(typeof(Exception)));
+    Assert.False(result.IsFailedWith<Exception>(true));
+  }
+
+  [Fact]
+  public void PaymentRequiredWithMessages()
+  {
+    // Arrange
+    var result = Result<ValueClass>.PaymentRequired("Error1", "Error2");
+
+    // Assert
+    Assert.NotNull(result);
+    Assert.False(result.IsOk);
+    Assert.True(result.IsFailed);
+    Assert.NotNull(result.Failure);
+    Assert.Equal(2, result.Failure.Errors.Count);
+    Assert.Equal("Error1", result.Failure.Errors[0].Message);
+    Assert.Equal("Error2", result.Failure.Errors[1].Message);
+    Assert.True(result.IsFailedWith(FailureType.PaymentRequired));
+    Assert.False(result.IsFailedWith(FailureType.Unspecified));
+    Assert.True(result.IsFailedWith("Failure.PaymentRequired"));
+    Assert.False(result.IsFailedWith("failure.PaymentRequired"));
+    Assert.False(result.IsFailedWith(typeof(Exception)));
+    Assert.False(result.IsFailedWith<Exception>(true));
+  }
+
+  [Fact]
+  public void PaymentRequiredWithErrors()
+  {
+    // Arrange
+    var result = Result<ValueClass>.PaymentRequired(error1, error2);
+
+    // Assert
+    Assert.NotNull(result);
+    Assert.False(result.IsOk);
+    Assert.True(result.IsFailed);
+    Assert.NotNull(result.Failure);
+    Assert.Equal(2, result.Failure.Errors.Count);
+    Assert.Equal("Error 1", result.Failure.Errors[0].Message);
+    Assert.Equal("Error 2", result.Failure.Errors[1].Message);
+    Assert.True(result.IsFailedWith(FailureType.PaymentRequired));
+    Assert.False(result.IsFailedWith(FailureType.Unspecified));
+    Assert.False(result.IsFailedWith("Failure.PaymentRequired"));
+    Assert.True(result.IsFailedWith("E2"));
+    Assert.False(result.IsFailedWith("e2"));
+    Assert.False(result.IsFailedWith(typeof(Exception)));
+    Assert.False(result.IsFailedWith<Exception>(true));
+  }
+
+  [Fact]
+  public void PaymentRequiredWithExceptions()
+  {
+    // Arrange
+    var result = Result<ValueClass>.PaymentRequired(ex1, ex2);
+
+    // Assert
+    Assert.NotNull(result);
+    Assert.False(result.IsOk);
+    Assert.True(result.IsFailed);
+    Assert.NotNull(result.Failure);
+    Assert.Equal(2, result.Failure.Errors.Count);
+    Assert.Equal("Error 4", result.Failure.Errors[0].Message);
+    Assert.Equal("Error 5", result.Failure.Errors[1].Message);
+    Assert.True(result.IsFailedWith(FailureType.PaymentRequired));
+    Assert.False(result.IsFailedWith(FailureType.Unspecified));
+    Assert.True(result.IsFailedWith("Failure.PaymentRequired"));
+    Assert.False(result.IsFailedWith("E2"));
+    Assert.False(result.IsFailedWith("e2"));
+    Assert.False(result.IsFailedWith(typeof(Exception)));
+    Assert.True(result.IsFailedWith<Exception>(true));
+    Assert.True(result.IsFailedWith<InvalidOperationException>());
+    Assert.True(result.IsFailedWith<ApplicationException>());
+  }
+
+  [Fact]
   public void ExceptionImplicitOperator()
   {
     // Arrange

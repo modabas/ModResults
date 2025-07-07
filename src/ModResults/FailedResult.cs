@@ -520,6 +520,53 @@ public partial class Result
   }
   #endregion
 
+  #region PaymentRequired
+  /// <summary>
+  /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.PaymentRequired"/>.
+  /// </summary>
+  /// <returns></returns>
+  public static Result PaymentRequired()
+  {
+    return new Result(FailureType.PaymentRequired);
+  }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.PaymentRequired"/>.
+  /// </summary>
+  /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
+  /// <returns></returns>
+  public static Result PaymentRequired(params string[] errorMessages)
+  {
+    var failureType = FailureType.PaymentRequired;
+    return new Result(
+        failureType,
+        errorMessages.Select(x => x.ToError(failureType)));
+  }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.PaymentRequired"/>.
+  /// </summary>
+  /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
+  /// <returns></returns>
+  public static Result PaymentRequired(params Error[] errors)
+  {
+    return new Result(FailureType.PaymentRequired, errors);
+  }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.PaymentRequired"/>.
+  /// </summary>
+  /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
+  /// <returns></returns>
+  public static Result PaymentRequired(params Exception[] exceptions)
+  {
+    var failureType = FailureType.PaymentRequired;
+    return new Result(
+        failureType,
+        exceptions.Select(x => x.ToError(failureType)));
+  }
+  #endregion
+
   /// <summary>
   /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.CriticalError"/> containing an error constructed from specified exception.
   /// </summary>
@@ -1054,6 +1101,53 @@ public partial class Result<TValue>
   public static Result<TValue> TimedOut(params Exception[] exceptions)
   {
     var failureType = FailureType.TimedOut;
+    return new Result<TValue>(
+        failureType,
+        exceptions.Select(x => x.ToError(failureType)));
+  }
+  #endregion
+
+  #region PaymentRequired
+  /// <summary>
+  /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.PaymentRequired"/>.
+  /// </summary>
+  /// <returns></returns>
+  public static Result<TValue> PaymentRequired()
+  {
+    return new Result<TValue>(FailureType.PaymentRequired);
+  }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.PaymentRequired"/>.
+  /// </summary>
+  /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
+  /// <returns></returns>
+  public static Result<TValue> PaymentRequired(params string[] errorMessages)
+  {
+    var failureType = FailureType.PaymentRequired;
+    return new Result<TValue>(
+        failureType,
+        errorMessages.Select(x => x.ToError(failureType)));
+  }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.PaymentRequired"/>.
+  /// </summary>
+  /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
+  /// <returns></returns>
+  public static Result<TValue> PaymentRequired(params Error[] errors)
+  {
+    return new Result<TValue>(FailureType.PaymentRequired, errors);
+  }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.PaymentRequired"/>.
+  /// </summary>
+  /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
+  /// <returns></returns>
+  public static Result<TValue> PaymentRequired(params Exception[] exceptions)
+  {
+    var failureType = FailureType.PaymentRequired;
     return new Result<TValue>(
         failureType,
         exceptions.Select(x => x.ToError(failureType)));
