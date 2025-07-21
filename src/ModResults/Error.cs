@@ -104,6 +104,7 @@ public class Error
       FailureType.GatewayError => "Failure.GatewayError",
       FailureType.RateLimited => "Failure.RateLimited",
       FailureType.TimedOut => "Failure.TimedOut",
+      FailureType.PaymentRequired => "Failure.PaymentRequired",
       _ => null,
     };
   }

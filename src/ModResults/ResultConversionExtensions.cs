@@ -26,6 +26,26 @@ public static partial class ResultConversionExtensions
   /// If source <see cref="Result"/> is in Ok state, the returned <see cref="Result{TValue}"/> will be in Ok state with the result of value function as value.
   /// If source <see cref="Result"/> is in Fail state, the returned <see cref="Result{TValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
   /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <returns></returns>
+  public static Result<TValue> ToResult<TValue>(
+    this Result result,
+    Func<TValue> valueFuncOnOk)
+    where TValue : notnull
+  {
+    return result.Map<Result<TValue>>(
+      (okResult) => Result<TValue>.Ok(valueFuncOnOk())
+        .WithStatementsFrom(okResult),
+      (failResult) => Result<TValue>.Fail(failResult));
+  }
+
+  /// <summary>
+  /// Converts a <see cref="Result"/> to a <see cref="Result{TValue}"/>, copying over Statements.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="Result{TValue}"/> will be in Ok state with the result of value function as value.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="Result{TValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="result"></param>
@@ -43,6 +63,29 @@ public static partial class ResultConversionExtensions
         .WithStatementsFrom(okResult),
       (failResult, _) => Result<TValue>.Fail(failResult),
       state);
+  }
+
+  /// <summary>
+  /// Converts a <see cref="Result"/> to a <see cref="Result{TValue}"/>, copying over Statements.
+  /// If source <see cref="Result"/> is in Ok state, the returned <see cref="Result{TValue}"/> will be in Ok state with the result of value function as value.
+  /// If source <see cref="Result"/> is in Fail state, the returned <see cref="Result{TValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="ct"></param>
+  /// <returns></returns>
+  public static async Task<Result<TValue>> ToResultAsync<TValue>(
+    this Result result,
+    Func<CancellationToken, Task<TValue>> valueFuncOnOk,
+    CancellationToken ct)
+    where TValue : notnull
+  {
+    return await result.MapAsync<Result<TValue>>(
+      async (okResult, ct) => Result<TValue>.Ok(await valueFuncOnOk(ct))
+        .WithStatementsFrom(okResult),
+      (failResult, _) => Task.FromResult(Result<TValue>.Fail(failResult)),
+      ct);
   }
 
   /// <summary>
@@ -137,6 +180,34 @@ public static partial class ResultConversionExtensions
         .WithStatementsFrom(okResult),
       (failResult, _) => Result<TTargetValue>.Fail(failResult),
       state);
+  }
+
+  /// <summary>
+  /// Converts a <see cref="Result{TSourceValue}"/> to a <see cref="Result{TTargetValue}"/>, copying over Statements.
+  /// If source <see cref="Result{TSourceValue}"/> is in Ok state, the returned <see cref="Result{TTargetValue}"/> will be in Ok state with the result of value function as value.
+  /// If source <see cref="Result{TSourceValue}"/> is in Fail state, the returned <see cref="Result{TTargetValue}"/> will be in Fail state with the same <see cref="Failure"/> information.
+  /// </summary>
+  /// <typeparam name="TSourceValue"></typeparam>
+  /// <typeparam name="TTargetValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="ct"></param>
+  /// <returns></returns>
+  public static async Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TTargetValue>(
+    this Result<TSourceValue> result,
+    Func<TSourceValue, CancellationToken, Task<TTargetValue>> valueFuncOnOk,
+    CancellationToken ct)
+    where TSourceValue : notnull
+    where TTargetValue : notnull
+  {
+    return await result.MapAsync<TSourceValue, Result<TTargetValue>>(
+      async (okResult, ct) => Result<TTargetValue>.Ok(
+        await valueFuncOnOk(
+          okResult.Value!,
+          ct))
+        .WithStatementsFrom(okResult),
+      (failResult, _) => Task.FromResult(Result<TTargetValue>.Fail(failResult)),
+      ct);
   }
 
   /// <summary>

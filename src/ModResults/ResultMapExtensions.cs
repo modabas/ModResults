@@ -40,6 +40,25 @@ public static partial class ResultMapExtensions
   /// <summary>
   /// Converts a <see cref="Result"/> to a <typeparamref name="TReturn"/> instance.
   /// </summary>
+  /// <typeparam name="TReturn"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="ct"></param>
+  /// <returns></returns>
+  public static async Task<TReturn> MapAsync<TReturn>(
+    this Result result,
+    Func<Result, CancellationToken, Task<TReturn>> mapFuncOnOk,
+    Func<Result, CancellationToken, Task<TReturn>> mapFuncOnFail,
+    CancellationToken ct)
+  {
+    return result.IsOk ? await mapFuncOnOk(result, ct) :
+      await mapFuncOnFail(result, ct);
+  }
+
+  /// <summary>
+  /// Converts a <see cref="Result"/> to a <typeparamref name="TReturn"/> instance.
+  /// </summary>
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TReturn"></typeparam>
   /// <param name="result"></param>
@@ -97,6 +116,27 @@ public static partial class ResultMapExtensions
   {
     return result.IsOk ? mapFuncOnOk(result, state) :
       mapFuncOnFail(result, state);
+  }
+
+  /// <summary>
+  /// Converts a <see cref="Result{TValue}"/> to a <typeparamref name="TReturn"/> instance.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <typeparam name="TReturn"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="ct"></param>
+  /// <returns></returns>
+  public static async Task<TReturn> MapAsync<TValue, TReturn>(
+    this Result<TValue> result,
+    Func<Result<TValue>, CancellationToken, Task<TReturn>> mapFuncOnOk,
+    Func<Result<TValue>, CancellationToken, Task<TReturn>> mapFuncOnFail,
+    CancellationToken ct)
+    where TValue : notnull
+  {
+    return result.IsOk ? await mapFuncOnOk(result, ct) :
+      await mapFuncOnFail(result, ct);
   }
 
   /// <summary>

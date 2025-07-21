@@ -12,5 +12,6 @@ public enum FailureType
   Unavailable = 8,
   GatewayError = 9,
   RateLimited = 10,
-  TimedOut = 11
+  TimedOut = 11,
+  PaymentRequired = 12
 }

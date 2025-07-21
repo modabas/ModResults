@@ -323,6 +323,7 @@ public static class ResultExtensions
       FailureType.GatewayError => result.ToProblem(StatusCodes.Status502BadGateway),
       FailureType.RateLimited => result.ToProblem(StatusCodes.Status429TooManyRequests),
       FailureType.TimedOut => result.ToProblem(StatusCodes.Status504GatewayTimeout),
+      FailureType.PaymentRequired => result.ToProblem(StatusCodes.Status402PaymentRequired),
       _ => result.ToProblem(StatusCodes.Status500InternalServerError)
     };
   }
