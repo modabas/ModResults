@@ -23,6 +23,5 @@ ToResult extension methods described previously, also use these Map methods unde
       (failResult, _) => Result<TTargetValue>.Fail(failResult),
       state);
   }
-}
 ```
 

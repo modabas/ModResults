@@ -35,10 +35,10 @@ public static partial class ResultConversionExtensions
     Func<TValue> valueFuncOnOk)
     where TValue : notnull
   {
-    return result.Map<Result<TValue>>(
-      (okResult) => Result<TValue>.Ok(valueFuncOnOk())
-        .WithStatementsFrom(okResult),
-      (failResult) => Result<TValue>.Fail(failResult));
+    return result.ToResult(WrapFactoryCallback, valueFuncOnOk);
+
+    //allows ToResult<TValue> and ToResult<TState, TValue> to share an implementation.
+    static TValue WrapFactoryCallback(Func<TValue> callback) => callback();
   }
 
   /// <summary>
@@ -75,17 +75,16 @@ public static partial class ResultConversionExtensions
   /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
-  public static async Task<Result<TValue>> ToResultAsync<TValue>(
+  public static Task<Result<TValue>> ToResultAsync<TValue>(
     this Result result,
     Func<CancellationToken, Task<TValue>> valueFuncOnOk,
     CancellationToken ct)
     where TValue : notnull
   {
-    return await result.MapAsync<Result<TValue>>(
-      async (okResult, ct) => Result<TValue>.Ok(await valueFuncOnOk(ct))
-        .WithStatementsFrom(okResult),
-      (failResult, _) => Task.FromResult(Result<TValue>.Fail(failResult)),
-      ct);
+    return result.ToResultAsync(WrapFactoryCallback, valueFuncOnOk, ct);
+
+    //allows ToResultAsync<TValue> and ToResultAsync<TState, TValue> to share an implementation.
+    static Task<TValue> WrapFactoryCallback(Func<CancellationToken, Task<TValue>> callback, CancellationToken ct) => callback(ct);
   }
 
   /// <summary>
@@ -147,10 +146,10 @@ public static partial class ResultConversionExtensions
     where TSourceValue : notnull
     where TTargetValue : notnull
   {
-    return result.Map<TSourceValue, Result<TTargetValue>>(
-      okResult => Result<TTargetValue>.Ok(valueFuncOnOk(okResult.Value!))
-        .WithStatementsFrom(okResult),
-      failResult => Result<TTargetValue>.Fail(failResult));
+    return result.ToResult(WrapFactoryCallback, valueFuncOnOk);
+
+    //allows ToResult<TSourceValue, TTargetValue> and ToResult<TSourceValue, TState, TTargetValue> to share an implementation.
+    static TTargetValue WrapFactoryCallback(TSourceValue value, Func<TSourceValue, TTargetValue> callback) => callback(value);
   }
 
   /// <summary>
@@ -193,21 +192,17 @@ public static partial class ResultConversionExtensions
   /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
-  public static async Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TTargetValue>(
+  public static Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TTargetValue>(
     this Result<TSourceValue> result,
     Func<TSourceValue, CancellationToken, Task<TTargetValue>> valueFuncOnOk,
     CancellationToken ct)
     where TSourceValue : notnull
     where TTargetValue : notnull
   {
-    return await result.MapAsync<TSourceValue, Result<TTargetValue>>(
-      async (okResult, ct) => Result<TTargetValue>.Ok(
-        await valueFuncOnOk(
-          okResult.Value!,
-          ct))
-        .WithStatementsFrom(okResult),
-      (failResult, _) => Task.FromResult(Result<TTargetValue>.Fail(failResult)),
-      ct);
+    return result.ToResultAsync(WrapFactoryCallback, valueFuncOnOk, ct);
+
+    //allows ToResultAsync<TSourceValue, TTargetValue> and ToResultAsync<TSourceValue, TState, TTargetValue> to share an implementation.
+    static Task<TTargetValue> WrapFactoryCallback(TSourceValue value, Func<TSourceValue, CancellationToken, Task<TTargetValue>> callback, CancellationToken ct) => callback(value, ct);
   }
 
   /// <summary>

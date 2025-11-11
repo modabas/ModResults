@@ -46,14 +46,14 @@ public static partial class ResultMapExtensions
   /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
-  public static async Task<TReturn> MapAsync<TReturn>(
+  public static Task<TReturn> MapAsync<TReturn>(
     this Result result,
     Func<Result, CancellationToken, Task<TReturn>> mapFuncOnOk,
     Func<Result, CancellationToken, Task<TReturn>> mapFuncOnFail,
     CancellationToken ct)
   {
-    return result.IsOk ? await mapFuncOnOk(result, ct) :
-      await mapFuncOnFail(result, ct);
+    return result.IsOk ? mapFuncOnOk(result, ct) :
+      mapFuncOnFail(result, ct);
   }
 
   /// <summary>
@@ -67,15 +67,15 @@ public static partial class ResultMapExtensions
   /// <param name="state">Argument value to pass into both value functions.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
-  public static async Task<TReturn> MapAsync<TState, TReturn>(
+  public static Task<TReturn> MapAsync<TState, TReturn>(
     this Result result,
     Func<Result, TState, CancellationToken, Task<TReturn>> mapFuncOnOk,
     Func<Result, TState, CancellationToken, Task<TReturn>> mapFuncOnFail,
     TState state,
     CancellationToken ct)
   {
-    return result.IsOk ? await mapFuncOnOk(result, state, ct) :
-      await mapFuncOnFail(result, state, ct);
+    return result.IsOk ? mapFuncOnOk(result, state, ct) :
+      mapFuncOnFail(result, state, ct);
   }
 
   /// <summary>
@@ -128,15 +128,15 @@ public static partial class ResultMapExtensions
   /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
-  public static async Task<TReturn> MapAsync<TValue, TReturn>(
+  public static Task<TReturn> MapAsync<TValue, TReturn>(
     this Result<TValue> result,
     Func<Result<TValue>, CancellationToken, Task<TReturn>> mapFuncOnOk,
     Func<Result<TValue>, CancellationToken, Task<TReturn>> mapFuncOnFail,
     CancellationToken ct)
     where TValue : notnull
   {
-    return result.IsOk ? await mapFuncOnOk(result, ct) :
-      await mapFuncOnFail(result, ct);
+    return result.IsOk ? mapFuncOnOk(result, ct) :
+      mapFuncOnFail(result, ct);
   }
 
   /// <summary>
@@ -151,7 +151,7 @@ public static partial class ResultMapExtensions
   /// <param name="state">Argument value to pass into both value functions.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
-  public static async Task<TReturn> MapAsync<TValue, TState, TReturn>(
+  public static Task<TReturn> MapAsync<TValue, TState, TReturn>(
     this Result<TValue> result,
     Func<Result<TValue>, TState, CancellationToken, Task<TReturn>> mapFuncOnOk,
     Func<Result<TValue>, TState, CancellationToken, Task<TReturn>> mapFuncOnFail,
@@ -159,7 +159,7 @@ public static partial class ResultMapExtensions
     CancellationToken ct)
     where TValue : notnull
   {
-    return result.IsOk ? await mapFuncOnOk(result, state, ct) :
-      await mapFuncOnFail(result, state, ct);
+    return result.IsOk ? mapFuncOnOk(result, state, ct) :
+      mapFuncOnFail(result, state, ct);
   }
 }

@@ -23,6 +23,18 @@ public static partial class ResultMapExtensions
       mapFuncOnFail(result, state);
   }
 
+  public static async Task<TReturn> MapAsync<TValue, TFailure, TReturn>(
+    this Result<TValue, TFailure> result,
+    Func<Result<TValue, TFailure>, CancellationToken, Task<TReturn>> mapFuncOnOk,
+    Func<Result<TValue, TFailure>, CancellationToken, Task<TReturn>> mapFuncOnFail,
+    CancellationToken ct)
+    where TValue : notnull
+    where TFailure : notnull
+  {
+    return result.IsOk ? await mapFuncOnOk(result, ct) :
+      await mapFuncOnFail(result, ct);
+  }
+
   public static async Task<TReturn> MapAsync<TValue, TFailure, TState, TReturn>(
     this Result<TValue, TFailure> result,
     Func<Result<TValue, TFailure>, TState, CancellationToken, Task<TReturn>> mapFuncOnOk,

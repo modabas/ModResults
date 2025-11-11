@@ -1,28 +1,28 @@
 ﻿namespace ModResults;
 public static partial class ResultConversionExtensions
 {
-  public static Result<TTargetValue, TFailure> ToResult<TValue, TFailure, TTargetValue>(
-    this Result<TValue, TFailure> result,
-    Func<TValue, TTargetValue> valueFuncOnOk)
-    where TValue : notnull
+  public static Result<TTargetValue, TFailure> ToResult<TSourceValue, TFailure, TTargetValue>(
+    this Result<TSourceValue, TFailure> result,
+    Func<TSourceValue, TTargetValue> valueFuncOnOk)
+    where TSourceValue : notnull
     where TFailure : notnull
     where TTargetValue : notnull
   {
-    return result.Map<TValue, TFailure, Result<TTargetValue, TFailure>>(
-      okResult => Result<TTargetValue, TFailure>.Ok(valueFuncOnOk(okResult.Value!))
-        .WithStatementsFrom(okResult),
-      failResult => Result<TTargetValue, TFailure>.Fail(failResult));
+    return result.ToResult(WrapFactoryCallback, valueFuncOnOk);
+
+    //allows ToResult<TSourceValue, TFailure, TTargetValue> and ToResult<TSourceValue, TFailure, TState, TTargetValue> to share an implementation.
+    static TTargetValue WrapFactoryCallback(TSourceValue value, Func<TSourceValue, TTargetValue> callback) => callback(value);
   }
 
-  public static Result<TTargetValue, TFailure> ToResult<TValue, TFailure, TState, TTargetValue>(
-    this Result<TValue, TFailure> result,
-    Func<TValue, TState, TTargetValue> valueFuncOnOk,
+  public static Result<TTargetValue, TFailure> ToResult<TSourceValue, TFailure, TState, TTargetValue>(
+    this Result<TSourceValue, TFailure> result,
+    Func<TSourceValue, TState, TTargetValue> valueFuncOnOk,
     TState state)
-    where TValue : notnull
+    where TSourceValue : notnull
     where TFailure : notnull
     where TTargetValue : notnull
   {
-    return result.Map<TValue, TFailure, TState, Result<TTargetValue, TFailure>>(
+    return result.Map<TSourceValue, TFailure, TState, Result<TTargetValue, TFailure>>(
       (okResult, state) => Result<TTargetValue, TFailure>.Ok(
         valueFuncOnOk(
           okResult.Value!,
@@ -32,16 +32,30 @@ public static partial class ResultConversionExtensions
       state);
   }
 
-  public static async Task<Result<TTargetValue, TFailure>> ToResultAsync<TValue, TFailure, TState, TTargetValue>(
-    this Result<TValue, TFailure> result,
-    Func<TValue, TState, CancellationToken, Task<TTargetValue>> valueFuncOnOk,
-    TState state,
+  public static Task<Result<TTargetValue, TFailure>> ToResultAsync<TSourceValue, TFailure, TTargetValue>(
+    this Result<TSourceValue, TFailure> result,
+    Func<TSourceValue, CancellationToken, Task<TTargetValue>> valueFuncOnOk,
     CancellationToken ct)
-    where TValue : notnull
+    where TSourceValue : notnull
     where TFailure : notnull
     where TTargetValue : notnull
   {
-    return await result.MapAsync<TValue, TFailure, TState, Result<TTargetValue, TFailure>>(
+    return result.ToResultAsync(WrapFactoryCallback, valueFuncOnOk, ct);
+
+    //allows ToResultAsync<TSourceValue, TFailure, TTargetValue> and ToResultAsync<TSourceValue, TFailure, TState, TTargetValue> to share an implementation.
+    static Task<TTargetValue> WrapFactoryCallback(TSourceValue value, Func<TSourceValue, CancellationToken, Task<TTargetValue>> callback, CancellationToken ct) => callback(value, ct);
+  }
+
+  public static async Task<Result<TTargetValue, TFailure>> ToResultAsync<TSourceValue, TFailure, TState, TTargetValue>(
+    this Result<TSourceValue, TFailure> result,
+    Func<TSourceValue, TState, CancellationToken, Task<TTargetValue>> valueFuncOnOk,
+    TState state,
+    CancellationToken ct)
+    where TSourceValue : notnull
+    where TFailure : notnull
+    where TTargetValue : notnull
+  {
+    return await result.MapAsync<TSourceValue, TFailure, TState, Result<TTargetValue, TFailure>>(
       async (okResult, state, ct) => Result<TTargetValue, TFailure>.Ok(
         await valueFuncOnOk(
           okResult.Value!,
