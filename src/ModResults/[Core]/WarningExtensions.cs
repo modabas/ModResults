@@ -1,4 +1,5 @@
 ﻿namespace ModResults;
+
 public static class WarningExtensions
 {
   /// <summary>

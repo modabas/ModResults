@@ -1,4 +1,5 @@
 ﻿namespace ModResults;
+
 public static partial class ResultFactExtensions
 {
   public static Result<TValue, TFailure> WithFacts<TValue, TFailure>(

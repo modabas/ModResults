@@ -1,4 +1,5 @@
 ﻿namespace ModResults;
+
 public static partial class ResultMapExtensions
 {
   public static TReturn Map<TValue, TFailure, TReturn>(

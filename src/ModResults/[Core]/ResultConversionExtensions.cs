@@ -1,4 +1,5 @@
 ﻿namespace ModResults;
+
 public static partial class ResultConversionExtensions
 {
   public static Result<TTargetValue, TFailure> ToResult<TSourceValue, TFailure, TTargetValue>(

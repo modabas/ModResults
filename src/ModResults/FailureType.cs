@@ -1,4 +1,5 @@
 ﻿namespace ModResults;
+
 public enum FailureType
 {
   Unspecified = 0,

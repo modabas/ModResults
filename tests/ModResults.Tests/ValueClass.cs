@@ -1,4 +1,5 @@
 ﻿namespace ModResults.Tests;
+
 internal class ValueClass
 {
   public int Number { get; set; }

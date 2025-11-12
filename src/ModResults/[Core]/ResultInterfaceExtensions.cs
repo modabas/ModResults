@@ -1,6 +1,7 @@
 ﻿using System.Text;
 
 namespace ModResults;
+
 public static class ResultInterfaceExtensions
 {
   /// <summary>

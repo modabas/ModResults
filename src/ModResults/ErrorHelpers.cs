@@ -1,4 +1,5 @@
 ﻿namespace ModResults;
+
 internal static class ErrorHelpers
 {
   /// <summary>

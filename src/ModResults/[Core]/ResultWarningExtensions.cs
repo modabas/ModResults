@@ -1,4 +1,5 @@
 ﻿namespace ModResults;
+
 public static partial class ResultWarningExtensions
 {
   public static Result<TValue, TFailure> WithWarnings<TValue, TFailure>(

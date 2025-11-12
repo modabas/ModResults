@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 
 namespace ModResults;
+
 public static class ResultInterfaceWarningExtensions
 {
   /// <summary>

@@ -1,4 +1,5 @@
 ﻿namespace ModResults.Tests;
+
 public class FailedResultOfTTests
 {
   private readonly Error error1, error2;
