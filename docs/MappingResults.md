@@ -9,19 +9,24 @@ There are various overloads of [Map() and MapAsync()](../src/ModResults/ResultMa
 ToResult extension methods described previously, also use these Map methods underneath.
 
 ``` csharp
-  public static Result<TTargetValue> ToResult<TValue, TState, TTargetValue>(
-    this Result<TValue> result,
-    Func<TValue, TState, TTargetValue> valueFuncOnOk,
-    TState state)
+  public static async Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TState, TTargetValue>(
+    this Result<TSourceValue> result,
+    Func<TSourceValue, TState, CancellationToken, Task<TTargetValue>> valueFuncOnOk,
+    TState state,
+    CancellationToken ct)
+    where TSourceValue : notnull
+    where TTargetValue : notnull
   {
-    return result.Map<TValue, TState, Result<TTargetValue>>(
-      (okResult, state) => Result<TTargetValue>.Ok(
-        valueFuncOnOk(
+    return await result.MapAsync(
+      static async (okResult, state, ct) => Result<TTargetValue>.Ok(
+        await state.OkFactory(
           okResult.Value!,
-          state))
+          state.OriginalState,
+          ct))
         .WithStatementsFrom(okResult),
-      (failResult, _) => Result<TTargetValue>.Fail(failResult),
-      state);
+      static (failResult, _, _) => Task.FromResult(Result<TTargetValue>.Fail(failResult)),
+      new { OkFactory = valueFuncOnOk, OriginalState = state },
+      ct);
   }
 ```
 

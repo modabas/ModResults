@@ -59,11 +59,11 @@ public static partial class ResultConversionExtensions
     TState state)
     where TValue : notnull
   {
-    return result.Map<TState, Result<TValue>>(
-      (okResult, state) => Result<TValue>.Ok(valueFuncOnOk(state))
+    return result.Map(
+      static (okResult, state) => Result<TValue>.Ok(state.OkFactory(state.OriginalState))
         .WithStatementsFrom(okResult),
-      (failResult, _) => Result<TValue>.Fail(failResult),
-      state);
+      static (failResult, _) => Result<TValue>.Fail(failResult),
+      new { OkFactory = valueFuncOnOk, OriginalState = state });
   }
 
   /// <summary>
@@ -107,11 +107,11 @@ public static partial class ResultConversionExtensions
     CancellationToken ct)
     where TValue : notnull
   {
-    return await result.MapAsync<TState, Result<TValue>>(
-      async (okResult, state, ct) => Result<TValue>.Ok(await valueFuncOnOk(state, ct))
+    return await result.MapAsync(
+      static async (okResult, state, ct) => Result<TValue>.Ok(await state.OkFactory(state.OriginalState, ct))
         .WithStatementsFrom(okResult),
-      (failResult, _, _) => Task.FromResult(Result<TValue>.Fail(failResult)),
-      state,
+      static (failResult, _, _) => Task.FromResult(Result<TValue>.Fail(failResult)),
+      new { OkFactory = valueFuncOnOk, OriginalState = state },
       ct);
   }
 
@@ -172,14 +172,14 @@ public static partial class ResultConversionExtensions
     where TSourceValue : notnull
     where TTargetValue : notnull
   {
-    return result.Map<TSourceValue, TState, Result<TTargetValue>>(
-      (okResult, state) => Result<TTargetValue>.Ok(
-        valueFuncOnOk(
+    return result.Map(
+      static (okResult, state) => Result<TTargetValue>.Ok(
+        state.OkFactory(
           okResult.Value!,
-          state))
+          state.OriginalState))
         .WithStatementsFrom(okResult),
-      (failResult, _) => Result<TTargetValue>.Fail(failResult),
-      state);
+      static (failResult, _) => Result<TTargetValue>.Fail(failResult),
+      new { OkFactory = valueFuncOnOk, OriginalState = state });
   }
 
   /// <summary>
@@ -227,15 +227,15 @@ public static partial class ResultConversionExtensions
     where TSourceValue : notnull
     where TTargetValue : notnull
   {
-    return await result.MapAsync<TSourceValue, TState, Result<TTargetValue>>(
-      async (okResult, state, ct) => Result<TTargetValue>.Ok(
-        await valueFuncOnOk(
+    return await result.MapAsync(
+      static async (okResult, state, ct) => Result<TTargetValue>.Ok(
+        await state.OkFactory(
           okResult.Value!,
-          state,
+          state.OriginalState,
           ct))
         .WithStatementsFrom(okResult),
-      (failResult, _, _) => Task.FromResult(Result<TTargetValue>.Fail(failResult)),
-      state,
+      static (failResult, _, _) => Task.FromResult(Result<TTargetValue>.Fail(failResult)),
+      new { OkFactory = valueFuncOnOk, OriginalState = state },
       ct);
   }
 
