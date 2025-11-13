@@ -4,6 +4,16 @@ public static partial class ResultFactExtensions
 {
   public static Result<TValue, TFailure> WithFacts<TValue, TFailure>(
     this Result<TValue, TFailure> result,
+    IReadOnlyList<Fact> facts)
+    where TValue : notnull
+    where TFailure : notnull
+  {
+    result.Statements.AddFacts(facts);
+    return result;
+  }
+
+  public static Result<TValue, TFailure> WithFacts<TValue, TFailure>(
+    this Result<TValue, TFailure> result,
     IEnumerable<Fact> facts)
     where TValue : notnull
     where TFailure : notnull
