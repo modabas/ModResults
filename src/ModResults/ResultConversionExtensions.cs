@@ -100,15 +100,16 @@ public static partial class ResultConversionExtensions
   /// <param name="state">Argument value to pass into value function.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
-  public static async Task<Result<TValue>> ToResultAsync<TState, TValue>(
+  public static Task<Result<TValue>> ToResultAsync<TState, TValue>(
     this Result result,
     Func<TState, CancellationToken, Task<TValue>> valueFuncOnOk,
     TState state,
     CancellationToken ct)
     where TValue : notnull
   {
-    return await result.MapAsync(
-      static async (okResult, state, ct) => Result<TValue>.Ok(await state.OkFactory(state.OriginalState, ct))
+    return result.MapAsync(
+      static async (okResult, state, ct) => Result<TValue>
+        .Ok(await state.OkFactory(state.OriginalState, ct))
         .WithStatementsFrom(okResult),
       static (failResult, _, _) => Task.FromResult(Result<TValue>.Fail(failResult)),
       new { OkFactory = valueFuncOnOk, OriginalState = state },
@@ -219,7 +220,7 @@ public static partial class ResultConversionExtensions
   /// <param name="state">Argument value to pass into value function.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
-  public static async Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TState, TTargetValue>(
+  public static Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TState, TTargetValue>(
     this Result<TSourceValue> result,
     Func<TSourceValue, TState, CancellationToken, Task<TTargetValue>> valueFuncOnOk,
     TState state,
@@ -227,7 +228,7 @@ public static partial class ResultConversionExtensions
     where TSourceValue : notnull
     where TTargetValue : notnull
   {
-    return await result.MapAsync(
+    return result.MapAsync(
       static async (okResult, state, ct) => Result<TTargetValue>.Ok(
         await state.OkFactory(
           okResult.Value!,
