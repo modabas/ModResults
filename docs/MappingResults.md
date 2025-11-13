@@ -9,7 +9,7 @@ There are various overloads of [Map() and MapAsync()](../src/ModResults/ResultMa
 ToResult extension methods described previously, also use these Map methods underneath.
 
 ``` csharp
-  public static async Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TState, TTargetValue>(
+  public static Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TState, TTargetValue>(
     this Result<TSourceValue> result,
     Func<TSourceValue, TState, CancellationToken, Task<TTargetValue>> valueFuncOnOk,
     TState state,
@@ -17,7 +17,7 @@ ToResult extension methods described previously, also use these Map methods unde
     where TSourceValue : notnull
     where TTargetValue : notnull
   {
-    return await result.MapAsync(
+    return result.MapAsync(
       static async (okResult, state, ct) => Result<TTargetValue>.Ok(
         await state.OkFactory(
           okResult.Value!,
