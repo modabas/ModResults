@@ -2,6 +2,16 @@
 
 public static partial class ResultMapExtensions
 {
+  /// <summary>
+  /// Converts a <see cref="Result{TValue, TFailure}"/> to a <typeparamref name="TReturn"/> instance.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <typeparam name="TFailure"></typeparam>
+  /// <typeparam name="TReturn"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
+  /// <returns></returns>
   public static TReturn Map<TValue, TFailure, TReturn>(
     this Result<TValue, TFailure> result,
     Func<Result<TValue, TFailure>, TReturn> mapFuncOnOk,
@@ -12,6 +22,18 @@ public static partial class ResultMapExtensions
     return result.IsOk ? mapFuncOnOk(result) : mapFuncOnFail(result);
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result{TValue, TFailure}"/> to a <typeparamref name="TReturn"/> instance.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <typeparam name="TFailure"></typeparam>
+  /// <typeparam name="TState"></typeparam>
+  /// <typeparam name="TReturn"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
+  /// <param name="state">Argument value to pass into both value functions.</param>
+  /// <returns></returns>
   public static TReturn Map<TValue, TFailure, TState, TReturn>(
     this Result<TValue, TFailure> result,
     Func<Result<TValue, TFailure>, TState, TReturn> mapFuncOnOk,
@@ -24,6 +46,17 @@ public static partial class ResultMapExtensions
       mapFuncOnFail(result, state);
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result{TValue, TFailure}"/> to a <typeparamref name="TReturn"/> instance.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <typeparam name="TFailure"></typeparam>
+  /// <typeparam name="TReturn"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
+  /// <param name="ct"></param>
+  /// <returns></returns>
   public static Task<TReturn> MapAsync<TValue, TFailure, TReturn>(
     this Result<TValue, TFailure> result,
     Func<Result<TValue, TFailure>, CancellationToken, Task<TReturn>> mapFuncOnOk,
@@ -36,6 +69,19 @@ public static partial class ResultMapExtensions
       mapFuncOnFail(result, ct);
   }
 
+  /// <summary>
+  /// Converts a <see cref="Result{TValue, TFailure}"/> to a <typeparamref name="TReturn"/> instance.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <typeparam name="TFailure"></typeparam>
+  /// <typeparam name="TState"></typeparam>
+  /// <typeparam name="TReturn"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
+  /// <param name="state">Argument value to pass into both value functions.</param>
+  /// <param name="ct"></param>
+  /// <returns></returns>
   public static Task<TReturn> MapAsync<TValue, TFailure, TState, TReturn>(
     this Result<TValue, TFailure> result,
     Func<Result<TValue, TFailure>, TState, CancellationToken, Task<TReturn>> mapFuncOnOk,

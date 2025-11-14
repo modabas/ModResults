@@ -7,8 +7,8 @@ public static partial class ResultMapExtensions
   /// </summary>
   /// <typeparam name="TReturn"></typeparam>
   /// <param name="result"></param>
-  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
-  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
   /// <returns></returns>
   public static TReturn Map<TReturn>(
     this Result result,
@@ -24,8 +24,8 @@ public static partial class ResultMapExtensions
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TReturn"></typeparam>
   /// <param name="result"></param>
-  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
-  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
   /// <param name="state">Argument value to pass into both value functions.</param>
   /// <returns></returns>
   public static TReturn Map<TState, TReturn>(
@@ -43,8 +43,8 @@ public static partial class ResultMapExtensions
   /// </summary>
   /// <typeparam name="TReturn"></typeparam>
   /// <param name="result"></param>
-  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
-  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
   public static Task<TReturn> MapAsync<TReturn>(
@@ -63,8 +63,8 @@ public static partial class ResultMapExtensions
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TReturn"></typeparam>
   /// <param name="result"></param>
-  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
-  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
   /// <param name="state">Argument value to pass into both value functions.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
@@ -85,8 +85,8 @@ public static partial class ResultMapExtensions
   /// <typeparam name="TValue"></typeparam>
   /// <typeparam name="TReturn"></typeparam>
   /// <param name="result"></param>
-  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
-  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
   /// <returns></returns>
   public static TReturn Map<TValue, TReturn>(
     this Result<TValue> result,
@@ -104,8 +104,8 @@ public static partial class ResultMapExtensions
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TReturn"></typeparam>
   /// <param name="result"></param>
-  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
-  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
   /// <param name="state">Argument value to pass into both value functions.</param>
   /// <returns></returns>
   public static TReturn Map<TValue, TState, TReturn>(
@@ -125,8 +125,8 @@ public static partial class ResultMapExtensions
   /// <typeparam name="TValue"></typeparam>
   /// <typeparam name="TReturn"></typeparam>
   /// <param name="result"></param>
-  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
-  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
   public static Task<TReturn> MapAsync<TValue, TReturn>(
@@ -147,8 +147,8 @@ public static partial class ResultMapExtensions
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TReturn"></typeparam>
   /// <param name="result"></param>
-  /// <param name="mapFuncOnOk">The function used to generate return if in Ok state.</param>
-  /// <param name="mapFuncOnFail">The function used to generate return if in Fail state.</param>
+  /// <param name="mapFuncOnOk">The function used to generate return if source result in Ok state.</param>
+  /// <param name="mapFuncOnFail">The function used to generate return if source result is in Fail state.</param>
   /// <param name="state">Argument value to pass into both value functions.</param>
   /// <param name="ct"></param>
   /// <returns></returns>

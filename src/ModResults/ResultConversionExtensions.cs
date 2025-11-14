@@ -9,7 +9,7 @@ public static partial class ResultConversionExtensions
   /// </summary>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="result"></param>
-  /// <param name="valueOnOk">Value to be encapsulated by returning <see cref="Result{TValue}"/> if in Ok state.</param>
+  /// <param name="valueOnOk">Value to be encapsulated by returning <see cref="Result{TValue}"/> if source result in Ok state.</param>
   /// <returns></returns>
   public static Result<TValue> ToResult<TValue>(
     this Result result,
@@ -29,7 +29,7 @@ public static partial class ResultConversionExtensions
   /// </summary>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="result"></param>
-  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="valueFuncOnOk">The function used to generate value if source result in Ok state.</param>
   /// <returns></returns>
   public static Result<TValue> ToResult<TValue>(
     this Result result,
@@ -50,7 +50,7 @@ public static partial class ResultConversionExtensions
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="result"></param>
-  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="valueFuncOnOk">The function used to generate value if source result in Ok state.</param>
   /// <param name="state">Argument value to pass into value function.</param>
   /// <returns></returns>
   public static Result<TValue> ToResult<TState, TValue>(
@@ -73,7 +73,7 @@ public static partial class ResultConversionExtensions
   /// </summary>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="result"></param>
-  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="valueFuncOnOk">The function used to generate value if source result in Ok state.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
   public static Task<Result<TValue>> ToResultAsync<TValue>(
@@ -96,7 +96,7 @@ public static partial class ResultConversionExtensions
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="result"></param>
-  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="valueFuncOnOk">The function used to generate value if source result in Ok state.</param>
   /// <param name="state">Argument value to pass into value function.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
@@ -140,7 +140,7 @@ public static partial class ResultConversionExtensions
   /// <typeparam name="TSourceValue"></typeparam>
   /// <typeparam name="TTargetValue"></typeparam>
   /// <param name="result"></param>
-  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="valueFuncOnOk">The function used to generate value if source result in Ok state.</param>
   /// <returns></returns>
   public static Result<TTargetValue> ToResult<TSourceValue, TTargetValue>(
     this Result<TSourceValue> result,
@@ -163,7 +163,7 @@ public static partial class ResultConversionExtensions
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TTargetValue"></typeparam>
   /// <param name="result"></param>
-  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="valueFuncOnOk">The function used to generate value if source result in Ok state.</param>
   /// <param name="state">Argument value to pass into value function.</param>
   /// <returns></returns>
   public static Result<TTargetValue> ToResult<TSourceValue, TState, TTargetValue>(
@@ -191,7 +191,7 @@ public static partial class ResultConversionExtensions
   /// <typeparam name="TSourceValue"></typeparam>
   /// <typeparam name="TTargetValue"></typeparam>
   /// <param name="result"></param>
-  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="valueFuncOnOk">The function used to generate value if source result in Ok state.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
   public static Task<Result<TTargetValue>> ToResultAsync<TSourceValue, TTargetValue>(
@@ -216,7 +216,7 @@ public static partial class ResultConversionExtensions
   /// <typeparam name="TState"></typeparam>
   /// <typeparam name="TTargetValue"></typeparam>
   /// <param name="result"></param>
-  /// <param name="valueFuncOnOk">The function used to generate value if in Ok state.</param>
+  /// <param name="valueFuncOnOk">The function used to generate value if source result in Ok state.</param>
   /// <param name="state">Argument value to pass into value function.</param>
   /// <param name="ct"></param>
   /// <returns></returns>
