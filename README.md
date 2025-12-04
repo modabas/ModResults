@@ -1,7 +1,6 @@
 ﻿# ModResults
 
-[![Nuget downloads](https://img.shields.io/nuget/v/ModResults.svg)](https://www.nuget.org/packages/ModResults/)
-[![Nuget](https://img.shields.io/nuget/dt/ModResults)](https://www.nuget.org/packages/ModResults/)
+[![Nuget](https://img.shields.io/nuget/v/ModResults.svg)](https://www.nuget.org/packages/ModResults/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/modabas/ModResults/blob/main/LICENSE.txt)
 
 ModResults implements the Result pattern, providing a structured way to represent the outcome of operations as either success or failure. Instead of using exceptions or loosely-typed error codes, ModResults encapsulates operation results in strongly-typed objects to improve code readability, maintainability, and error handling. Uses nullability annotations for safer, more predictable code.
