@@ -1,4 +1,5 @@
 ﻿namespace ModResults;
+
 public interface IModResult
 {
   public bool IsOk { get; }

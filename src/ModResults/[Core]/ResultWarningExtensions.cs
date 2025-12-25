@@ -1,6 +1,17 @@
 ﻿namespace ModResults;
+
 public static partial class ResultWarningExtensions
 {
+  public static Result<TValue, TFailure> WithWarnings<TValue, TFailure>(
+    this Result<TValue, TFailure> result,
+    IReadOnlyList<Warning> warnings)
+    where TValue : notnull
+    where TFailure : notnull
+  {
+    result.Statements.AddWarnings(warnings);
+    return result;
+  }
+
   public static Result<TValue, TFailure> WithWarnings<TValue, TFailure>(
     this Result<TValue, TFailure> result,
     IEnumerable<Warning> warnings)

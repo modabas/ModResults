@@ -1,4 +1,5 @@
 ﻿namespace ModResults.Tests;
+
 public class ErrorTests
 {
   private readonly ApplicationException ex1;

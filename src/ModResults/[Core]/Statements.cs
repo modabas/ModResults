@@ -27,6 +27,15 @@ public sealed class Statements : IStatements
   /// Adds a collection of <see cref="Warning"/> to the <see cref="Statements"/>.
   /// </summary>
   /// <param name="warnings"></param>
+  public void AddWarnings(IReadOnlyList<Warning> warnings)
+  {
+    _warnings.AddRange(warnings);
+  }
+
+  /// <summary>
+  /// Adds a collection of <see cref="Warning"/> to the <see cref="Statements"/>.
+  /// </summary>
+  /// <param name="warnings"></param>
   public void AddWarnings(IEnumerable<Warning> warnings)
   {
     _warnings.AddRange(warnings);
@@ -47,6 +56,15 @@ public sealed class Statements : IStatements
   public void AddFact(Fact fact)
   {
     _facts.Add(fact);
+  }
+
+  /// <summary>
+  /// Adds a collection of <see cref="Fact"/> to the <see cref="Statements"/>.
+  /// </summary>
+  /// <param name="facts"></param>
+  public void AddFacts(IReadOnlyList<Fact> facts)
+  {
+    _facts.AddRange(facts);
   }
 
   /// <summary>

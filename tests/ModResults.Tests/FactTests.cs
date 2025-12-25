@@ -1,4 +1,5 @@
 ﻿namespace ModResults.Tests;
+
 public class FactTests
 {
   private readonly Fact fact1, fact2, fact3;

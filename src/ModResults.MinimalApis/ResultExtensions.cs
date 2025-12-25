@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 
 namespace ModResults.MinimalApis;
+
 public static class ResultExtensions
 {
   /// <summary>

@@ -1,4 +1,5 @@
 ﻿namespace ModResults.Orleans.Tests;
+
 internal class InheritanceSerializationGrain : IInheritanceSerializationGrain
 {
   public Task<ErrorChild> GetErrorChild(string message, string? code, string extra)

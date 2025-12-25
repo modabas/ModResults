@@ -1,6 +1,21 @@
 ﻿namespace ModResults;
+
 public static partial class ResultFactExtensions
 {
+  /// <summary>
+  /// Adds a collection of <see cref="Fact"/> to the <see cref="Result"/>.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="facts"></param>
+  /// <returns></returns>
+  public static Result WithFacts(
+    this Result result,
+    IReadOnlyList<Fact> facts)
+  {
+    result.Statements.AddFacts(facts);
+    return result;
+  }
+
   /// <summary>
   /// Adds a collection of <see cref="Fact"/> to the <see cref="Result"/>.
   /// </summary>
@@ -40,6 +55,22 @@ public static partial class ResultFactExtensions
     IModResult fromResult)
   {
     result.WithFacts(fromResult.Statements.Facts);
+    return result;
+  }
+
+  /// <summary>
+  /// Adds a collection of <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="facts"></param>
+  /// <returns></returns>
+  public static Result<TValue> WithFacts<TValue>(
+    this Result<TValue> result,
+    IReadOnlyList<Fact> facts)
+    where TValue : notnull
+  {
+    result.Statements.AddFacts(facts);
     return result;
   }
 

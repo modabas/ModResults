@@ -1,4 +1,5 @@
 ﻿namespace ModResults.Tests;
+
 public class WarningTests
 {
   private readonly Warning warning1, warning2, warning3;

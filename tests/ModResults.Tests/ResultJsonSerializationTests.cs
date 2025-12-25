@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 
 namespace ModResults.Tests;
+
 public class ResultJsonSerializationTests
 {
   private readonly Fact fact1, fact2, fact3;

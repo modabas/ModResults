@@ -1,4 +1,5 @@
 ﻿namespace ModResults;
+
 public static class ResultStatementExtensions
 {
   /// <summary>
@@ -11,7 +12,15 @@ public static class ResultStatementExtensions
     this Result result,
     Statements statements)
   {
-    return result.WithFacts(statements.Facts).WithWarnings(statements.Warnings);
+    if (statements.Facts.Count > 0)
+    {
+      result = result.WithFacts(statements.Facts);
+    }
+    if (statements.Warnings.Count > 0)
+    {
+      result = result.WithWarnings(statements.Warnings);
+    }
+    return result;
   }
 
   /// <summary>
@@ -39,7 +48,15 @@ public static class ResultStatementExtensions
     Statements statements)
     where TValue : notnull
   {
-    return result.WithFacts(statements.Facts).WithWarnings(statements.Warnings);
+    if (statements.Facts.Count > 0)
+    {
+      result = result.WithFacts(statements.Facts);
+    }
+    if (statements.Warnings.Count > 0)
+    {
+      result = result.WithWarnings(statements.Warnings);
+    }
+    return result;
   }
 
   /// <summary>
@@ -71,7 +88,15 @@ public static class ResultStatementExtensions
     where TValue : notnull
     where TFailure : notnull
   {
-    return result.WithFacts(statements.Facts).WithWarnings(statements.Warnings);
+    if (statements.Facts.Count > 0)
+    {
+      result = result.WithFacts(statements.Facts);
+    }
+    if (statements.Warnings.Count > 0)
+    {
+      result = result.WithWarnings(statements.Warnings);
+    }
+    return result;
   }
 
   /// <summary>

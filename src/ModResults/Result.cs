@@ -38,6 +38,12 @@ public sealed partial class Result : IModResult<Failure>
     Failure = null;
   }
 
+  private Result(FailureType failureType, IReadOnlyList<Error> errors)
+  {
+    IsOk = false;
+    Failure = new Failure(failureType, errors);
+  }
+
   private Result(FailureType failureType, IEnumerable<Error> errors)
   {
     IsOk = false;
@@ -168,6 +174,12 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   {
     IsOk = true;
     Value = value;
+  }
+
+  private Result(FailureType failureType, IReadOnlyList<Error> errors)
+  {
+    IsOk = false;
+    Failure = new Failure(failureType, errors);
   }
 
   private Result(FailureType failureType, IEnumerable<Error> errors)

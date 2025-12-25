@@ -1,6 +1,21 @@
 ﻿namespace ModResults;
+
 public static partial class ResultWarningExtensions
 {
+  /// <summary>
+  /// Adds a collection of <see cref="Warning"/> to the <see cref="Result"/>.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="warnings"></param>
+  /// <returns></returns>
+  public static Result WithWarnings(
+    this Result result,
+    IReadOnlyList<Warning> warnings)
+  {
+    result.Statements.AddWarnings(warnings);
+    return result;
+  }
+
   /// <summary>
   /// Adds a collection of <see cref="Warning"/> to the <see cref="Result"/>.
   /// </summary>
@@ -40,6 +55,22 @@ public static partial class ResultWarningExtensions
     IModResult fromResult)
   {
     result.WithWarnings(fromResult.Statements.Warnings);
+    return result;
+  }
+
+  /// <summary>
+  /// Adds a collection of <see cref="Warning"/> to the <see cref="Result{TValue}"/>.
+  /// </summary>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="result"></param>
+  /// <param name="warnings"></param>
+  /// <returns></returns>
+  public static Result<TValue> WithWarnings<TValue>(
+    this Result<TValue> result,
+    IReadOnlyList<Warning> warnings)
+    where TValue : notnull
+  {
+    result.Statements.AddWarnings(warnings);
     return result;
   }
 

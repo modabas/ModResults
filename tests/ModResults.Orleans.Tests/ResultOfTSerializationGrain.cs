@@ -1,5 +1,6 @@
 ﻿
 namespace ModResults.Orleans.Tests;
+
 internal class ResultOfTSerializationGrain : IResultOfTSerializationGrain
 {
   private readonly Fact fact1, fact2, fact3;
