@@ -8,7 +8,7 @@ ModResults implements the Result pattern, providing a structured way to represen
 ## ✨ Features
 
 - **Result Pattern**: Encapsulates success or failure states with associated error messages and additional information.
-- **East-to-Use**: Simplifies error handling and result management with a clear API.
+- **Easy-to-Use**: Simplifies error handling and result management with a clear API.
 - **Serialization**: System.Text.Json serialization support without need for special configuration. Microsoft.Orleans serialization support via `ModResults.Orleans` package.
 - **Ready-to-Use Implementations**:
   - `Result` and `Result<TValue>` with a default `Failure` state.
