@@ -109,7 +109,7 @@ public static partial class ResultConversionExtensions
   {
     return result.MapAsync(
       static async (okResult, state, ct) => Result<TValue>
-        .Ok(await state.OkFactory(state.OriginalState, ct))
+        .Ok(await state.OkFactory(state.OriginalState, ct).ConfigureAwait(false))
         .WithStatementsFrom(okResult),
       static (failResult, _, _) => Task.FromResult(Result<TValue>.Fail(failResult)),
       new { OkFactory = valueFuncOnOk, OriginalState = state },
@@ -233,7 +233,7 @@ public static partial class ResultConversionExtensions
         await state.OkFactory(
           okResult.Value!,
           state.OriginalState,
-          ct))
+          ct).ConfigureAwait(false))
         .WithStatementsFrom(okResult),
       static (failResult, _, _) => Task.FromResult(Result<TTargetValue>.Fail(failResult)),
       new { OkFactory = valueFuncOnOk, OriginalState = state },
