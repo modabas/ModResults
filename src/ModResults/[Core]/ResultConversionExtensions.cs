@@ -61,10 +61,10 @@ public static partial class ResultConversionExtensions
         await state.OkFactory(
           okResult.Value!,
           state.OriginalState,
-          ct))
+          ct).ConfigureAwait(false))
         .WithStatementsFrom(okResult),
       static (failResult, _, _) => Task.FromResult(Result<TTargetValue, TFailure>.Fail(failResult)),
       new { OkFactory = valueFuncOnOk, OriginalState = state },
-      ct);
+      ct).ConfigureAwait(false);
   }
 }
