@@ -2,20 +2,20 @@
 
 public class FactTests
 {
-  private readonly Fact fact1, fact2, fact3;
+  private readonly Fact _fact1, _fact2, _fact3;
 
   public FactTests()
   {
-    fact1 = new Fact();
-    fact2 = new Fact("Fact 2", "F2");
-    fact3 = new Fact("Fact 3", "F3");
+    _fact1 = new Fact();
+    _fact2 = new Fact("Fact 2", "F2");
+    _fact3 = new Fact("Fact 3", "F3");
   }
 
   [Fact]
   public void ResultHasFact()
   {
     // Arrange
-    var result = Result.Ok().WithFacts([fact1, fact2]).WithFact(fact3);
+    var result = Result.Ok().WithFacts([_fact1, _fact2]).WithFact(_fact3);
 
     // Assert
     Assert.NotNull(result);
@@ -60,7 +60,7 @@ public class FactTests
   public void ResultHasFactFrom()
   {
     // Arrange
-    var resultOriginal = Result.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." }).WithFacts([fact1, fact2]).WithFact(fact3);
+    var resultOriginal = Result.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." }).WithFacts([_fact1, _fact2]).WithFact(_fact3);
 
     var result = Result.Ok().WithFactsFrom(resultOriginal);
 
@@ -86,7 +86,7 @@ public class FactTests
   public void ResultOfTHasFact()
   {
     // Arrange
-    var result = Result<ValueClass>.Error().WithFacts([fact1, fact2]).WithFact(fact3);
+    var result = Result<ValueClass>.Error().WithFacts([_fact1, _fact2]).WithFact(_fact3);
 
     // Assert
     Assert.NotNull(result);
@@ -131,7 +131,7 @@ public class FactTests
   public void ResultOfTHasFactFrom()
   {
     // Arrange
-    var resultOriginal = Result.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." }).WithFacts([fact1, fact2]).WithFact(fact3);
+    var resultOriginal = Result.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." }).WithFacts([_fact1, _fact2]).WithFact(_fact3);
 
     var result = Result<ValueClass>.Error().WithFactsFrom(resultOriginal);
 

@@ -2,31 +2,31 @@
 
 public class ResultOfTConversionTests
 {
-  private readonly Fact fact1, fact2, fact3;
-  private readonly Warning warning1, warning2, warning3;
-  private readonly Error error1, error2;
-  private readonly InvalidOperationException ex1;
-  private readonly ApplicationException ex2;
+  private readonly Fact _fact1, _fact2, _fact3;
+  private readonly Warning _warning1, _warning2, _warning3;
+  private readonly Error _error1, _error2;
+  private readonly InvalidOperationException _ex1;
+  private readonly ApplicationException _ex2;
 
   public ResultOfTConversionTests()
   {
-    fact1 = new Fact();
-    fact2 = new Fact("Fact 2", "F2");
-    fact3 = new Fact("Fact 3", "F3");
-    warning1 = new Warning();
-    warning2 = new Warning("Warning 2", "W2");
-    warning3 = new Warning("Warning 3", "W3");
-    error1 = new Error("Error 1");
-    error2 = new Error("Error 2", code: "E2");
-    ex1 = new InvalidOperationException("Error 4");
-    ex2 = new ApplicationException("Error 5", new ArgumentException("Error 5 Inner"));
+    _fact1 = new Fact();
+    _fact2 = new Fact("Fact 2", "F2");
+    _fact3 = new Fact("Fact 3", "F3");
+    _warning1 = new Warning();
+    _warning2 = new Warning("Warning 2", "W2");
+    _warning3 = new Warning("Warning 3", "W3");
+    _error1 = new Error("Error 1");
+    _error2 = new Error("Error 2", code: "E2");
+    _ex1 = new InvalidOperationException("Error 4");
+    _ex2 = new ApplicationException("Error 5", new ArgumentException("Error 5 Inner"));
   }
 
   [Fact]
   public void OkResultOfTToResult()
   {
     //Arrange
-    var resultOriginal = Result.Ok(new ValueClass() { Number = 42, String = "Meaning of life." }).WithFacts([fact1, fact2, fact3]).WithWarnings([warning1, warning2, warning3]);
+    var resultOriginal = Result.Ok(new ValueClass() { Number = 42, String = "Meaning of life." }).WithFacts([_fact1, _fact2, _fact3]).WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var result = resultOriginal.ToResult();
@@ -64,12 +64,12 @@ public class ResultOfTConversionTests
     //Arrange
     var resultOriginal = Result<ValueClass>
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = resultOriginal.ToResult();
@@ -107,7 +107,7 @@ public class ResultOfTConversionTests
   public void OkResultOfTToResultWithValueOnOk()
   {
     //Arrange
-    var result = Result.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." }).WithFacts([fact1, fact2, fact3]).WithWarnings([warning1, warning2, warning3]);
+    var result = Result.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." }).WithFacts([_fact1, _fact2, _fact3]).WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = result.ToResult<ValueStruct, ValueClass>(
@@ -149,12 +149,12 @@ public class ResultOfTConversionTests
     //Arrange
     var resultOriginal = Result<ValueStruct>
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = resultOriginal.ToResult<ValueStruct, ValueClass>(
@@ -196,8 +196,8 @@ public class ResultOfTConversionTests
     //Arrange
     var resultOriginal = Result
       .Ok(new ValueStruct() { Number = 42, String = "Meaning of life" })
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = resultOriginal.ToResult<ValueStruct, string, ValueClass>(
@@ -240,12 +240,12 @@ public class ResultOfTConversionTests
     //Arrange
     var resultOriginal = Result<ValueStruct>
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = resultOriginal.ToResult<ValueStruct, string, ValueClass>(
@@ -288,8 +288,8 @@ public class ResultOfTConversionTests
     //Arrange
     var resultOriginal = Result
       .Ok(new ValueStruct() { Number = 42, String = "Meaning of life" })
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
     //Act
     var resultOfT = await resultOriginal.ToResultAsync<ValueStruct, ValueClass>(
       async (source, ct) =>
@@ -297,7 +297,7 @@ public class ResultOfTConversionTests
         await Task.Delay(1, ct);
         return new ValueClass() { Number = source.Number, String = source.String + "." };
       },
-      default);
+      TestContext.Current.CancellationToken);
 
     // Assert
     Assert.True(resultOfT.IsOk);
@@ -335,12 +335,12 @@ public class ResultOfTConversionTests
     //Arrange
     var resultOriginal = Result<ValueStruct>
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = await resultOriginal.ToResultAsync<ValueStruct, ValueClass>(
@@ -349,7 +349,7 @@ public class ResultOfTConversionTests
         await Task.Delay(1, ct);
         return new ValueClass() { Number = source.Number, String = source.String + "." };
       },
-      default);
+      TestContext.Current.CancellationToken);
 
     // Assert
     Assert.NotNull(resultOfT);
@@ -387,8 +387,8 @@ public class ResultOfTConversionTests
     //Arrange
     var resultOriginal = Result
       .Ok(new ValueStruct() { Number = 42, String = "Meaning of life" })
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
     //Act
     var resultOfT = await resultOriginal.ToResultAsync<ValueStruct, string, ValueClass>(
       async (source, state, ct) =>
@@ -397,7 +397,7 @@ public class ResultOfTConversionTests
         return new ValueClass() { Number = source.Number, String = source.String + state };
       },
       ("."),
-      default);
+      TestContext.Current.CancellationToken);
 
     // Assert
     Assert.True(resultOfT.IsOk);
@@ -435,12 +435,12 @@ public class ResultOfTConversionTests
     //Arrange
     var resultOriginal = Result<ValueStruct>
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = await resultOriginal.ToResultAsync<ValueStruct, string, ValueClass>(
@@ -450,7 +450,7 @@ public class ResultOfTConversionTests
         return new ValueClass() { Number = source.Number, String = source.String + state };
       },
       ("."),
-      default);
+      TestContext.Current.CancellationToken);
 
     // Assert
     Assert.NotNull(resultOfT);

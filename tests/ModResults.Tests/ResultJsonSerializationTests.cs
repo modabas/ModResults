@@ -5,44 +5,42 @@ namespace ModResults.Tests;
 
 public class ResultJsonSerializationTests
 {
-  private readonly Fact fact1, fact2, fact3;
-  private readonly Warning warning1, warning2, warning3;
-  private readonly Error error1, error2, error3, error4, error5;
-  private readonly JsonSerializerOptions jsonSerializerOptions;
+  private readonly Fact _fact1, _fact2, _fact3;
+  private readonly Warning _warning1, _warning2, _warning3;
+  private readonly Error _error1, _error2, _error5;
+  private readonly JsonSerializerOptions _jsonSerializerOptions;
 
   public ResultJsonSerializationTests()
   {
-    jsonSerializerOptions = new()
+    _jsonSerializerOptions = new()
     {
       PropertyNameCaseInsensitive = true,
       PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
       NumberHandling = JsonNumberHandling.AllowReadingFromString
     };
-    fact1 = new Fact();
-    fact2 = new Fact("Fact 2", "F2");
-    fact3 = new Fact("Fact 3", "F3");
-    warning1 = new Warning();
-    warning2 = new Warning("Warning 2", "W2");
-    warning3 = new Warning("Warning 3", "W3");
-    error1 = new Error();
-    error2 = new Error("Error 2", code: "E2");
-    error3 = new Error("Error 3", code: "E3");
-    error4 = new Error(new InvalidOperationException("Error 4"));
-    error5 = new Error(new ApplicationException("Error 5", new ArgumentException("Error 5 Inner")));
+    _fact1 = new Fact();
+    _fact2 = new Fact("Fact 2", "F2");
+    _fact3 = new Fact("Fact 3", "F3");
+    _warning1 = new Warning();
+    _warning2 = new Warning("Warning 2", "W2");
+    _warning3 = new Warning("Warning 3", "W3");
+    _error1 = new Error();
+    _error2 = new Error("Error 2", code: "E2");
+    _error5 = new Error(new ApplicationException("Error 5", new ArgumentException("Error 5 Inner")));
   }
 
   [Fact]
   public void OkResult()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2, fact3 };
-    var warnings = new List<Warning> { warning1, warning2, warning3 };
+    var facts = new List<Fact> { _fact1, _fact2, _fact3 };
+    var warnings = new List<Warning> { _warning1, _warning2, _warning3 };
     var statements = new Statements(facts, warnings);
     var resultOriginal = Result.Ok().WithStatements(statements);
 
     // Act
-    var jsonString = JsonSerializer.Serialize(resultOriginal, jsonSerializerOptions);
-    var result = JsonSerializer.Deserialize<Result>(jsonString, jsonSerializerOptions);
+    var jsonString = JsonSerializer.Serialize(resultOriginal, _jsonSerializerOptions);
+    var result = JsonSerializer.Deserialize<Result>(jsonString, _jsonSerializerOptions);
 
     // Assert
     Assert.NotNull(result);
@@ -63,12 +61,12 @@ public class ResultJsonSerializationTests
   public void FailedResult()
   {
     // Arrange
-    var errors = new List<Error> { error1, error2, error5 };
-    var resultOriginal = Result.Error(errors.ToArray()).WithFact(fact1).WithWarning(warning3);
+    var errors = new List<Error> { _error1, _error2, _error5 };
+    var resultOriginal = Result.Error(errors.ToArray()).WithFact(_fact1).WithWarning(_warning3);
 
     // Act
-    var jsonString = JsonSerializer.Serialize(resultOriginal, jsonSerializerOptions);
-    var result = JsonSerializer.Deserialize<Result>(jsonString, jsonSerializerOptions);
+    var jsonString = JsonSerializer.Serialize(resultOriginal, _jsonSerializerOptions);
+    var result = JsonSerializer.Deserialize<Result>(jsonString, _jsonSerializerOptions);
 
     // Assert
     Assert.NotNull(result);

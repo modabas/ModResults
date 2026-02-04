@@ -2,25 +2,25 @@
 
 public class ErrorTests
 {
-  private readonly ApplicationException ex1;
-  private readonly ArgumentNullException ex2;
+  private readonly ApplicationException _ex1;
+  private readonly ArgumentNullException _ex2;
 
   public ErrorTests()
   {
-    ex1 = new ApplicationException("Error 5", new ArgumentException("Error 5 Inner"));
-    ex2 = new ArgumentNullException();
+    _ex1 = new ApplicationException("Error 5", new ArgumentException("Error 5 Inner"));
+    _ex2 = new ArgumentNullException();
   }
 
   [Fact]
   public void ErrorCtorFromException()
   {
     // Arrange
-    var error = new Error(ex1, 10, "E1", "P1");
+    var error = new Error(_ex1, 10, "E1", "P1");
 
     Assert.True(error.IsFromException);
     Assert.True(error.HasCode("E1", StringComparison.Ordinal));
     Assert.False(error.HasCode("e1", StringComparison.Ordinal));
-    Assert.Equal(ex1.Message, error.Message);
+    Assert.Equal(_ex1.Message, error.Message);
     Assert.NotNull(error.PropertyName);
     Assert.Equal("P1", error.PropertyName);
     Assert.True(error.HasException<ApplicationException>());
@@ -43,15 +43,15 @@ public class ErrorTests
   public void ErrorCtorFromExceptionTypeName()
   {
     // Arrange
-    var exceptionTypeName = ex1.GetType().AssemblyQualifiedName;
-    var errorMessage = ex1.Message;
-    Error innerError = new Error(ex1.InnerException!, 10, null, null);
+    var exceptionTypeName = _ex1.GetType().AssemblyQualifiedName;
+    var errorMessage = _ex1.Message;
+    Error innerError = new Error(_ex1.InnerException!, 10, null, null);
     var error = new Error(errorMessage, exceptionTypeName, innerError, "E1", "P1");
 
     Assert.True(error.IsFromException);
     Assert.True(error.HasCode("E1", StringComparison.Ordinal));
     Assert.False(error.HasCode("e1", StringComparison.Ordinal));
-    Assert.Equal(ex1.Message, error.Message);
+    Assert.Equal(_ex1.Message, error.Message);
     Assert.NotNull(error.PropertyName);
     Assert.Equal("P1", error.PropertyName);
     Assert.True(error.HasException<ApplicationException>());
@@ -74,9 +74,9 @@ public class ErrorTests
   public void ResultHasError()
   {
     // Arrange
-    var error1 = new Error(ex1, 10, "E1", "P1");
+    var error1 = new Error(_ex1, 10, "E1", "P1");
     var error2 = new Error("Error 2", code: "E2");
-    var error3 = new Error(ex2, 10, "E3", "P3");
+    var error3 = new Error(_ex2, 10, "E3", "P3");
     var errors = new List<Error> { error1, error2, error3 };
     var result = Result.Forbidden(errors.ToArray());
 

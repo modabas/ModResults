@@ -2,31 +2,31 @@
 
 public class ResultConversionTests
 {
-  private readonly Fact fact1, fact2, fact3;
-  private readonly Warning warning1, warning2, warning3;
-  private readonly Error error1, error2;
-  private readonly InvalidOperationException ex1;
-  private readonly ApplicationException ex2;
+  private readonly Fact _fact1, _fact2, _fact3;
+  private readonly Warning _warning1, _warning2, _warning3;
+  private readonly Error _error1, _error2;
+  private readonly InvalidOperationException _ex1;
+  private readonly ApplicationException _ex2;
 
   public ResultConversionTests()
   {
-    fact1 = new Fact();
-    fact2 = new Fact("Fact 2", "F2");
-    fact3 = new Fact("Fact 3", "F3");
-    warning1 = new Warning();
-    warning2 = new Warning("Warning 2", "W2");
-    warning3 = new Warning("Warning 3", "W3");
-    error1 = new Error("Error 1");
-    error2 = new Error("Error 2", code: "E2");
-    ex1 = new InvalidOperationException("Error 4");
-    ex2 = new ApplicationException("Error 5", new ArgumentException("Error 5 Inner"));
+    _fact1 = new Fact();
+    _fact2 = new Fact("Fact 2", "F2");
+    _fact3 = new Fact("Fact 3", "F3");
+    _warning1 = new Warning();
+    _warning2 = new Warning("Warning 2", "W2");
+    _warning3 = new Warning("Warning 3", "W3");
+    _error1 = new Error("Error 1");
+    _error2 = new Error("Error 2", code: "E2");
+    _ex1 = new InvalidOperationException("Error 4");
+    _ex2 = new ApplicationException("Error 5", new ArgumentException("Error 5 Inner"));
   }
 
   [Fact]
   public void OkResultToResultWithValueOnOk()
   {
     //Arrange
-    var result = Result.Ok().WithFacts([fact1, fact2, fact3]).WithWarnings([warning1, warning2, warning3]);
+    var result = Result.Ok().WithFacts([_fact1, _fact2, _fact3]).WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = result.ToResult<ValueClass>(new ValueClass() { Number = 42, String = "Meaning of life." });
@@ -67,12 +67,12 @@ public class ResultConversionTests
     //Arrange
     var resultOriginal = Result
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = resultOriginal.ToResult<ValueClass>(new ValueClass() { Number = 42, String = "Meaning of life." });
@@ -111,7 +111,7 @@ public class ResultConversionTests
   public void OkResultToResultWithValueFuncOnOk()
   {
     //Arrange
-    var resultOriginal = Result.Ok().WithFacts([fact1, fact2, fact3]).WithWarnings([warning1, warning2, warning3]);
+    var resultOriginal = Result.Ok().WithFacts([_fact1, _fact2, _fact3]).WithWarnings([_warning1, _warning2, _warning3]);
     var item1 = 42;
     var item2 = "Meaning of life.";
 
@@ -155,12 +155,12 @@ public class ResultConversionTests
     //Arrange
     var resultOriginal = Result
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
     var item1 = 42;
     var item2 = "Meaning of life.";
 
@@ -202,7 +202,7 @@ public class ResultConversionTests
   public void OkResultToResultWithValueFuncOnOkAndState()
   {
     //Arrange
-    var resultOriginal = Result.Ok().WithFacts([fact1, fact2, fact3]).WithWarnings([warning1, warning2, warning3]);
+    var resultOriginal = Result.Ok().WithFacts([_fact1, _fact2, _fact3]).WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = resultOriginal.ToResult<(int, string), ValueClass>(
@@ -245,12 +245,12 @@ public class ResultConversionTests
     //Arrange
     var resultOriginal = Result
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = resultOriginal.ToResult<(int, string), ValueClass>(
@@ -291,7 +291,7 @@ public class ResultConversionTests
   public async Task OkResultToResultWithValueFuncOnOkAsync()
   {
     //Arrange
-    var resultOriginal = Result.Ok().WithFacts([fact1, fact2, fact3]).WithWarnings([warning1, warning2, warning3]);
+    var resultOriginal = Result.Ok().WithFacts([_fact1, _fact2, _fact3]).WithWarnings([_warning1, _warning2, _warning3]);
     var item1 = 42;
     var item2 = "Meaning of life.";
 
@@ -302,7 +302,7 @@ public class ResultConversionTests
         await Task.Delay(1, ct);
         return new ValueClass() { Number = item1, String = item2 };
       },
-      default);
+      TestContext.Current.CancellationToken);
 
     // Assert
     Assert.True(resultOfT.IsOk);
@@ -340,12 +340,12 @@ public class ResultConversionTests
     //Arrange
     var resultOriginal = Result
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
     var item1 = 42;
     var item2 = "Meaning of life.";
 
@@ -356,7 +356,7 @@ public class ResultConversionTests
         await Task.Delay(1, ct);
         return new ValueClass() { Number = item1, String = item2 };
       },
-      default);
+      TestContext.Current.CancellationToken);
 
     // Assert
     Assert.NotNull(resultOfT);
@@ -392,7 +392,7 @@ public class ResultConversionTests
   public async Task OkResultToResultWithValueFuncOnOkAndStateAsync()
   {
     //Arrange
-    var resultOriginal = Result.Ok().WithFacts([fact1, fact2, fact3]).WithWarnings([warning1, warning2, warning3]);
+    var resultOriginal = Result.Ok().WithFacts([_fact1, _fact2, _fact3]).WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = await resultOriginal.ToResultAsync<(int, string), ValueClass>(
@@ -402,7 +402,7 @@ public class ResultConversionTests
         return new ValueClass() { Number = state.Item1, String = state.Item2 };
       },
       (42, "Meaning of life."),
-      default);
+      TestContext.Current.CancellationToken);
 
     // Assert
     Assert.True(resultOfT.IsOk);
@@ -440,12 +440,12 @@ public class ResultConversionTests
     //Arrange
     var resultOriginal = Result
       .Error(
-        error1,
-        error2,
-        new Error(ex1),
-        new Error(ex2))
-      .WithFacts([fact1, fact2, fact3])
-      .WithWarnings([warning1, warning2, warning3]);
+        _error1,
+        _error2,
+        new Error(_ex1),
+        new Error(_ex2))
+      .WithFacts([_fact1, _fact2, _fact3])
+      .WithWarnings([_warning1, _warning2, _warning3]);
 
     //Act
     var resultOfT = await resultOriginal.ToResultAsync<(int, string), ValueClass>(
@@ -455,7 +455,7 @@ public class ResultConversionTests
         return new ValueClass() { Number = state.Item1, String = state.Item2 };
       },
       (42, "Meaning of life."),
-      default);
+      TestContext.Current.CancellationToken);
 
     // Assert
     Assert.NotNull(resultOfT);

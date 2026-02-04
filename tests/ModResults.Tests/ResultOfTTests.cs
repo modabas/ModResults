@@ -3,23 +3,23 @@
 public class ResultOfTTests
 {
 
-  private readonly Fact fact1, fact2, fact3;
-  private readonly Warning warning1, warning2, warning3;
-  private readonly Error error1, error2, error3, error4, error5;
+  private readonly Fact _fact1, _fact2, _fact3;
+  private readonly Warning _warning1, _warning2, _warning3;
+  private readonly Error _error1, _error2, _error3, _error4, _error5;
 
   public ResultOfTTests()
   {
-    fact1 = new Fact();
-    fact2 = new Fact("Fact 2", "F2");
-    fact3 = new Fact("Fact 3", "F3");
-    warning1 = new Warning();
-    warning2 = new Warning("Warning 2", "W2");
-    warning3 = new Warning("Warning 3", "W3");
-    error1 = new Error();
-    error2 = new Error("Error 2", code: "E2");
-    error3 = new Error("Error 3", code: "E3");
-    error4 = new Error(new InvalidOperationException("Error 4"));
-    error5 = new Error(new ApplicationException("Error 5", new ArgumentException("Error 5 Inner")));
+    _fact1 = new Fact();
+    _fact2 = new Fact("Fact 2", "F2");
+    _fact3 = new Fact("Fact 3", "F3");
+    _warning1 = new Warning();
+    _warning2 = new Warning("Warning 2", "W2");
+    _warning3 = new Warning("Warning 3", "W3");
+    _error1 = new Error();
+    _error2 = new Error("Error 2", code: "E2");
+    _error3 = new Error("Error 3", code: "E3");
+    _error4 = new Error(new InvalidOperationException("Error 4"));
+    _error5 = new Error(new ApplicationException("Error 5", new ArgumentException("Error 5 Inner")));
   }
 
   [Fact]
@@ -129,8 +129,8 @@ public class ResultOfTTests
   public void FailedResultOfTFromOkResult()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2 };
-    var warnings = new List<Warning> { warning1 };
+    var facts = new List<Fact> { _fact1, _fact2 };
+    var warnings = new List<Warning> { _warning1 };
     var result = new Result(
       true,
       null,
@@ -164,9 +164,9 @@ public class ResultOfTTests
   public void FailedResultWithValueStruct()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2, fact3 };
-    var warnings = new List<Warning> { warning1, warning2 };
-    var errors = new List<Error> { error2, error5 };
+    var facts = new List<Fact> { _fact1, _fact2, _fact3 };
+    var warnings = new List<Warning> { _warning1, _warning2 };
+    var errors = new List<Error> { _error2, _error5 };
     var result2 = new Result(
       false,
       new Failure(FailureType.Unavailable, errors),
@@ -212,9 +212,9 @@ public class ResultOfTTests
   public void FailedResultWithValueClass()
   {
     // Arrange
-    var facts = new List<Fact> { fact3 };
-    var warnings = new List<Warning> { warning1, warning2, warning3 };
-    var errors = new List<Error> { error1, error2, error3, error4, error5 };
+    var facts = new List<Fact> { _fact3 };
+    var warnings = new List<Warning> { _warning1, _warning2, _warning3 };
+    var errors = new List<Error> { _error1, _error2, _error3, _error4, _error5 };
     var result2 = new Result(
       false,
       new Failure(FailureType.Error, errors),
@@ -256,9 +256,9 @@ public class ResultOfTTests
   public void FailedResultWithValueRecord()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2 };
-    var warnings = new List<Warning> { warning1 };
-    var errors = new List<Error> { error1, error2, error5 };
+    var facts = new List<Fact> { _fact1, _fact2 };
+    var warnings = new List<Warning> { _warning1 };
+    var errors = new List<Error> { _error1, _error2, _error5 };
     var result2 = new Result(
       false,
       new Failure(FailureType.Unspecified, errors),
@@ -293,8 +293,8 @@ public class ResultOfTTests
   public void CtorThrowsArgumentNullExceptionWhenValueClassIsNull()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2 };
-    var warnings = new List<Warning> { warning1 };
+    var facts = new List<Fact> { _fact1, _fact2 };
+    var warnings = new List<Warning> { _warning1 };
     // Act
     void act() => new Result<ValueClass>(true, null, null, new Statements(facts, warnings));
     // Assert
@@ -305,8 +305,8 @@ public class ResultOfTTests
   public void CtorThrowsArgumentNullExceptionWhenValueRecordIsNull()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2 };
-    var warnings = new List<Warning> { warning1 };
+    var facts = new List<Fact> { _fact1, _fact2 };
+    var warnings = new List<Warning> { _warning1 };
     // Act
     void act() => new Result<ValueRecord>(true, null, null, new Statements(facts, warnings));
     // Assert
@@ -317,8 +317,8 @@ public class ResultOfTTests
   public void CtorThrowsArgumentNullExceptionWhenFailureIsNull()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2 };
-    var warnings = new List<Warning> { warning1 };
+    var facts = new List<Fact> { _fact1, _fact2 };
+    var warnings = new List<Warning> { _warning1 };
     // Act
     void act() => new Result<ValueRecord>(false, null, null, new Statements(facts, warnings));
     // Assert

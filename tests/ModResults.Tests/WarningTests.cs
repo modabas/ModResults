@@ -2,20 +2,20 @@
 
 public class WarningTests
 {
-  private readonly Warning warning1, warning2, warning3;
+  private readonly Warning _warning1, _warning2, _warning3;
 
   public WarningTests()
   {
-    warning1 = new Warning();
-    warning2 = new Warning("Warning 2", "W2");
-    warning3 = new Warning("Warning 3", "W3");
+    _warning1 = new Warning();
+    _warning2 = new Warning("Warning 2", "W2");
+    _warning3 = new Warning("Warning 3", "W3");
   }
 
   [Fact]
   public void ResultHasWarning()
   {
     // Arrange
-    var result = Result.Ok().WithWarnings([warning1, warning2]).WithWarning(warning3);
+    var result = Result.Ok().WithWarnings([_warning1, _warning2]).WithWarning(_warning3);
 
     // Assert
     Assert.NotNull(result);
@@ -61,7 +61,7 @@ public class WarningTests
   {
     // Arrange
     var resultOriginal = Result.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." })
-      .WithWarnings([warning1, warning2]).WithWarning(warning3);
+      .WithWarnings([_warning1, _warning2]).WithWarning(_warning3);
     var result = Result.Ok().WithWarningsFrom(resultOriginal);
 
     // Assert
@@ -86,7 +86,7 @@ public class WarningTests
   public void ResultOfTHasWarning()
   {
     // Arrange
-    var result = Result<ValueClass>.Error().WithWarnings([warning1, warning2]).WithWarning(warning3);
+    var result = Result<ValueClass>.Error().WithWarnings([_warning1, _warning2]).WithWarning(_warning3);
 
     // Assert
     Assert.NotNull(result);
@@ -132,7 +132,7 @@ public class WarningTests
   {
     // Arrange
     var resultOriginal = Result.Ok(new ValueStruct() { Number = 42, String = "Meaning of life." })
-      .WithWarnings([warning1, warning2]).WithWarning(warning3);
+      .WithWarnings([_warning1, _warning2]).WithWarning(_warning3);
     var result = Result<ValueClass>.Error().WithWarningsFrom(resultOriginal);
 
     // Assert

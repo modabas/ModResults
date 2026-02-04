@@ -2,23 +2,18 @@
 
 public class ResultTests
 {
-  private readonly Fact fact1, fact2, fact3;
-  private readonly Warning warning1, warning2, warning3;
-  private readonly Error error1, error2, error3, error4, error5;
+  private readonly Fact _fact1, _fact2;
+  private readonly Warning _warning1;
+  private readonly Error _error1, _error2, _error5;
 
   public ResultTests()
   {
-    fact1 = new Fact();
-    fact2 = new Fact("Fact 2", "F2");
-    fact3 = new Fact("Fact 3", "F3");
-    warning1 = new Warning();
-    warning2 = new Warning("Warning 2", "W2");
-    warning3 = new Warning("Warning 3", "W3");
-    error1 = new Error();
-    error2 = new Error("Error 2", code: "E2");
-    error3 = new Error("Error 3", code: "E3");
-    error4 = new Error(new InvalidOperationException("Error 4"));
-    error5 = new Error(new ApplicationException("Error 5", new ArgumentException("Error 5 Inner")));
+    _fact1 = new Fact();
+    _fact2 = new Fact("Fact 2", "F2");
+    _warning1 = new Warning();
+    _error1 = new Error();
+    _error2 = new Error("Error 2", code: "E2");
+    _error5 = new Error(new ApplicationException("Error 5", new ArgumentException("Error 5 Inner")));
   }
 
   [Fact]
@@ -75,9 +70,9 @@ public class ResultTests
   public void FailedResult()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2 };
-    var warnings = new List<Warning> { warning1 };
-    var errors = new List<Error> { error1, error2, error5 };
+    var facts = new List<Fact> { _fact1, _fact2 };
+    var warnings = new List<Warning> { _warning1 };
+    var errors = new List<Error> { _error1, _error2, _error5 };
     var resultOfT = new Result<ValueStruct>(
       false,
       default,
@@ -118,8 +113,8 @@ public class ResultTests
   public void FailedResultFromOkResultOfT()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2 };
-    var warnings = new List<Warning> { warning1 };
+    var facts = new List<Fact> { _fact1, _fact2 };
+    var warnings = new List<Warning> { _warning1 };
     var resultOfT = new Result<ValueStruct>(
       true,
       new ValueStruct() { Number = 42, String = "Meaning of life." },
@@ -154,8 +149,8 @@ public class ResultTests
   public void CtorThrowsArgumentNullExceptionWhenFailureIsNull()
   {
     // Arrange
-    var facts = new List<Fact> { fact1, fact2 };
-    var warnings = new List<Warning> { warning1 };
+    var facts = new List<Fact> { _fact1, _fact2 };
+    var warnings = new List<Warning> { _warning1 };
     // Act
     void act() => new Result(false, null, new Statements(facts, warnings));
     // Assert
