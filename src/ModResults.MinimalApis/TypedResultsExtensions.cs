@@ -56,7 +56,6 @@ public static class TypedResultsExtensions
 
   private static ProblemHttpResult ToValidationProblem(this IModResult<Failure> result)
   {
-    var detail = result.Failure?.Errors.FirstOrDefault()?.Message;
     var errors = (result.Failure?.Errors ?? _emptyErrors)
         .GroupBy(e => e.PropertyName ?? string.Empty)
         .Select(g => new { g.Key, Values = g.Select(e => e.Message).ToArray() })
@@ -66,9 +65,10 @@ public static class TypedResultsExtensions
       { "facts", result.Statements.Facts },
       { "warnings", result.Statements.Warnings }
     };
-    return TypedResults.Problem(
-      detail: detail,
-      statusCode: StatusCodes.Status400BadRequest,
-      extensions: extensions);
+    var problemDetails = new HttpValidationProblemDetails(errors)
+    {
+      Extensions = extensions
+    };
+    return TypedResults.Problem(problemDetails);
   }
 }

@@ -348,7 +348,6 @@ public static class ResultExtensions
 
   private static IResult ToValidationProblem(this IModResult<Failure> result)
   {
-    var detail = result.Failure?.Errors.FirstOrDefault()?.Message;
     var errors = (result.Failure?.Errors ?? _emptyErrors)
         .GroupBy(e => e.PropertyName ?? string.Empty)
         .Select(g => new { g.Key, Values = g.Select(e => e.Message).ToArray() })
@@ -360,7 +359,6 @@ public static class ResultExtensions
     };
     return Results.ValidationProblem(
       errors: errors,
-      detail: detail,
       extensions: extensions);
   }
 
