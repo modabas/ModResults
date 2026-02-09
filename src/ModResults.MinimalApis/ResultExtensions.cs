@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace ModResults.MinimalApis;
 
@@ -306,17 +305,6 @@ public static class ResultExtensions
   /// <returns></returns>
   /// <exception cref="NotSupportedException">Thrown if result is in Ok state.</exception>
   public static IResult ToErrorResponse(this IModResult<Failure> result)
-  {
-    return TypedResults.Problem(result);
-  }
-
-  /// <summary>
-  /// Converts a Failed <see cref="Result"/> to an error response of type <see cref="ProblemHttpResult"/> based on its failure type.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <returns></returns>
-  /// <exception cref="NotSupportedException">Thrown if result is in Ok state.</exception>
-  public static ProblemHttpResult ToProblemResponse(this IModResult<Failure> result)
   {
     return TypedResults.Problem(result);
   }
