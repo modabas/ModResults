@@ -6,7 +6,7 @@
 /// </summary>
 public sealed class Failure
 {
-  private readonly List<Error> _errors = [];
+  private readonly List<Error> _errors;
 
   /// <summary>
   /// Error collection.
@@ -22,6 +22,12 @@ public sealed class Failure
   public Failure(FailureType type, IReadOnlyList<Error> errors)
   {
     Type = type;
-    _errors.AddRange(errors);
+    _errors = new(errors);
+  }
+
+  internal Failure(FailureType type, IEnumerable<Error> errors)
+  {
+    Type = type;
+    _errors = new(errors);
   }
 }
