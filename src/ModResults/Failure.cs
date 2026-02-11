@@ -25,9 +25,14 @@ public sealed class Failure
     _errors = new(errors);
   }
 
-  internal Failure(FailureType type, IEnumerable<Error> errors)
+  private Failure(FailureType type, IEnumerable<Error> errors)
   {
     Type = type;
     _errors = new(errors);
+  }
+
+  internal static Failure Create(FailureType type, IEnumerable<Error> errors)
+  {
+    return new Failure(type, errors);
   }
 }

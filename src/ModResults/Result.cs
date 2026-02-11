@@ -47,7 +47,7 @@ public sealed partial class Result : IModResult<Failure>
   private Result(FailureType failureType, IEnumerable<Error> errors)
   {
     IsOk = false;
-    Failure = new Failure(failureType, errors);
+    Failure = Failure.Create(failureType, errors);
   }
 
   private Result(FailureType failureType)
@@ -185,7 +185,7 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   private Result(FailureType failureType, IEnumerable<Error> errors)
   {
     IsOk = false;
-    Failure = new Failure(failureType, errors);
+    Failure = Failure.Create(failureType, errors);
   }
 
   private Result(FailureType failureType)
