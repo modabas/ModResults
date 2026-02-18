@@ -2,17 +2,27 @@
 
 public sealed class Statements : IStatements
 {
-  private readonly List<Warning> _warnings = [];
+  private List<Warning>? _warnings;
+  private List<Warning> GetWarnings()
+  {
+    return _warnings ??= [];
+  }
+
   /// <summary>
   /// Warning collection.
   /// </summary>
-  public IReadOnlyList<Warning> Warnings => _warnings.AsReadOnly();
+  public IReadOnlyList<Warning> Warnings => GetWarnings().AsReadOnly();
 
-  private readonly List<Fact> _facts = [];
+  private List<Fact>? _facts;
+  private List<Fact> GetFacts()
+  {
+    return _facts ??= [];
+  }
+
   /// <summary>
   /// Fact collection.
   /// </summary>
-  public IReadOnlyList<Fact> Facts => _facts.AsReadOnly();
+  public IReadOnlyList<Fact> Facts => GetFacts().AsReadOnly();
 
   /// <summary>
   /// Adds a <see cref="Warning"/> to the <see cref="Statements"/>.
@@ -20,7 +30,7 @@ public sealed class Statements : IStatements
   /// <param name="warning"></param>
   public void AddWarning(Warning warning)
   {
-    _warnings.Add(warning);
+    GetWarnings().Add(warning);
   }
 
   /// <summary>
@@ -29,7 +39,7 @@ public sealed class Statements : IStatements
   /// <param name="warnings"></param>
   public void AddWarnings(IReadOnlyList<Warning> warnings)
   {
-    _warnings.AddRange(warnings);
+    GetWarnings().AddRange(warnings);
   }
 
   /// <summary>
@@ -38,7 +48,7 @@ public sealed class Statements : IStatements
   /// <param name="warnings"></param>
   public void AddWarnings(IEnumerable<Warning> warnings)
   {
-    _warnings.AddRange(warnings);
+    GetWarnings().AddRange(warnings);
   }
 
   /// <summary>
@@ -46,7 +56,7 @@ public sealed class Statements : IStatements
   /// </summary>
   public void ClearWarnings()
   {
-    _warnings.Clear();
+    GetWarnings().Clear();
   }
 
   /// <summary>
@@ -55,7 +65,7 @@ public sealed class Statements : IStatements
   /// <param name="fact"></param>
   public void AddFact(Fact fact)
   {
-    _facts.Add(fact);
+    GetFacts().Add(fact);
   }
 
   /// <summary>
@@ -64,7 +74,7 @@ public sealed class Statements : IStatements
   /// <param name="facts"></param>
   public void AddFacts(IReadOnlyList<Fact> facts)
   {
-    _facts.AddRange(facts);
+    GetFacts().AddRange(facts);
   }
 
   /// <summary>
@@ -73,7 +83,7 @@ public sealed class Statements : IStatements
   /// <param name="facts"></param>
   public void AddFacts(IEnumerable<Fact> facts)
   {
-    _facts.AddRange(facts);
+    GetFacts().AddRange(facts);
   }
 
   /// <summary>
@@ -81,13 +91,13 @@ public sealed class Statements : IStatements
   /// </summary>
   public void ClearFacts()
   {
-    _facts.Clear();
+    GetFacts().Clear();
   }
 
   //intended as single public constructor to be used from json deserialization
   public Statements(IReadOnlyList<Fact> facts, IReadOnlyList<Warning> warnings)
   {
-    _facts.AddRange(facts);
-    _warnings.AddRange(warnings);
+    GetFacts().AddRange(facts);
+    GetWarnings().AddRange(warnings);
   }
 }
