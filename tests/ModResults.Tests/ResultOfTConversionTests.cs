@@ -23,6 +23,24 @@ public class ResultOfTConversionTests
   }
 
   [Fact]
+  public void BasicOkResultOfTToResult()
+  {
+    //Arrange
+    var resultOriginal = Result.Ok(new ValueClass() { Number = 42, String = "Meaning of life." });
+
+    //Act
+    var result = resultOriginal.ToResult();
+
+    // Assert
+    Assert.True(result.IsOk);
+    Assert.False(result.IsFailed);
+    Assert.Null(result.Failure);
+    Assert.False(result.HasStatements());
+    Assert.False(result.HasFacts());
+    Assert.False(result.HasWarnings());
+  }
+
+  [Fact]
   public void OkResultOfTToResult()
   {
     //Arrange
@@ -56,6 +74,26 @@ public class ResultOfTConversionTests
     Assert.False(result.IsFailedWith(typeof(Exception)));
     Assert.False(result.IsFailedWith<Exception>(true));
     Assert.False(result.IsFailedWith(typeof(Exception), true));
+  }
+
+  [Fact]
+  public void BasicFailedResultOfTToResult()
+  {
+    //Arrange
+    var resultOriginal = Result<ValueClass>.Error();
+
+    //Act
+    var resultOfT = resultOriginal.ToResult();
+
+    // Assert
+    Assert.NotNull(resultOfT);
+    Assert.False(resultOfT.IsOk);
+    Assert.True(resultOfT.IsFailed);
+    Assert.NotNull(resultOfT.Failure);
+    Assert.False(resultOfT.HasStatements());
+    Assert.False(resultOfT.HasFacts());
+    Assert.False(resultOfT.HasWarnings());
+    Assert.False(resultOfT.Failure.HasErrors());
   }
 
   [Fact]

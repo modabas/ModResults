@@ -23,6 +23,27 @@ public class ResultConversionTests
   }
 
   [Fact]
+  public void BasicOkResultToResultWithValueOnOk()
+  {
+    //Arrange
+    var result = Result.Ok();
+
+    //Act
+    var resultOfT = result.ToResult<ValueClass>(new ValueClass() { Number = 42, String = "Meaning of life." });
+
+    // Assert
+    Assert.True(resultOfT.IsOk);
+    Assert.False(resultOfT.IsFailed);
+    Assert.Null(resultOfT.Failure);
+    Assert.NotNull(resultOfT.Value);
+    Assert.Equal(42, resultOfT.Value.Number);
+    Assert.Equal("Meaning of life.", resultOfT.Value.String);
+    Assert.False(resultOfT.HasStatements());
+    Assert.False(resultOfT.HasFacts());
+    Assert.False(resultOfT.HasWarnings());
+  }
+
+  [Fact]
   public void OkResultToResultWithValueOnOk()
   {
     //Arrange
@@ -59,6 +80,27 @@ public class ResultConversionTests
     Assert.False(resultOfT.IsFailedWith(typeof(Exception)));
     Assert.False(resultOfT.IsFailedWith<Exception>(true));
     Assert.False(resultOfT.IsFailedWith(typeof(Exception), true));
+  }
+
+  [Fact]
+  public void BasicFailedResultToResultWithValueOnOk()
+  {
+    //Arrange
+    var resultOriginal = Result.TimedOut();
+
+    //Act
+    var resultOfT = resultOriginal.ToResult<ValueClass>(new ValueClass() { Number = 42, String = "Meaning of life." });
+
+    // Assert
+    Assert.NotNull(resultOfT);
+    Assert.False(resultOfT.IsOk);
+    Assert.True(resultOfT.IsFailed);
+    Assert.NotNull(resultOfT.Failure);
+    Assert.Null(resultOfT.Value);
+    Assert.False(resultOfT.HasStatements());
+    Assert.False(resultOfT.HasFacts());
+    Assert.False(resultOfT.HasWarnings());
+    Assert.False(resultOfT.Failure.HasErrors());
   }
 
   [Fact]
@@ -487,3 +529,4 @@ public class ResultConversionTests
     Assert.True(resultOfT.IsFailedWith<ApplicationException>());
   }
 }
+

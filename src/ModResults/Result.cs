@@ -30,7 +30,7 @@ public sealed partial class Result : BaseResult<Failure>
     Failure = null;
   }
 
-  private Result(FailureType failureType, IReadOnlyList<Error> errors)
+  private Result(FailureType failureType, IReadOnlyList<Error>? errors)
   {
     IsOk = false;
     Failure = new Failure(failureType, errors);
@@ -45,7 +45,7 @@ public sealed partial class Result : BaseResult<Failure>
   private Result(FailureType failureType)
   {
     IsOk = false;
-    Failure = new Failure(failureType, Definitions.EmptyErrors);
+    Failure = new Failure(failureType, null);
   }
 
   /// <summary>
@@ -59,7 +59,7 @@ public sealed partial class Result : BaseResult<Failure>
   public Result(
     bool isOk,
     Failure? failure,
-    Statements statements)
+    Statements? statements)
   {
     //by design Failure cannot be null if isOk is false
     if (!isOk && failure is null)
@@ -68,7 +68,7 @@ public sealed partial class Result : BaseResult<Failure>
     }
     IsOk = isOk;
     Failure = failure;
-    Statements = statements;
+    _statements = statements;
   }
 
   /// <summary>
@@ -123,7 +123,7 @@ public sealed partial class Result : BaseResult<Failure>
       return new Result(result.Failure.Type, result.Failure.Errors)
         .WithStatementsFrom(result);
     }
-    return new Result(result.Failure.Type, Definitions.EmptyErrors)
+    return new Result(result.Failure.Type, null)
       .WithStatementsFrom(result);
   }
 }
@@ -165,7 +165,7 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
     Value = value;
   }
 
-  private Result(FailureType failureType, IReadOnlyList<Error> errors)
+  private Result(FailureType failureType, IReadOnlyList<Error>? errors)
   {
     IsOk = false;
     Failure = new Failure(failureType, errors);
@@ -180,7 +180,7 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
   private Result(FailureType failureType)
   {
     IsOk = false;
-    Failure = new Failure(failureType, Definitions.EmptyErrors);
+    Failure = new Failure(failureType, null);
   }
 
   /// <summary>
@@ -196,7 +196,7 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
     bool isOk,
     TValue? value,
     Failure? failure,
-    Statements statements)
+    Statements? statements)
   {
     //by design Value cannot be null if isOk is true
     if (isOk && value is null)
@@ -211,7 +211,7 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
     IsOk = isOk;
     Value = value;
     Failure = failure;
-    Statements = statements;
+    _statements = statements;
   }
 
   /// <summary>
@@ -239,10 +239,10 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
     if (result.Failure.HasErrors())
     {
       return new Result<TValue>(result.Failure.Type, result.Failure.Errors)
-          .WithStatementsFrom(result);
-    }
-    return new Result<TValue>(result.Failure.Type, Definitions.EmptyErrors)
         .WithStatementsFrom(result);
+    }
+    return new Result<TValue>(result.Failure.Type, null)
+      .WithStatementsFrom(result);
   }
 
   /// <summary>

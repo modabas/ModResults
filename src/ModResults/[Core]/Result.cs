@@ -35,7 +35,7 @@ public sealed class Result<TValue, TFailure> : BaseResult<TValue, TFailure>
     bool isOk,
     TValue? value,
     TFailure? failure,
-    Statements statements)
+    Statements? statements)
   {
     //by design Value cannot be null if isOk is true
     if (isOk && value is null)
@@ -50,7 +50,7 @@ public sealed class Result<TValue, TFailure> : BaseResult<TValue, TFailure>
     IsOk = isOk;
     Value = value;
     Failure = failure;
-    Statements = statements;
+    _statements = statements;
   }
 
   public static Result<TValue, TFailure> Ok(TValue value)

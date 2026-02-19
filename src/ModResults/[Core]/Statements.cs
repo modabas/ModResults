@@ -120,13 +120,13 @@ public sealed class Statements : IStatements
   }
 
   //intended as single public constructor to be used from json deserialization
-  public Statements(IReadOnlyList<Fact> facts, IReadOnlyList<Warning> warnings)
+  public Statements(IReadOnlyList<Fact>? facts, IReadOnlyList<Warning>? warnings)
   {
-    if (facts.Count > 0)
+    if (facts?.Count > 0)
     {
       GetFacts().AddRange(facts);
     }
-    if (warnings.Count > 0)
+    if (warnings?.Count > 0)
     {
       GetWarnings().AddRange(warnings);
     }

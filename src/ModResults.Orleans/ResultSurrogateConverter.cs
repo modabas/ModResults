@@ -9,7 +9,7 @@ public sealed class ResultSurrogateConverter :
     return new Result(
       surrogate.IsOk,
       surrogate.Failure,
-      surrogate.Statements ?? Definitions.EmptyStatements);
+      surrogate.Statements);
   }
 
   public ResultSurrogate ConvertToSurrogate(in Result value)
@@ -35,7 +35,7 @@ public sealed class ResultSurrogateConverter<TValue> :
       surrogate.IsOk,
       surrogate.Value,
       surrogate.Failure,
-      surrogate.Statements ?? Definitions.EmptyStatements);
+      surrogate.Statements);
   }
 
   public ResultSurrogate<TValue> ConvertToSurrogate(in Result<TValue> value)

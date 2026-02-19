@@ -33,10 +33,10 @@ public sealed class Failure
   public FailureType Type { get; }
 
   //intended as single public constructor to be used from json deserialization
-  public Failure(FailureType type, IReadOnlyList<Error> errors)
+  public Failure(FailureType type, IReadOnlyList<Error>? errors)
   {
     Type = type;
-    if (errors.Count > 0)
+    if (errors?.Count > 0)
     {
       _errors = new(errors);
     }

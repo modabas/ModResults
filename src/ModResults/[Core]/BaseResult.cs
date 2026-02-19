@@ -9,7 +9,7 @@ public abstract class BaseResult : IModResult
   protected Statements? _statements;
   protected Statements GetStatements()
   {
-    return _statements ??= new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
+    return _statements ??= new(null, null);
   }
 
   /// <summary>
