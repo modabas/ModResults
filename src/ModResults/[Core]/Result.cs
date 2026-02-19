@@ -18,9 +18,12 @@ public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
 
   public TFailure? Failure { get; init; }
 
-  private readonly Statements _statements =
-    new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
-  public Statements Statements { get { return _statements; } init { _statements = value; } }
+  private Statements? _statements;
+  private Statements GetStatements()
+  {
+    return _statements ??= new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
+  }
+  public Statements Statements { get { return GetStatements(); } init { _statements = value; } }
 
   private Result(TValue value)
   {

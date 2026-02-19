@@ -24,13 +24,16 @@ public sealed partial class Result : IModResult<Failure>
   /// </summary>
   public Failure? Failure { get; init; }
 
-  private readonly Statements _statements =
-    new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
-
+  private Statements? _statements;
+  private Statements GetStatements()
+  {
+    return _statements ??= new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
+  }
+  
   /// <summary>
   /// Contains facts and warnings for the result.
   /// </summary>
-  public Statements Statements { get { return _statements; } init { _statements = value; } }
+  public Statements Statements { get { return GetStatements(); } init { _statements = value; } }
 
   private Result()
   {
@@ -162,13 +165,16 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   /// </summary>
   public Failure? Failure { get; init; }
 
-  private readonly Statements _statements =
-    new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
+  private Statements? _statements;
+  private Statements GetStatements()
+  {
+    return _statements ??= new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
+  }
 
   /// <summary>
   /// Contains facts and warnings for the result.
   /// </summary>
-  public Statements Statements { get { return _statements; } init { _statements = value; } }
+  public Statements Statements { get { return GetStatements(); } init { _statements = value; } }
 
   private Result(TValue value)
   {
