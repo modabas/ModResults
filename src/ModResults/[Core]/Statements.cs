@@ -13,6 +13,11 @@ public sealed class Statements : IStatements
   /// </summary>
   public IReadOnlyList<Warning> Warnings => GetWarnings().AsReadOnly();
 
+  /// <summary>
+  /// Determines whether the current statement contains any warnings without initializing the warnings property.
+  /// </summary>
+  /// <returns><see langword="true"/> if the result contains at least one warning; otherwise, <see langword="false"/>.</returns>
+
   public bool HasWarnings()
   {
     return _warnings is not null && _warnings.Count > 0;
@@ -29,6 +34,10 @@ public sealed class Statements : IStatements
   /// </summary>
   public IReadOnlyList<Fact> Facts => GetFacts().AsReadOnly();
 
+  /// <summary>
+  /// Determines whether the current statement contains any facts without initializing the facts property.
+  /// </summary>
+  /// <returns><see langword="true"/> if the result contains at least one fact; otherwise, <see langword="false"/>.</returns>
   public bool HasFacts()
   {
     return _facts is not null && _facts.Count > 0;

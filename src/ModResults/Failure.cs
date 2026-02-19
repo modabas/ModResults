@@ -17,6 +17,11 @@ public sealed class Failure
   /// </summary>
   public IReadOnlyList<Error> Errors => GetErrors().AsReadOnly();
 
+  /// <summary>
+  /// Determines whether the current failure contains any errors without initializing the errors property.
+  /// </summary>
+  /// <returns><see langword="true"/> if the result contains at least one error; otherwise, <see langword="false"/>.</returns>
+
   public bool HasErrors()
   {
     return _errors is not null && _errors.Count > 0;
