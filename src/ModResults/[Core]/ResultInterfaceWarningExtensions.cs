@@ -12,11 +12,11 @@ public static class ResultInterfaceWarningExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasWarning(
-    this IModResult result,
+    this ResultBase result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
-    return result.Statements.Warnings.Any(p => p.HasCode(code, comparisonType));
+    return result.HasWarnings() && result.Statements.Warnings.Any(p => p.HasCode(code, comparisonType));
   }
 
   /// <summary>
@@ -28,7 +28,7 @@ public static class ResultInterfaceWarningExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasWarning(
-    this IModResult result,
+    this ResultBase result,
     string code,
     out ReadOnlyCollection<Warning> warnings,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
@@ -45,7 +45,7 @@ public static class ResultInterfaceWarningExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static ReadOnlyCollection<Warning> GetWarnings(
-    this IModResult result,
+    this ResultBase result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
@@ -53,10 +53,14 @@ public static class ResultInterfaceWarningExtensions
   }
 
   private static IEnumerable<Warning> GetWarningsInternal(
-    this IModResult result,
+    this ResultBase result,
     string code,
     StringComparison comparisonType)
   {
-    return result.Statements.Warnings.Where(w => w.HasCode(code, comparisonType));
+    if (result.HasWarnings())
+    {
+      return result.Statements.Warnings.Where(w => w.HasCode(code, comparisonType));
+    }
+    return [];
   }
 }

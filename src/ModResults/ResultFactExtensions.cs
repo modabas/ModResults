@@ -52,9 +52,12 @@ public static partial class ResultFactExtensions
   /// <returns></returns>
   public static Result WithFactsFrom(
     this Result result,
-    IModResult fromResult)
+    ResultBase fromResult)
   {
-    result.WithFacts(fromResult.Statements.Facts);
+    if (fromResult.HasFacts())
+    {
+      result.WithFacts(fromResult.Statements.Facts);
+    }
     return result;
   }
 
@@ -115,10 +118,13 @@ public static partial class ResultFactExtensions
   /// <returns></returns>
   public static Result<TValue> WithFactsFrom<TValue>(
     this Result<TValue> result,
-    IModResult fromResult)
+    ResultBase fromResult)
     where TValue : notnull
   {
-    result.WithFacts(fromResult.Statements.Facts);
+    if (fromResult.HasFacts())
+    {
+      result.WithFacts(fromResult.Statements.Facts);
+    }
     return result;
   }
 

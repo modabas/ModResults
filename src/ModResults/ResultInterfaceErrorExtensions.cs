@@ -12,7 +12,7 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasError(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
@@ -28,7 +28,7 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasError(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     string code,
     out ReadOnlyCollection<Error> errors,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
@@ -45,7 +45,7 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static ReadOnlyCollection<Error> GetErrors(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
@@ -53,7 +53,7 @@ public static class ResultInterfaceErrorExtensions
   }
 
   private static IEnumerable<Error> GetErrorsInternal(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     string code,
     StringComparison comparisonType)
   {
@@ -68,7 +68,7 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static bool HasErrorWithException<TException>(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     bool includeAssignableTo = false)
     where TException : Exception
   {
@@ -84,7 +84,7 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static bool HasErrorWithException<TException>(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     out ReadOnlyCollection<Error> errors,
     bool includeAssignableTo = false)
     where TException : Exception
@@ -101,7 +101,7 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static ReadOnlyCollection<Error> GetErrorsWithException<TException>(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     bool includeAssignableTo = false)
     where TException : Exception
   {
@@ -109,7 +109,7 @@ public static class ResultInterfaceErrorExtensions
   }
 
   private static IEnumerable<Error> GetErrorsWithExceptionInternal<TException>(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     bool includeAssignableTo = false) where TException : Exception
   {
     return result.Failure?.Errors.Where(e => e.HasException<TException>(includeAssignableTo)) ?? [];
@@ -123,7 +123,7 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static bool HasErrorWithException(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     Type exceptionType,
     bool includeAssignableTo = false)
   {
@@ -139,7 +139,7 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static bool HasErrorWithException(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     Type exceptionType,
     out ReadOnlyCollection<Error> errors,
     bool includeAssignableTo = false)
@@ -156,7 +156,7 @@ public static class ResultInterfaceErrorExtensions
   /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
   /// <returns></returns>
   public static ReadOnlyCollection<Error> GetErrorsWithException(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     Type exceptionType,
     bool includeAssignableTo = false)
   {
@@ -164,7 +164,7 @@ public static class ResultInterfaceErrorExtensions
   }
 
   private static IEnumerable<Error> GetErrorsWithExceptionInternal(
-    this IModResult<Failure> result,
+    this ResultBase<Failure> result,
     Type exceptionType,
     bool includeAssignableTo = false)
   {

@@ -2,28 +2,21 @@
 
 namespace ModResults;
 
-public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
+public sealed class Result<TValue, TFailure> : ResultBase<TValue, TFailure>
   where TValue : notnull
   where TFailure : notnull
 {
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public bool IsOk { get; init; }
+  public override bool IsOk { get; init; }
 
   [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public bool IsFailed => !IsOk;
+  public override bool IsFailed => !IsOk;
 
-  public TValue? Value { get; init; }
+  public override TValue? Value { get; init; }
 
-  public TFailure? Failure { get; init; }
-
-  private Statements? _statements;
-  private Statements GetStatements()
-  {
-    return _statements ??= new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
-  }
-  public Statements Statements { get { return GetStatements(); } init { _statements = value; } }
+  public override TFailure? Failure { get; init; }
 
   private Result(TValue value)
   {
@@ -70,8 +63,8 @@ public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
     return new Result<TValue, TFailure>(failure);
   }
 
-  public static Result<TValue, TFailure> Fail<TState>(IModResult<TFailure> result,
-    Func<IModResult<TFailure>, TState, TFailure>? failureFuncOnOk,
+  public static Result<TValue, TFailure> Fail<TState>(ResultBase<TFailure> result,
+    Func<ResultBase<TFailure>, TState, TFailure>? failureFuncOnOk,
     TState state)
   {
     if (result.Failure is null)
@@ -87,8 +80,8 @@ public sealed class Result<TValue, TFailure> : IModResult<TValue, TFailure>
         .WithStatementsFrom(result);
   }
 
-  public static Result<TValue, TFailure> Fail(IModResult<TFailure> result,
-    Func<IModResult<TFailure>, TFailure>? failureFuncOnOk = null)
+  public static Result<TValue, TFailure> Fail(ResultBase<TFailure> result,
+    Func<ResultBase<TFailure>, TFailure>? failureFuncOnOk = null)
   {
     if (result.Failure is null)
     {

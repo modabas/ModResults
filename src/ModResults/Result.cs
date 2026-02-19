@@ -5,35 +5,24 @@ namespace ModResults;
 /// <summary>
 /// A business result that represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
 /// </summary>
-public sealed partial class Result : IModResult<Failure>
+public sealed partial class Result : ResultBase<Failure>
 {
   /// <summary>
   /// Gets if state of result instance is Ok.
   /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public bool IsOk { get; init; }
+  public override bool IsOk { get; init; }
 
   /// <summary>
   /// Gets if state of result instance is Failed.
   /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public bool IsFailed => !IsOk;
+  public override bool IsFailed => !IsOk;
 
   /// <summary>
   /// Contains failure info for a failed <see cref="Result"/> instance. Not null when <see cref="IsFailed"/> is true.
   /// </summary>
-  public Failure? Failure { get; init; }
-
-  private Statements? _statements;
-  private Statements GetStatements()
-  {
-    return _statements ??= new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
-  }
-  
-  /// <summary>
-  /// Contains facts and warnings for the result.
-  /// </summary>
-  public Statements Statements { get { return GetStatements(); } init { _statements = value; } }
+  public override Failure? Failure { get; init; }
 
   private Result()
   {
@@ -122,7 +111,7 @@ public sealed partial class Result : IModResult<Failure>
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static Result Fail(IModResult<Failure> result)
+  public static Result Fail(ResultBase<Failure> result)
   {
     if (result.Failure is null)
     {
@@ -138,7 +127,7 @@ public sealed partial class Result : IModResult<Failure>
 /// A business result that represents the outcome of an operation, encapsulating either successful value of type <typeparamref name="TValue"/> or failure states, along with associated error messages and additional information.
 /// </summary>
 /// <typeparam name="TValue"></typeparam>
-public sealed partial class Result<TValue> : IModResult<TValue, Failure>
+public sealed partial class Result<TValue> : ResultBase<TValue, Failure>
   where TValue : notnull
 {
   /// <summary>
@@ -146,35 +135,24 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public bool IsOk { get; init; }
+  public override bool IsOk { get; init; }
 
   /// <summary>
   /// Gets if state of result instance is Failed.
   /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public bool IsFailed => !IsOk;
+  public override bool IsFailed => !IsOk;
 
   /// <summary>
   /// Contains encapsulated value for an Ok <see cref="Result{TValue}"/> instance. Not null when <see cref="IsOk"/> is true.
   /// </summary>
-  public TValue? Value { get; init; }
+  public override TValue? Value { get; init; }
 
   /// <summary>
   /// Contains failure info for a failed <see cref="Result{TValue}"/> instance. Not null when <see cref="IsFailed"/> is true.
   /// </summary>
-  public Failure? Failure { get; init; }
-
-  private Statements? _statements;
-  private Statements GetStatements()
-  {
-    return _statements ??= new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
-  }
-
-  /// <summary>
-  /// Contains facts and warnings for the result.
-  /// </summary>
-  public Statements Statements { get { return GetStatements(); } init { _statements = value; } }
+  public override Failure? Failure { get; init; }
 
   private Result(TValue value)
   {
@@ -246,7 +224,7 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static Result<TValue> Fail(IModResult<Failure> result)
+  public static Result<TValue> Fail(ResultBase<Failure> result)
   {
     if (result.Failure is null)
     {

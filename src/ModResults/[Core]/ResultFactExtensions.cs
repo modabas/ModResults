@@ -34,11 +34,14 @@ public static partial class ResultFactExtensions
 
   public static Result<TValue, TFailure> WithFactsFrom<TValue, TFailure>(
     this Result<TValue, TFailure> result,
-    IModResult fromResult)
+    ResultBase fromResult)
     where TValue : notnull
     where TFailure : notnull
   {
-    result.WithFacts(fromResult.Statements.Facts);
+    if (fromResult.HasFacts())
+    {
+      result.WithFacts(fromResult.Statements.Facts);
+    }
     return result;
   }
 

@@ -12,11 +12,11 @@ public static class ResultInterfaceFactExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasFact(
-    this IModResult result,
+    this ResultBase result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
-    return result.Statements.Facts.Any(f => f.HasCode(code, comparisonType));
+    return result.HasFacts() && result.Statements.Facts.Any(f => f.HasCode(code, comparisonType));
   }
 
   /// <summary>
@@ -28,7 +28,7 @@ public static class ResultInterfaceFactExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasFact(
-    this IModResult result,
+    this ResultBase result,
     string code,
     out ReadOnlyCollection<Fact> facts,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
@@ -45,7 +45,7 @@ public static class ResultInterfaceFactExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static ReadOnlyCollection<Fact> GetFacts(
-    this IModResult result,
+    this ResultBase result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
@@ -53,10 +53,14 @@ public static class ResultInterfaceFactExtensions
   }
 
   private static IEnumerable<Fact> GetFactsInternal(
-    this IModResult result,
+    this ResultBase result,
     string code,
     StringComparison comparisonType)
   {
-    return result.Statements.Facts.Where(f => f.HasCode(code, comparisonType));
+    if (result.HasFacts())
+    {
+      return result.Statements.Facts.Where(f => f.HasCode(code, comparisonType));
+    }
+    return [];
   }
 }

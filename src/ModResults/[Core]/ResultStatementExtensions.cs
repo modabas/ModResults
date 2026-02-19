@@ -12,11 +12,11 @@ public static class ResultStatementExtensions
     this Result result,
     Statements statements)
   {
-    if (statements.Facts.Count > 0)
+    if (statements.HasFacts())
     {
       result = result.WithFacts(statements.Facts);
     }
-    if (statements.Warnings.Count > 0)
+    if (statements.HasWarnings())
     {
       result = result.WithWarnings(statements.Warnings);
     }
@@ -31,9 +31,13 @@ public static class ResultStatementExtensions
   /// <returns></returns>
   public static Result WithStatementsFrom(
     this Result result,
-    IModResult fromResult)
+    ResultBase fromResult)
   {
-    return result.WithStatements(fromResult.Statements);
+    if (fromResult.HasStatements())
+    {
+      return result.WithStatements(fromResult.Statements);
+    }
+    return result;
   }
 
   /// <summary>
@@ -48,11 +52,11 @@ public static class ResultStatementExtensions
     Statements statements)
     where TValue : notnull
   {
-    if (statements.Facts.Count > 0)
+    if (statements.HasFacts())
     {
       result = result.WithFacts(statements.Facts);
     }
-    if (statements.Warnings.Count > 0)
+    if (statements.HasWarnings())
     {
       result = result.WithWarnings(statements.Warnings);
     }
@@ -68,10 +72,14 @@ public static class ResultStatementExtensions
   /// <returns></returns>
   public static Result<TValue> WithStatementsFrom<TValue>(
     this Result<TValue> result,
-    IModResult fromResult)
+    ResultBase fromResult)
     where TValue : notnull
   {
-    return result.WithStatements(fromResult.Statements);
+    if (fromResult.HasStatements())
+    {
+      return result.WithStatements(fromResult.Statements);
+    }
+    return result;
   }
 
   /// <summary>
@@ -88,11 +96,11 @@ public static class ResultStatementExtensions
     where TValue : notnull
     where TFailure : notnull
   {
-    if (statements.Facts.Count > 0)
+    if (statements.HasFacts())
     {
       result = result.WithFacts(statements.Facts);
     }
-    if (statements.Warnings.Count > 0)
+    if (statements.HasWarnings())
     {
       result = result.WithWarnings(statements.Warnings);
     }
@@ -109,10 +117,14 @@ public static class ResultStatementExtensions
   /// <returns></returns>
   public static Result<TValue, TFailure> WithStatementsFrom<TValue, TFailure>(
     this Result<TValue, TFailure> result,
-    IModResult fromResult)
+    ResultBase fromResult)
     where TValue : notnull
     where TFailure : notnull
   {
-    return result.WithStatements(fromResult.Statements);
+    if (fromResult.HasStatements())
+    {
+      return result.WithStatements(fromResult.Statements);
+    }
+    return result;
   }
 }

@@ -13,6 +13,11 @@ public sealed class Statements : IStatements
   /// </summary>
   public IReadOnlyList<Warning> Warnings => GetWarnings().AsReadOnly();
 
+  internal bool HasWarnings()
+  {
+    return _warnings is not null && _warnings.Count > 0;
+  }
+
   private List<Fact>? _facts;
   private List<Fact> GetFacts()
   {
@@ -23,6 +28,11 @@ public sealed class Statements : IStatements
   /// Fact collection.
   /// </summary>
   public IReadOnlyList<Fact> Facts => GetFacts().AsReadOnly();
+
+  internal bool HasFacts()
+  {
+    return _facts is not null && _facts.Count > 0;
+  }
 
   /// <summary>
   /// Adds a <see cref="Warning"/> to the <see cref="Statements"/>.

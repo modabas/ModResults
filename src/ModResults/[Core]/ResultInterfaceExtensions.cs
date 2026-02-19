@@ -9,7 +9,7 @@ public static class ResultInterfaceExtensions
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static string DumpMessages(this IModResult<Failure> result)
+  public static string DumpMessages(this ResultBase<Failure> result)
   {
     var sb = new StringBuilder();
     sb.AppendLine($"IsOk: {result.IsOk}");
@@ -23,13 +23,13 @@ public static class ResultInterfaceExtensions
           .Aggregate(sb, (sb, m) => sb.AppendLine($"  {m}"));
       }
     }
-    if (result.Statements.Facts.Count > 0)
+    if (result.HasFacts())
     {
       sb.AppendLine("Facts:");
       sb = result.Statements.Facts.Select(e => e.Message)
         .Aggregate(sb, (sb, m) => sb.AppendLine($"  {m}"));
     }
-    if (result.Statements.Warnings.Count > 0)
+    if (result.HasWarnings())
     {
       sb.AppendLine("Warnings:");
       sb = result.Statements.Warnings.Select(e => e.Message)
@@ -43,17 +43,17 @@ public static class ResultInterfaceExtensions
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static string DumpStatements(this IModResult result)
+  public static string DumpStatements(this ResultBase result)
   {
     var sb = new StringBuilder();
     sb.AppendLine($"IsOk: {result.IsOk}");
-    if (result.Statements.Facts.Count > 0)
+    if (result.HasFacts())
     {
       sb.AppendLine("Facts:");
       sb = result.Statements.Facts.Select(e => e.Message)
         .Aggregate(sb, (sb, m) => sb.AppendLine($"  {m}"));
     }
-    if (result.Statements.Warnings.Count > 0)
+    if (result.HasWarnings())
     {
       sb.AppendLine("Warnings:");
       sb = result.Statements.Warnings.Select(e => e.Message)

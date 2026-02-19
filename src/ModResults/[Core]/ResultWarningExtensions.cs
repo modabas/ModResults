@@ -34,11 +34,14 @@ public static partial class ResultWarningExtensions
 
   public static Result<TValue, TFailure> WithWarningsFrom<TValue, TFailure>(
     this Result<TValue, TFailure> result,
-    IModResult fromResult)
+    ResultBase fromResult)
     where TValue : notnull
     where TFailure : notnull
   {
-    result.WithWarnings(fromResult.Statements.Warnings);
+    if (fromResult.HasWarnings())
+    {
+      result.WithWarnings(fromResult.Statements.Warnings);
+    }
     return result;
   }
 

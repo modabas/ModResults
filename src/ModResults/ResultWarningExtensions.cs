@@ -52,9 +52,12 @@ public static partial class ResultWarningExtensions
   /// <returns></returns>
   public static Result WithWarningsFrom(
     this Result result,
-    IModResult fromResult)
+    ResultBase fromResult)
   {
-    result.WithWarnings(fromResult.Statements.Warnings);
+    if (fromResult.HasWarnings())
+    {
+      result.WithWarnings(fromResult.Statements.Warnings);
+    }
     return result;
   }
 
@@ -115,10 +118,13 @@ public static partial class ResultWarningExtensions
   /// <returns></returns>
   public static Result<TValue> WithWarningsFrom<TValue>(
     this Result<TValue> result,
-    IModResult fromResult)
+    ResultBase fromResult)
     where TValue : notnull
   {
-    result.WithWarnings(fromResult.Statements.Warnings);
+    if (fromResult.HasWarnings())
+    {
+      result.WithWarnings(fromResult.Statements.Warnings);
+    }
     return result;
   }
 
