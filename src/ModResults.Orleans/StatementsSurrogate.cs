@@ -5,7 +5,7 @@
 public struct StatementsSurrogate
 {
   [Id(0)]
-  public IReadOnlyList<Fact> Facts;
+  public IReadOnlyList<Fact>? Facts;
   [Id(1)]
-  public IReadOnlyList<Warning> Warnings;
+  public IReadOnlyList<Warning>? Warnings;
 }

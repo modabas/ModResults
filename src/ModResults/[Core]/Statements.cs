@@ -13,7 +13,7 @@ public sealed class Statements : IStatements
   /// </summary>
   public IReadOnlyList<Warning> Warnings => GetWarnings().AsReadOnly();
 
-  internal bool HasWarnings()
+  public bool HasWarnings()
   {
     return _warnings is not null && _warnings.Count > 0;
   }
@@ -29,7 +29,7 @@ public sealed class Statements : IStatements
   /// </summary>
   public IReadOnlyList<Fact> Facts => GetFacts().AsReadOnly();
 
-  internal bool HasFacts()
+  public bool HasFacts()
   {
     return _facts is not null && _facts.Count > 0;
   }

@@ -7,16 +7,16 @@ public sealed class StatementsSurrogateConverter :
   public Statements ConvertFromSurrogate(in StatementsSurrogate surrogate)
   {
     return new Statements(
-        surrogate.Facts,
-        surrogate.Warnings);
+        surrogate.Facts ?? Definitions.EmptyFacts,
+        surrogate.Warnings ?? Definitions.EmptyWarnings);
   }
 
   public StatementsSurrogate ConvertToSurrogate(in Statements value)
   {
     return new StatementsSurrogate()
     {
-      Facts = value.Facts,
-      Warnings = value.Warnings
+      Facts = value.HasFacts() ? value.Facts : null,
+      Warnings = value.HasWarnings() ? value.Warnings : null
     };
   }
 }

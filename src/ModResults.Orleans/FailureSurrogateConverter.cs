@@ -8,7 +8,7 @@ public sealed class FailureSurrogateConverter :
   {
     return new Failure(
         surrogate.Type,
-        surrogate.Errors);
+        surrogate.Errors ?? Definitions.EmptyErrors);
   }
 
   public FailureSurrogate ConvertToSurrogate(in Failure value)
@@ -16,7 +16,7 @@ public sealed class FailureSurrogateConverter :
     return new FailureSurrogate()
     {
       Type = value.Type,
-      Errors = value.Errors
+      Errors = value.HasErrors() ? value.Errors : null
     };
   }
 }

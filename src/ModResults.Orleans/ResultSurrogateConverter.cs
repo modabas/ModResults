@@ -9,7 +9,7 @@ public sealed class ResultSurrogateConverter :
     return new Result(
       surrogate.IsOk,
       surrogate.Failure,
-      surrogate.Statements);
+      surrogate.Statements ?? Definitions.EmptyStatements);
   }
 
   public ResultSurrogate ConvertToSurrogate(in Result value)
@@ -18,7 +18,7 @@ public sealed class ResultSurrogateConverter :
     {
       IsOk = value.IsOk,
       Failure = value.Failure,
-      Statements = value.Statements
+      Statements = value.HasStatements() ? value.Statements : null
     };
   }
 }
@@ -35,7 +35,7 @@ public sealed class ResultSurrogateConverter<TValue> :
       surrogate.IsOk,
       surrogate.Value,
       surrogate.Failure,
-      surrogate.Statements);
+      surrogate.Statements ?? Definitions.EmptyStatements);
   }
 
   public ResultSurrogate<TValue> ConvertToSurrogate(in Result<TValue> value)
@@ -45,7 +45,7 @@ public sealed class ResultSurrogateConverter<TValue> :
       IsOk = value.IsOk,
       Failure = value.Failure,
       Value = value.Value,
-      Statements = value.Statements
+      Statements = value.HasStatements() ? value.Statements : null
     };
   }
 }

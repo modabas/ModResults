@@ -17,7 +17,7 @@ public abstract class ResultBase : IModResult
   /// </summary>
   public Statements Statements { get { return GetStatements(); } init { _statements = value; } }
 
-  internal bool HasStatements()
+  public bool HasStatements()
   {
     return _statements is not null;
   }
