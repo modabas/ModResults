@@ -5,7 +5,7 @@ namespace ModResults;
 /// <summary>
 /// A business result that represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
 /// </summary>
-public sealed partial class Result : ResultBase<Failure>
+public sealed partial class Result : BaseResult<Failure>
 {
   /// <summary>
   /// Gets if state of result instance is Ok.
@@ -111,7 +111,7 @@ public sealed partial class Result : ResultBase<Failure>
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static Result Fail(ResultBase<Failure> result)
+  public static Result Fail(BaseResult<Failure> result)
   {
     if (result.Failure is null)
     {
@@ -132,7 +132,7 @@ public sealed partial class Result : ResultBase<Failure>
 /// A business result that represents the outcome of an operation, encapsulating either successful value of type <typeparamref name="TValue"/> or failure states, along with associated error messages and additional information.
 /// </summary>
 /// <typeparam name="TValue"></typeparam>
-public sealed partial class Result<TValue> : ResultBase<TValue, Failure>
+public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
   where TValue : notnull
 {
   /// <summary>
@@ -229,7 +229,7 @@ public sealed partial class Result<TValue> : ResultBase<TValue, Failure>
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static Result<TValue> Fail(ResultBase<Failure> result)
+  public static Result<TValue> Fail(BaseResult<Failure> result)
   {
     if (result.Failure is null)
     {

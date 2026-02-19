@@ -34,7 +34,7 @@ public static partial class ResultFactExtensions
 
   public static Result<TValue, TFailure> WithFactsFrom<TValue, TFailure>(
     this Result<TValue, TFailure> result,
-    ResultBase fromResult)
+    BaseResult fromResult)
     where TValue : notnull
     where TFailure : notnull
   {

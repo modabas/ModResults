@@ -12,7 +12,7 @@ public static class ResultInterfaceFactExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasFact(
-    this ResultBase result,
+    this BaseResult result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
@@ -28,7 +28,7 @@ public static class ResultInterfaceFactExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasFact(
-    this ResultBase result,
+    this BaseResult result,
     string code,
     out ReadOnlyCollection<Fact> facts,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
@@ -45,7 +45,7 @@ public static class ResultInterfaceFactExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static ReadOnlyCollection<Fact> GetFacts(
-    this ResultBase result,
+    this BaseResult result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
@@ -53,7 +53,7 @@ public static class ResultInterfaceFactExtensions
   }
 
   private static IEnumerable<Fact> GetFactsInternal(
-    this ResultBase result,
+    this BaseResult result,
     string code,
     StringComparison comparisonType)
   {

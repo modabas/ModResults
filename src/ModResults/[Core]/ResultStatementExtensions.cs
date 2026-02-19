@@ -31,7 +31,7 @@ public static class ResultStatementExtensions
   /// <returns></returns>
   public static Result WithStatementsFrom(
     this Result result,
-    ResultBase fromResult)
+    BaseResult fromResult)
   {
     if (fromResult.HasStatements())
     {
@@ -72,7 +72,7 @@ public static class ResultStatementExtensions
   /// <returns></returns>
   public static Result<TValue> WithStatementsFrom<TValue>(
     this Result<TValue> result,
-    ResultBase fromResult)
+    BaseResult fromResult)
     where TValue : notnull
   {
     if (fromResult.HasStatements())
@@ -117,7 +117,7 @@ public static class ResultStatementExtensions
   /// <returns></returns>
   public static Result<TValue, TFailure> WithStatementsFrom<TValue, TFailure>(
     this Result<TValue, TFailure> result,
-    ResultBase fromResult)
+    BaseResult fromResult)
     where TValue : notnull
     where TFailure : notnull
   {

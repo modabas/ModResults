@@ -13,7 +13,7 @@ public static class TypedResultsExtensions
     /// <param name="result"></param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException">Thrown if result is in Ok state.</exception>
-    public static ProblemHttpResult Problem(ResultBase<Failure> result)
+    public static ProblemHttpResult Problem(BaseResult<Failure> result)
     {
       if (result.IsOk)
       {
@@ -41,7 +41,7 @@ public static class TypedResultsExtensions
   private static readonly IReadOnlyList<Error> _emptyErrors = [];
   private static readonly IReadOnlyList<Fact> _emptyFacts = [];
   private static readonly IReadOnlyList<Warning> _emptyWarnings = [];
-  private static ProblemHttpResult ToProblem(this ResultBase<Failure> result, int statusCode)
+  private static ProblemHttpResult ToProblem(this BaseResult<Failure> result, int statusCode)
   {
     var errors = (result.Failure?.HasErrors() ?? false) ? result.Failure.Errors : _emptyErrors;
     var detail = errors.FirstOrDefault()?.Message;
@@ -57,7 +57,7 @@ public static class TypedResultsExtensions
       extensions: extensions);
   }
 
-  private static ProblemHttpResult ToValidationProblem(this ResultBase<Failure> result)
+  private static ProblemHttpResult ToValidationProblem(this BaseResult<Failure> result)
   {
     var resultErrors = (result.Failure?.HasErrors() ?? false) ? result.Failure.Errors : _emptyErrors;
     var errors = resultErrors

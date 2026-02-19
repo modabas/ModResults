@@ -52,7 +52,7 @@ public static partial class ResultFactExtensions
   /// <returns></returns>
   public static Result WithFactsFrom(
     this Result result,
-    ResultBase fromResult)
+    BaseResult fromResult)
   {
     if (fromResult.HasFacts())
     {
@@ -118,7 +118,7 @@ public static partial class ResultFactExtensions
   /// <returns></returns>
   public static Result<TValue> WithFactsFrom<TValue>(
     this Result<TValue> result,
-    ResultBase fromResult)
+    BaseResult fromResult)
     where TValue : notnull
   {
     if (fromResult.HasFacts())

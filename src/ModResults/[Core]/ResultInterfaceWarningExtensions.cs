@@ -12,7 +12,7 @@ public static class ResultInterfaceWarningExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasWarning(
-    this ResultBase result,
+    this BaseResult result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
@@ -28,7 +28,7 @@ public static class ResultInterfaceWarningExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static bool HasWarning(
-    this ResultBase result,
+    this BaseResult result,
     string code,
     out ReadOnlyCollection<Warning> warnings,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
@@ -45,7 +45,7 @@ public static class ResultInterfaceWarningExtensions
   /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
   /// <returns></returns>
   public static ReadOnlyCollection<Warning> GetWarnings(
-    this ResultBase result,
+    this BaseResult result,
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
@@ -53,7 +53,7 @@ public static class ResultInterfaceWarningExtensions
   }
 
   private static IEnumerable<Warning> GetWarningsInternal(
-    this ResultBase result,
+    this BaseResult result,
     string code,
     StringComparison comparisonType)
   {

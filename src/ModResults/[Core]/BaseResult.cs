@@ -1,6 +1,6 @@
 ﻿namespace ModResults;
 
-public abstract class ResultBase : IModResult
+public abstract class BaseResult : IModResult
 {
   public abstract bool IsOk { get; init; }
 
@@ -33,13 +33,13 @@ public abstract class ResultBase : IModResult
   }
 }
 
-public abstract class ResultBase<TFailure> : ResultBase, IModResult<TFailure>
+public abstract class BaseResult<TFailure> : BaseResult, IModResult<TFailure>
   where TFailure : notnull
 {
   public abstract TFailure? Failure { get; init; }
 }
 
-public abstract class ResultBase<TValue, TFailure> : ResultBase<TFailure>, IModResult<TValue, TFailure>
+public abstract class BaseResult<TValue, TFailure> : BaseResult<TFailure>, IModResult<TValue, TFailure>
   where TValue : notnull
   where TFailure : notnull
 {

@@ -9,7 +9,7 @@ public static class ResultInterfaceExtensions
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static string DumpMessages(this ResultBase<Failure> result)
+  public static string DumpMessages(this BaseResult<Failure> result)
   {
     var sb = new StringBuilder();
     sb.AppendLine($"IsOk: {result.IsOk}");
@@ -43,7 +43,7 @@ public static class ResultInterfaceExtensions
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static string DumpStatements(this ResultBase result)
+  public static string DumpStatements(this BaseResult result)
   {
     var sb = new StringBuilder();
     sb.AppendLine($"IsOk: {result.IsOk}");

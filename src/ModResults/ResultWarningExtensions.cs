@@ -52,7 +52,7 @@ public static partial class ResultWarningExtensions
   /// <returns></returns>
   public static Result WithWarningsFrom(
     this Result result,
-    ResultBase fromResult)
+    BaseResult fromResult)
   {
     if (fromResult.HasWarnings())
     {
@@ -118,7 +118,7 @@ public static partial class ResultWarningExtensions
   /// <returns></returns>
   public static Result<TValue> WithWarningsFrom<TValue>(
     this Result<TValue> result,
-    ResultBase fromResult)
+    BaseResult fromResult)
     where TValue : notnull
   {
     if (fromResult.HasWarnings())

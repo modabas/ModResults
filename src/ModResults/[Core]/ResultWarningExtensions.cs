@@ -34,7 +34,7 @@ public static partial class ResultWarningExtensions
 
   public static Result<TValue, TFailure> WithWarningsFrom<TValue, TFailure>(
     this Result<TValue, TFailure> result,
-    ResultBase fromResult)
+    BaseResult fromResult)
     where TValue : notnull
     where TFailure : notnull
   {

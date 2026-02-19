@@ -2,7 +2,7 @@
 
 namespace ModResults;
 
-public sealed class Result<TValue, TFailure> : ResultBase<TValue, TFailure>
+public sealed class Result<TValue, TFailure> : BaseResult<TValue, TFailure>
   where TValue : notnull
   where TFailure : notnull
 {
@@ -63,8 +63,8 @@ public sealed class Result<TValue, TFailure> : ResultBase<TValue, TFailure>
     return new Result<TValue, TFailure>(failure);
   }
 
-  public static Result<TValue, TFailure> Fail<TState>(ResultBase<TFailure> result,
-    Func<ResultBase<TFailure>, TState, TFailure>? failureFuncOnOk,
+  public static Result<TValue, TFailure> Fail<TState>(BaseResult<TFailure> result,
+    Func<BaseResult<TFailure>, TState, TFailure>? failureFuncOnOk,
     TState state)
   {
     if (result.Failure is null)
@@ -80,8 +80,8 @@ public sealed class Result<TValue, TFailure> : ResultBase<TValue, TFailure>
         .WithStatementsFrom(result);
   }
 
-  public static Result<TValue, TFailure> Fail(ResultBase<TFailure> result,
-    Func<ResultBase<TFailure>, TFailure>? failureFuncOnOk = null)
+  public static Result<TValue, TFailure> Fail(BaseResult<TFailure> result,
+    Func<BaseResult<TFailure>, TFailure>? failureFuncOnOk = null)
   {
     if (result.Failure is null)
     {
