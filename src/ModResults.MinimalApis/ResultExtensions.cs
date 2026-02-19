@@ -304,7 +304,7 @@ public static class ResultExtensions
   /// <param name="result"></param>
   /// <returns></returns>
   /// <exception cref="NotSupportedException">Thrown if result is in Ok state.</exception>
-  public static IResult ToErrorResponse(this IModResult<Failure> result)
+  public static IResult ToErrorResponse(this ResultBase<Failure> result)
   {
     return TypedResults.Problem(result);
   }

@@ -16,7 +16,7 @@ public static class ResultInterfaceExtensions
     if (result.Failure is not null)
     {
       sb.AppendLine($"FailureType: {Enum.GetName(typeof(FailureType), result.Failure.Type)}");
-      if (result.Failure.Errors.Count > 0)
+      if (result.Failure.HasErrors())
       {
         sb.AppendLine("Errors:");
         sb = result.Failure.Errors.Select(e => e.Message)

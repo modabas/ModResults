@@ -118,7 +118,12 @@ public sealed partial class Result : ResultBase<Failure>
       return new Result(FailureType.Unspecified)
         .WithStatementsFrom(result);
     }
-    return new Result(result.Failure.Type, result.Failure.Errors)
+    if (result.Failure.HasErrors())
+    {
+      return new Result(result.Failure.Type, result.Failure.Errors)
+        .WithStatementsFrom(result);
+    }
+    return new Result(result.Failure.Type, Definitions.EmptyErrors)
       .WithStatementsFrom(result);
   }
 }
@@ -231,7 +236,12 @@ public sealed partial class Result<TValue> : ResultBase<TValue, Failure>
       return new Result<TValue>(FailureType.Unspecified)
         .WithStatementsFrom(result);
     }
-    return new Result<TValue>(result.Failure.Type, result.Failure.Errors)
+    if (result.Failure.HasErrors())
+    {
+      return new Result<TValue>(result.Failure.Type, result.Failure.Errors)
+          .WithStatementsFrom(result);
+    }
+    return new Result<TValue>(result.Failure.Type, Definitions.EmptyErrors)
         .WithStatementsFrom(result);
   }
 

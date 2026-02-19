@@ -13,7 +13,7 @@ public static class TypedResultsExtensions
     /// <param name="result"></param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException">Thrown if result is in Ok state.</exception>
-    public static ProblemHttpResult Problem(IModResult<Failure> result)
+    public static ProblemHttpResult Problem(ResultBase<Failure> result)
     {
       if (result.IsOk)
       {
@@ -39,14 +39,17 @@ public static class TypedResultsExtensions
     }
   }
   private static readonly IReadOnlyList<Error> _emptyErrors = [];
-  private static ProblemHttpResult ToProblem(this IModResult<Failure> result, int statusCode)
+  private static readonly IReadOnlyList<Fact> _emptyFacts = [];
+  private static readonly IReadOnlyList<Warning> _emptyWarnings = [];
+  private static ProblemHttpResult ToProblem(this ResultBase<Failure> result, int statusCode)
   {
-    var detail = result.Failure?.Errors.FirstOrDefault()?.Message;
+    var errors = (result.Failure?.HasErrors() ?? false) ? result.Failure.Errors : _emptyErrors;
+    var detail = errors.FirstOrDefault()?.Message;
     var extensions = new Dictionary<string, object?>()
     {
-      { "errors", result.Failure?.Errors ?? _emptyErrors },
-      { "facts", result.Statements.Facts },
-      { "warnings", result.Statements.Warnings }
+      { "errors", errors },
+      { "facts", result.HasFacts() ? result.Statements.Facts : _emptyFacts },
+      { "warnings", result.HasWarnings() ? result.Statements.Warnings : _emptyWarnings }
     };
     return TypedResults.Problem(
       detail: detail,
@@ -54,16 +57,17 @@ public static class TypedResultsExtensions
       extensions: extensions);
   }
 
-  private static ProblemHttpResult ToValidationProblem(this IModResult<Failure> result)
+  private static ProblemHttpResult ToValidationProblem(this ResultBase<Failure> result)
   {
-    var errors = (result.Failure?.Errors ?? _emptyErrors)
+    var resultErrors = (result.Failure?.HasErrors() ?? false) ? result.Failure.Errors : _emptyErrors;
+    var errors = resultErrors
         .GroupBy(e => e.PropertyName ?? string.Empty)
         .Select(g => new { g.Key, Values = g.Select(e => e.Message).ToArray() })
         .ToDictionary(pair => pair.Key, pair => pair.Values);
     var extensions = new Dictionary<string, object?>()
     {
-      { "facts", result.Statements.Facts },
-      { "warnings", result.Statements.Warnings }
+      { "facts", result.HasFacts() ? result.Statements.Facts : _emptyFacts },
+      { "warnings", result.HasWarnings() ? result.Statements.Warnings : _emptyWarnings }
     };
     var problemDetails = new HttpValidationProblemDetails(errors)
     {

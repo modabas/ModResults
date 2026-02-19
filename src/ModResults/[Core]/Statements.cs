@@ -66,7 +66,10 @@ public sealed class Statements : IStatements
   /// </summary>
   public void ClearWarnings()
   {
-    GetWarnings().Clear();
+    if (HasWarnings())
+    {
+      GetWarnings().Clear();
+    }
   }
 
   /// <summary>
@@ -101,13 +104,22 @@ public sealed class Statements : IStatements
   /// </summary>
   public void ClearFacts()
   {
-    GetFacts().Clear();
+    if (HasFacts())
+    {
+      GetFacts().Clear();
+    }
   }
 
   //intended as single public constructor to be used from json deserialization
   public Statements(IReadOnlyList<Fact> facts, IReadOnlyList<Warning> warnings)
   {
-    GetFacts().AddRange(facts);
-    GetWarnings().AddRange(warnings);
+    if (facts.Count > 0)
+    {
+      GetFacts().AddRange(facts);
+    }
+    if (warnings.Count > 0)
+    {
+      GetWarnings().AddRange(warnings);
+    }
   }
 }

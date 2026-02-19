@@ -16,7 +16,8 @@ public static class ResultInterfaceErrorExtensions
     string code,
     StringComparison comparisonType = Definitions.DefaultComparisonType)
   {
-    return result.Failure?.Errors.Any(e => e.HasCode(code, comparisonType)) ?? false;
+    return (result.Failure?.HasErrors() ?? false) &&
+      result.Failure.Errors.Any(e => e.HasCode(code, comparisonType));
   }
 
   /// <summary>
@@ -57,7 +58,11 @@ public static class ResultInterfaceErrorExtensions
     string code,
     StringComparison comparisonType)
   {
-    return result.Failure?.Errors.Where(e => e.HasCode(code, comparisonType)) ?? [];
+    if ((result.Failure?.HasErrors() ?? false))
+    {
+      return result.Failure.Errors.Where(e => e.HasCode(code, comparisonType));
+    }
+    return [];
   }
 
   /// <summary>
@@ -72,7 +77,8 @@ public static class ResultInterfaceErrorExtensions
     bool includeAssignableTo = false)
     where TException : Exception
   {
-    return result.Failure?.Errors.Any(e => e.HasException<TException>(includeAssignableTo)) ?? false;
+    return (result.Failure?.HasErrors() ?? false) &&
+      result.Failure.Errors.Any(e => e.HasException<TException>(includeAssignableTo));
   }
 
   /// <summary>
@@ -112,7 +118,11 @@ public static class ResultInterfaceErrorExtensions
     this ResultBase<Failure> result,
     bool includeAssignableTo = false) where TException : Exception
   {
-    return result.Failure?.Errors.Where(e => e.HasException<TException>(includeAssignableTo)) ?? [];
+    if ((result.Failure?.HasErrors() ?? false))
+    {
+      return result.Failure.Errors.Where(e => e.HasException<TException>(includeAssignableTo));
+    }
+    return [];
   }
 
   /// <summary>
@@ -127,7 +137,8 @@ public static class ResultInterfaceErrorExtensions
     Type exceptionType,
     bool includeAssignableTo = false)
   {
-    return result.Failure?.Errors.Any(e => e.HasException(exceptionType, includeAssignableTo)) ?? false;
+    return (result.Failure?.HasErrors() ?? false) &&
+      result.Failure.Errors.Any(e => e.HasException(exceptionType, includeAssignableTo));
   }
 
   /// <summary>
@@ -168,6 +179,10 @@ public static class ResultInterfaceErrorExtensions
     Type exceptionType,
     bool includeAssignableTo = false)
   {
-    return result.Failure?.Errors.Where(e => e.HasException(exceptionType, includeAssignableTo)) ?? [];
+    if ((result.Failure?.HasErrors() ?? false))
+    {
+      return result.Failure.Errors.Where(e => e.HasException(exceptionType, includeAssignableTo));
+    }
+    return [];
   }
 }

@@ -22,12 +22,12 @@ public abstract class ResultBase : IModResult
     return _statements is not null;
   }
 
-  internal bool HasFacts()
+  public bool HasFacts()
   {
     return HasStatements() && GetStatements().HasFacts();
   }
 
-  internal bool HasWarnings()
+  public bool HasWarnings()
   {
     return HasStatements() && GetStatements().HasWarnings();
   }
