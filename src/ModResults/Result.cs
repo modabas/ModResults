@@ -62,7 +62,7 @@ public sealed partial class Result : BaseResult<Failure>
     }
     IsOk = isOk;
     Failure = failure;
-    SetStatements(statements);
+    Statements = statements!;
   }
 
   /// <summary>
@@ -199,7 +199,7 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
     IsOk = isOk;
     Value = value;
     Failure = failure;
-    SetStatements(statements);
+    Statements = statements!;
   }
 
   /// <summary>

@@ -18,7 +18,7 @@ public abstract class BaseResult : IModResult
     return _statements ??= new(null, null);
   }
 
-  protected void SetStatements(Statements? statements)
+  private void SetStatements(Statements? statements)
   {
     // If the provided statements is null or does not contain any facts or warnings,
     // we set the _statements field to null to avoid unnecessary memory allocation.
@@ -35,7 +35,11 @@ public abstract class BaseResult : IModResult
   /// <summary>
   /// Contains facts and warnings for the result.
   /// </summary>
-  public Statements Statements => GetStatements();
+  public Statements Statements
+  {
+    get => GetStatements();
+    init => SetStatements(value);
+  }
 
   /// <summary>
   /// Determines whether the current result has its statement property initialized.
