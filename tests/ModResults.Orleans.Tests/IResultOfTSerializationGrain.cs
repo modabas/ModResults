@@ -8,4 +8,6 @@ internal interface IResultOfTSerializationGrain : IGrainWithIntegerKey
   Task<Result<ValueClass>> OkResultWithValueClass();
   Task<Result<ValueRecord>> OkResultWithValueRecord();
   Task<Result<ValueStruct>> OkResultWithValueStruct();
+  Task<Result<ValueClass>> BasicFailedResultWithValueClass();
+  Task<Result<ValueClass>> BasicOkResultWithValueClass();
 }

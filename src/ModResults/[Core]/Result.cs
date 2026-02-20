@@ -50,7 +50,7 @@ public sealed class Result<TValue, TFailure> : BaseResult<TValue, TFailure>
     IsOk = isOk;
     Value = value;
     Failure = failure;
-    _statements = statements;
+    SetStatements(statements);
   }
 
   public static Result<TValue, TFailure> Ok(TValue value)

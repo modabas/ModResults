@@ -56,6 +56,9 @@ public class ResultOfTSerializationTests
     Assert.NotNull(resultOfT?.Value);
     Assert.Equal(42, resultOfT.Value.Number);
     Assert.Equal("Meaning of life.", resultOfT.Value.String);
+    Assert.True(resultOfT.HasStatements());
+    Assert.True(resultOfT.HasFacts());
+    Assert.True(resultOfT.HasWarnings());
     Assert.Equal(3, resultOfT.Statements.Facts.Count);
     Assert.Equal(string.Empty, resultOfT.Statements.Facts[2].Message);
     Assert.Equal("Fact 2", resultOfT.Statements.Facts[1].Message);
@@ -143,6 +146,10 @@ public class ResultOfTSerializationTests
     Assert.False(resultOfT.IsOk);
     Assert.True(resultOfT.IsFailed);
     Assert.NotNull(resultOfT.Failure);
+    Assert.True(resultOfT.HasStatements());
+    Assert.True(resultOfT.HasFacts());
+    Assert.True(resultOfT.HasWarnings());
+    Assert.True(resultOfT.Failure.HasErrors());
     Assert.Equal(5, resultOfT.Failure.Errors.Count);
     Assert.Equal(string.Empty, resultOfT.Failure.Errors[0].Message);
     Assert.Equal("Error 2", resultOfT.Failure.Errors[1].Message);
@@ -198,5 +205,53 @@ public class ResultOfTSerializationTests
     Assert.True(resultOfT.IsFailedWith<ApplicationException>());
     Assert.False(resultOfT.IsFailedWith<Exception>());
     Assert.True(resultOfT.IsFailedWith<Exception>(true));
+  }
+
+  [Fact]
+  public async Task BasicOkResultWithValueClassAsync()
+  {
+    // Arrange
+    var testGrain = _cluster.GrainFactory.GetGrain<IResultOfTSerializationGrain>(0);
+
+    // Act
+    var resultOfT = await testGrain.BasicOkResultWithValueClass();
+
+    // Assert
+    Assert.NotNull(resultOfT);
+    Assert.True(resultOfT.IsOk);
+    Assert.False(resultOfT.IsFailed);
+    Assert.Null(resultOfT.Failure);
+    Assert.NotNull(resultOfT?.Value);
+    Assert.Equal(42, resultOfT.Value.Number);
+    Assert.Equal("Meaning of life.", resultOfT.Value.String);
+    Assert.False(resultOfT.HasStatements());
+    Assert.False(resultOfT.HasFacts());
+    Assert.False(resultOfT.HasWarnings());
+  }
+
+  [Fact]
+  public async Task BasicFailedResultWithValueClassAsync()
+  {
+    // Arrange
+    var testGrain = _cluster.GrainFactory.GetGrain<IResultOfTSerializationGrain>(0);
+
+    // Act
+    var resultOfT = await testGrain.BasicFailedResultWithValueClass();
+
+    // Assert
+    Assert.NotNull(resultOfT);
+    Assert.False(resultOfT.IsOk);
+    Assert.True(resultOfT.IsFailed);
+    Assert.NotNull(resultOfT.Failure);
+    Assert.False(resultOfT.HasStatements());
+    Assert.False(resultOfT.HasFacts());
+    Assert.False(resultOfT.HasWarnings());
+    Assert.False(resultOfT.Failure.HasErrors());
+    Assert.True(resultOfT.IsFailedWith(FailureType.Error));
+    Assert.False(resultOfT.IsFailedWith(FailureType.Unspecified));
+    Assert.False(resultOfT.IsFailedWith("e2"));
+    Assert.False(resultOfT.IsFailedWith<InvalidCastException>());
+    Assert.False(resultOfT.IsFailedWith<Exception>());
+    Assert.False(resultOfT.IsFailedWith(typeof(Exception)));
   }
 }

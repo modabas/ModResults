@@ -6,16 +6,32 @@ public abstract class BaseResult : IModResult
 
   public abstract bool IsFailed { get; }
 
-  protected Statements? _statements;
-  protected Statements GetStatements()
+  private Statements? _statements;
+  private Statements GetStatements()
   {
     return _statements ??= new(null, null);
+  }
+
+  protected void SetStatements(Statements? statements)
+  {
+    if (statements is null)
+    {
+      _statements = null;
+      return;
+    }
+    if (statements.HasWarnings() || statements.HasFacts())
+    {
+      _statements = statements;
+      return;
+    }
+    _statements = null;
+    return;
   }
 
   /// <summary>
   /// Contains facts and warnings for the result.
   /// </summary>
-  public Statements Statements { get { return GetStatements(); } init { _statements = value; } }
+  public Statements Statements => GetStatements();
 
   /// <summary>
   /// Determines whether the current result has its statement property initialized.

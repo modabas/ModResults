@@ -94,4 +94,51 @@ public class ResultJsonSerializationTests
     Assert.False(result.IsFailedWith<ArgumentException>(true));
   }
 
+  [Fact]
+  public void BasicOkResult()
+  {
+    // Arrange
+    var resultOriginal = Result.Ok();
+
+    // Act
+    var jsonString = JsonSerializer.Serialize(resultOriginal, _jsonSerializerOptions);
+    var result = JsonSerializer.Deserialize<Result>(jsonString, _jsonSerializerOptions);
+
+    // Assert
+    Assert.NotNull(result);
+    Assert.True(result.IsOk);
+    Assert.False(result.IsFailed);
+    Assert.Null(result.Failure);
+    Assert.False(result.HasStatements());
+    Assert.False(result.HasFacts());
+    Assert.False(result.HasWarnings());
+  }
+
+  [Fact]
+  public void BasicFailedResult()
+  {
+    // Arrange
+    var resultOriginal = Result.Error();
+
+    // Act
+    var jsonString = JsonSerializer.Serialize(resultOriginal, _jsonSerializerOptions);
+    var result = JsonSerializer.Deserialize<Result>(jsonString, _jsonSerializerOptions);
+
+    // Assert
+    Assert.NotNull(result);
+    Assert.False(result.IsOk);
+    Assert.True(result.IsFailed);
+    Assert.NotNull(result.Failure);
+    Assert.False(result.HasStatements());
+    Assert.False(result.HasFacts());
+    Assert.False(result.HasWarnings());
+    Assert.False(result.Failure.HasErrors());
+    Assert.True(result.IsFailedWith(FailureType.Error));
+    Assert.False(result.IsFailedWith(FailureType.Unspecified));
+    Assert.False(result.IsFailedWith("e2"));
+    Assert.False(result.IsFailedWith<Exception>());
+    Assert.False(result.IsFailedWith(typeof(Exception)));
+    Assert.False(result.IsFailedWith(typeof(ArgumentException)));
+    Assert.False(result.IsFailedWith<ArgumentException>(true));
+  }
 }

@@ -110,4 +110,23 @@ internal class ResultOfTSerializationGrain : IResultOfTSerializationGrain
     //Act
     return Task.FromResult(resultOfTOriginal);
   }
+
+  public Task<Result<ValueClass>> BasicFailedResultWithValueClass()
+  {
+    // Arrange
+    var resultOfTOriginal = Result<ValueClass>.Error();
+
+    //Act
+    return Task.FromResult(resultOfTOriginal);
+  }
+
+  public Task<Result<ValueClass>> BasicOkResultWithValueClass()
+  {
+    // Arrange
+    var resultOfTOriginal = Result<ValueClass>.Ok(
+      new ValueClass() { Number = 42, String = "Meaning of life." });
+
+    //Act
+    return Task.FromResult(resultOfTOriginal);
+  }
 }
