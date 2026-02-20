@@ -2,8 +2,14 @@
 
 public abstract class BaseResult : IModResult
 {
+  /// <summary>
+  /// Gets if state of result instance is Ok.
+  /// </summary>
   public abstract bool IsOk { get; init; }
 
+  /// <summary>
+  /// Gets if state of result instance is Failed.
+  /// </summary>
   public abstract bool IsFailed { get; }
 
   private Statements? _statements;
@@ -14,17 +20,15 @@ public abstract class BaseResult : IModResult
 
   protected void SetStatements(Statements? statements)
   {
-    if (statements is null)
+    // If the provided statements is null or does not contain any facts or warnings,
+    // we set the _statements field to null to avoid unnecessary memory allocation.
+    if (statements is null ||
+      !(statements.HasWarnings() || statements.HasFacts()))
     {
       _statements = null;
       return;
     }
-    if (statements.HasWarnings() || statements.HasFacts())
-    {
-      _statements = statements;
-      return;
-    }
-    _statements = null;
+    _statements = statements;
     return;
   }
 

@@ -7,15 +7,9 @@ namespace ModResults;
 /// </summary>
 public sealed partial class Result : BaseResult<Failure>
 {
-  /// <summary>
-  /// Gets if state of result instance is Ok.
-  /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
   public override bool IsOk { get; init; }
 
-  /// <summary>
-  /// Gets if state of result instance is Failed.
-  /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public override bool IsFailed => !IsOk;
 
@@ -135,16 +129,10 @@ public sealed partial class Result : BaseResult<Failure>
 public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
   where TValue : notnull
 {
-  /// <summary>
-  /// Gets if state of result instance is Ok.
-  /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
   public override bool IsOk { get; init; }
 
-  /// <summary>
-  /// Gets if state of result instance is Failed.
-  /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public override bool IsFailed => !IsOk;
