@@ -224,9 +224,9 @@ public class ResultOfTSerializationTests
     Assert.NotNull(resultOfT?.Value);
     Assert.Equal(42, resultOfT.Value.Number);
     Assert.Equal("Meaning of life.", resultOfT.Value.String);
-    Assert.False(resultOfT.HasStatements());
     Assert.False(resultOfT.HasFacts());
     Assert.False(resultOfT.HasWarnings());
+    Assert.False(resultOfT.HasStatements());
   }
 
   [Fact]
@@ -243,9 +243,9 @@ public class ResultOfTSerializationTests
     Assert.False(resultOfT.IsOk);
     Assert.True(resultOfT.IsFailed);
     Assert.NotNull(resultOfT.Failure);
-    Assert.False(resultOfT.HasStatements());
     Assert.False(resultOfT.HasFacts());
     Assert.False(resultOfT.HasWarnings());
+    Assert.False(resultOfT.HasStatements());
     Assert.False(resultOfT.Failure.HasErrors());
     Assert.True(resultOfT.IsFailedWith(FailureType.Error));
     Assert.False(resultOfT.IsFailedWith(FailureType.Unspecified));

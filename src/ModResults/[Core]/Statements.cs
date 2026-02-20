@@ -1,6 +1,6 @@
 ﻿namespace ModResults;
 
-public sealed class Statements : IStatements
+public sealed class Statements
 {
   private List<Warning>? _warnings;
   private List<Warning> GetWarnings()

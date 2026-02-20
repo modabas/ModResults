@@ -92,9 +92,9 @@ public class ResultSerializationTests
     Assert.True(result.IsOk);
     Assert.False(result.IsFailed);
     Assert.Null(result.Failure);
-    Assert.False(result.HasStatements());
     Assert.False(result.HasFacts());
     Assert.False(result.HasWarnings());
+    Assert.False(result.HasStatements());
   }
 
   [Fact]
@@ -111,9 +111,9 @@ public class ResultSerializationTests
     Assert.False(result.IsOk);
     Assert.True(result.IsFailed);
     Assert.NotNull(result.Failure);
-    Assert.False(result.HasStatements());
     Assert.False(result.HasFacts());
     Assert.False(result.HasWarnings());
+    Assert.False(result.HasStatements());
     Assert.False(result.Failure.HasErrors());
     Assert.True(result.IsFailedWith(FailureType.Error));
     Assert.False(result.IsFailedWith(FailureType.Unspecified));

@@ -38,9 +38,9 @@ public class ResultConversionTests
     Assert.NotNull(resultOfT.Value);
     Assert.Equal(42, resultOfT.Value.Number);
     Assert.Equal("Meaning of life.", resultOfT.Value.String);
-    Assert.False(resultOfT.HasStatements());
     Assert.False(resultOfT.HasFacts());
     Assert.False(resultOfT.HasWarnings());
+    Assert.False(resultOfT.HasStatements());
   }
 
   [Fact]
@@ -97,9 +97,9 @@ public class ResultConversionTests
     Assert.True(resultOfT.IsFailed);
     Assert.NotNull(resultOfT.Failure);
     Assert.Null(resultOfT.Value);
-    Assert.False(resultOfT.HasStatements());
     Assert.False(resultOfT.HasFacts());
     Assert.False(resultOfT.HasWarnings());
+    Assert.False(resultOfT.HasStatements());
     Assert.False(resultOfT.Failure.HasErrors());
   }
 
