@@ -2,66 +2,53 @@
 
 public static partial class ResultWarningExtensions
 {
-  public static Result<TValue, TFailure> WithWarnings<TValue, TFailure>(
-    this Result<TValue, TFailure> result,
+  extension<TValue, TFailure>(Result<TValue, TFailure> result)
+    where TValue : notnull
+    where TFailure : notnull
+  {
+    public Result<TValue, TFailure> WithWarnings(
     IReadOnlyList<Warning> warnings)
-    where TValue : notnull
-    where TFailure : notnull
-  {
-    result.Statements.AddWarnings(warnings);
-    return result;
-  }
-
-  public static Result<TValue, TFailure> WithWarnings<TValue, TFailure>(
-    this Result<TValue, TFailure> result,
-    IEnumerable<Warning> warnings)
-    where TValue : notnull
-    where TFailure : notnull
-  {
-    result.Statements.AddWarnings(warnings);
-    return result;
-  }
-
-  public static Result<TValue, TFailure> WithWarnings<TValue, TFailure>(
-    this Result<TValue, TFailure> result,
-    IEnumerable<string> messages)
-    where TValue : notnull
-    where TFailure : notnull
-  {
-    result.Statements.AddWarnings(messages.Select(m => new Warning(m)));
-    return result;
-  }
-
-  public static Result<TValue, TFailure> WithWarningsFrom<TValue, TFailure>(
-    this Result<TValue, TFailure> result,
-    BaseResult fromResult)
-    where TValue : notnull
-    where TFailure : notnull
-  {
-    if (fromResult.HasWarnings())
     {
-      result.WithWarnings(fromResult.Statements.Warnings);
+      result.Statements.AddWarnings(warnings);
+      return result;
     }
-    return result;
-  }
 
-  public static Result<TValue, TFailure> WithWarning<TValue, TFailure>(
-    this Result<TValue, TFailure> result,
-    Warning warning)
-    where TValue : notnull
-    where TFailure : notnull
-  {
-    result.Statements.AddWarning(warning);
-    return result;
-  }
+    public Result<TValue, TFailure> WithWarnings(
+      IEnumerable<Warning> warnings)
+    {
+      result.Statements.AddWarnings(warnings);
+      return result;
+    }
 
-  public static Result<TValue, TFailure> WithWarning<TValue, TFailure>(
-    this Result<TValue, TFailure> result,
-    string message)
-    where TValue : notnull
-    where TFailure : notnull
-  {
-    result.Statements.AddWarning(new Warning(message));
-    return result;
+    public Result<TValue, TFailure> WithWarnings(
+      IEnumerable<string> messages)
+    {
+      result.Statements.AddWarnings(messages.Select(m => new Warning(m)));
+      return result;
+    }
+
+    public Result<TValue, TFailure> WithWarningsFrom(
+      BaseResult fromResult)
+    {
+      if (fromResult.HasWarnings())
+      {
+        result.WithWarnings(fromResult.Statements.Warnings);
+      }
+      return result;
+    }
+
+    public Result<TValue, TFailure> WithWarning(
+      Warning warning)
+    {
+      result.Statements.AddWarning(warning);
+      return result;
+    }
+
+    public Result<TValue, TFailure> WithWarning(
+      string message)
+    {
+      result.Statements.AddWarning(new Warning(message));
+      return result;
+    }
   }
 }

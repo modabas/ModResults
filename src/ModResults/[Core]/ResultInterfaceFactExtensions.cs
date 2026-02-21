@@ -4,63 +4,59 @@ namespace ModResults;
 
 public static class ResultInterfaceFactExtensions
 {
-  /// <summary>
-  /// Determines whether the result has a <see cref="Fact"/> with the specified code.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="code">Fact code to check for.</param>
-  /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
-  /// <returns></returns>
-  public static bool HasFact(
-    this BaseResult result,
-    string code,
-    StringComparison comparisonType = Definitions.DefaultComparisonType)
+  extension(BaseResult result)
   {
-    return result.HasFacts() && result.Statements.Facts.Any(f => f.HasCode(code, comparisonType));
-  }
-
-  /// <summary>
-  /// Checks if the result has a <see cref="Fact"/> with the specified code, returning matching facts as out parameter.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="code">Fact code to check for.</param>
-  /// <param name="facts">Matching fact collection.</param>
-  /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
-  /// <returns></returns>
-  public static bool HasFact(
-    this BaseResult result,
-    string code,
-    out ReadOnlyCollection<Fact> facts,
-    StringComparison comparisonType = Definitions.DefaultComparisonType)
-  {
-    facts = result.GetFacts(code, comparisonType);
-    return facts.Count > 0;
-  }
-
-  /// <summary>
-  /// Gets all <see cref="Fact"/>s with the specified code.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="code">Fact code to check for.</param>
-  /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
-  /// <returns></returns>
-  public static ReadOnlyCollection<Fact> GetFacts(
-    this BaseResult result,
-    string code,
-    StringComparison comparisonType = Definitions.DefaultComparisonType)
-  {
-    return result.GetFactsInternal(code, comparisonType).ToList().AsReadOnly();
-  }
-
-  private static IEnumerable<Fact> GetFactsInternal(
-    this BaseResult result,
-    string code,
-    StringComparison comparisonType)
-  {
-    if (result.HasFacts())
+    /// <summary>
+    /// Determines whether the result has a <see cref="Fact"/> with the specified code.
+    /// </summary>
+    /// <param name="code">Fact code to check for.</param>
+    /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
+    /// <returns></returns>
+    public bool HasFact(
+      string code,
+      StringComparison comparisonType = Definitions.DefaultComparisonType)
     {
-      return result.Statements.Facts.Where(f => f.HasCode(code, comparisonType));
+      return result.HasFacts() && result.Statements.Facts.Any(f => f.HasCode(code, comparisonType));
     }
-    return [];
+
+    /// <summary>
+    /// Checks if the result has a <see cref="Fact"/> with the specified code, returning matching facts as out parameter.
+    /// </summary>
+    /// <param name="code">Fact code to check for.</param>
+    /// <param name="facts">Matching fact collection.</param>
+    /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
+    /// <returns></returns>
+    public bool HasFact(
+      string code,
+      out ReadOnlyCollection<Fact> facts,
+      StringComparison comparisonType = Definitions.DefaultComparisonType)
+    {
+      facts = result.GetFacts(code, comparisonType);
+      return facts.Count > 0;
+    }
+
+    /// <summary>
+    /// Gets all <see cref="Fact"/>s with the specified code.
+    /// </summary>
+    /// <param name="code">Fact code to check for.</param>
+    /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
+    /// <returns></returns>
+    public ReadOnlyCollection<Fact> GetFacts(
+      string code,
+      StringComparison comparisonType = Definitions.DefaultComparisonType)
+    {
+      return result.GetFactsInternal(code, comparisonType).ToList().AsReadOnly();
+    }
+
+    private IEnumerable<Fact> GetFactsInternal(
+      string code,
+      StringComparison comparisonType)
+    {
+      if (result.HasFacts())
+      {
+        return result.Statements.Facts.Where(f => f.HasCode(code, comparisonType));
+      }
+      return [];
+    }
   }
 }
