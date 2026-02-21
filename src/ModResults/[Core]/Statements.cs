@@ -118,11 +118,11 @@ public sealed class Statements
   {
     if (facts?.Count > 0)
     {
-      GetFacts().AddRange(facts);
+      _facts = new(facts);
     }
     if (warnings?.Count > 0)
     {
-      GetWarnings().AddRange(warnings);
+      _warnings = new(warnings);
     }
   }
 }
