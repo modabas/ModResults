@@ -75,10 +75,7 @@ public sealed class Statements
   /// </summary>
   public void ClearWarnings()
   {
-    if (HasWarnings())
-    {
-      GetWarnings().Clear();
-    }
+    _warnings = null;
   }
 
   /// <summary>
@@ -113,10 +110,7 @@ public sealed class Statements
   /// </summary>
   public void ClearFacts()
   {
-    if (HasFacts())
-    {
-      GetFacts().Clear();
-    }
+    _facts = null;
   }
 
   //intended as single public constructor to be used from json deserialization
