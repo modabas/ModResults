@@ -41,4 +41,22 @@ internal class ResultSerializationGrain : IResultSerializationGrain
     // Act
     return Task.FromResult(resultOriginal);
   }
+
+  public Task<Result> BasicOkResult()
+  {
+    // Arrange
+    var resultOriginal = Result.Ok();
+
+    // Act
+    return Task.FromResult(resultOriginal);
+  }
+
+  public Task<Result> BasicFailedResult()
+  {
+    // Arrange
+    var resultOriginal = Result.Error();
+
+    // Act
+    return Task.FromResult(resultOriginal);
+  }
 }

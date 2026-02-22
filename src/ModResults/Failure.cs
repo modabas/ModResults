@@ -6,12 +6,26 @@
 /// </summary>
 public sealed class Failure
 {
-  private readonly List<Error> _errors = [];
+  private List<Error>? _errors;
+  private List<Error> GetErrors()
+  {
+    return _errors ??= [];
+  }
 
   /// <summary>
   /// Error collection.
   /// </summary>
-  public IReadOnlyList<Error> Errors => _errors.AsReadOnly();
+  public IReadOnlyList<Error> Errors => GetErrors().AsReadOnly();
+
+  /// <summary>
+  /// Determines whether the current failure contains any errors without initializing the errors property.
+  /// </summary>
+  /// <returns><see langword="true"/> if the result contains at least one error; otherwise, <see langword="false"/>.</returns>
+
+  public bool HasErrors()
+  {
+    return _errors is not null && _errors.Count > 0;
+  }
 
   /// <summary>
   /// Type of failure.
@@ -19,9 +33,26 @@ public sealed class Failure
   public FailureType Type { get; }
 
   //intended as single public constructor to be used from json deserialization
-  public Failure(FailureType type, IReadOnlyList<Error> errors)
+  public Failure(FailureType type, IReadOnlyList<Error>? errors)
   {
     Type = type;
-    _errors.AddRange(errors);
+    if (errors?.Count > 0)
+    {
+      _errors = new(errors);
+    }
+  }
+
+  private Failure(FailureType type, IEnumerable<Error> errors)
+  {
+    Type = type;
+    if (errors.Any())
+    {
+      _errors = new(errors);
+    }
+  }
+
+  internal static Failure Create(FailureType type, IEnumerable<Error> errors)
+  {
+    return new Failure(type, errors);
   }
 }

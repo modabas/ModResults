@@ -30,11 +30,11 @@ ModResults implements the Result pattern, providing a structured way to represen
 For each failure type (like Error, Forbidden, Unauthorized, etc.), there are several overloads that creates a failed result with the given FailureType:
 - No parameters:
 Creates a failed result with the given FailureType and no errors.
-- String[] errorMessages:
+- `params IEnumerable<String>` errorMessages:
 Converts each string to an Error and includes them in the result.
-- Error[] errors:
+- `params IEnumerable<Error>` errors:
 Directly includes the provided Error objects in the result.
-- Exception[] exceptions:
+- `params IEnumerable<Exception>` exceptions:
 Converts each exception to an Error and includes them in the result.
 
 These methods make it easy and consistent to create failed results with detailed error information, categorized by failure type, for both non-generic and generic result types.

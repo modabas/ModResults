@@ -18,7 +18,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Error(params string[] errorMessages)
+  public static Result Error(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Error;
     return new Result(
@@ -31,7 +31,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Error(params Error[] errors)
+  public static Result Error(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.Error, errors);
   }
@@ -41,7 +41,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Error(params Exception[] exceptions)
+  public static Result Error(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Error;
     return new Result(
@@ -65,7 +65,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Forbidden(params string[] errorMessages)
+  public static Result Forbidden(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Forbidden;
     return new Result(
@@ -78,7 +78,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Forbidden(params Error[] errors)
+  public static Result Forbidden(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.Forbidden, errors);
   }
@@ -88,7 +88,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Forbidden(params Exception[] exceptions)
+  public static Result Forbidden(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Forbidden;
     return new Result(
@@ -112,7 +112,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Unauthorized(params string[] errorMessages)
+  public static Result Unauthorized(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Unauthorized;
     return new Result(
@@ -125,7 +125,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Unauthorized(params Error[] errors)
+  public static Result Unauthorized(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.Unauthorized, errors);
   }
@@ -135,7 +135,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Unauthorized(params Exception[] exceptions)
+  public static Result Unauthorized(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Unauthorized;
     return new Result(
@@ -159,7 +159,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Invalid(params string[] errorMessages)
+  public static Result Invalid(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Invalid;
     return new Result(
@@ -172,7 +172,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Invalid(params Error[] errors)
+  public static Result Invalid(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.Invalid, errors);
   }
@@ -182,7 +182,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Invalid(params Exception[] exceptions)
+  public static Result Invalid(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Invalid;
     return new Result(
@@ -206,7 +206,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result NotFound(params string[] errorMessages)
+  public static Result NotFound(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.NotFound;
     return new Result(
@@ -219,7 +219,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result NotFound(params Error[] errors)
+  public static Result NotFound(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.NotFound, errors);
   }
@@ -229,7 +229,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result NotFound(params Exception[] exceptions)
+  public static Result NotFound(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.NotFound;
     return new Result(
@@ -253,7 +253,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Conflict(params string[] errorMessages)
+  public static Result Conflict(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Conflict;
     return new Result(
@@ -266,7 +266,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Conflict(params Error[] errors)
+  public static Result Conflict(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.Conflict, errors);
   }
@@ -276,7 +276,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Conflict(params Exception[] exceptions)
+  public static Result Conflict(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Conflict;
     return new Result(
@@ -300,7 +300,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result CriticalError(params string[] errorMessages)
+  public static Result CriticalError(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.CriticalError;
     return new Result(
@@ -313,7 +313,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result CriticalError(params Error[] errors)
+  public static Result CriticalError(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.CriticalError, errors);
   }
@@ -323,7 +323,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result CriticalError(params Exception[] exceptions)
+  public static Result CriticalError(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.CriticalError;
     return new Result(
@@ -347,7 +347,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Unavailable(params string[] errorMessages)
+  public static Result Unavailable(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Unavailable;
     return new Result(
@@ -360,7 +360,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Unavailable(params Error[] errors)
+  public static Result Unavailable(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.Unavailable, errors);
   }
@@ -370,7 +370,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result Unavailable(params Exception[] exceptions)
+  public static Result Unavailable(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Unavailable;
     return new Result(
@@ -394,7 +394,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result GatewayError(params string[] errorMessages)
+  public static Result GatewayError(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.GatewayError;
     return new Result(
@@ -407,7 +407,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result GatewayError(params Error[] errors)
+  public static Result GatewayError(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.GatewayError, errors);
   }
@@ -417,7 +417,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result GatewayError(params Exception[] exceptions)
+  public static Result GatewayError(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.GatewayError;
     return new Result(
@@ -441,7 +441,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result RateLimited(params string[] errorMessages)
+  public static Result RateLimited(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.RateLimited;
     return new Result(
@@ -454,7 +454,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result RateLimited(params Error[] errors)
+  public static Result RateLimited(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.RateLimited, errors);
   }
@@ -464,7 +464,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result RateLimited(params Exception[] exceptions)
+  public static Result RateLimited(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.RateLimited;
     return new Result(
@@ -488,7 +488,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result TimedOut(params string[] errorMessages)
+  public static Result TimedOut(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.TimedOut;
     return new Result(
@@ -501,7 +501,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result TimedOut(params Error[] errors)
+  public static Result TimedOut(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.TimedOut, errors);
   }
@@ -511,7 +511,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result TimedOut(params Exception[] exceptions)
+  public static Result TimedOut(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.TimedOut;
     return new Result(
@@ -535,7 +535,7 @@ public partial class Result
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result PaymentRequired(params string[] errorMessages)
+  public static Result PaymentRequired(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.PaymentRequired;
     return new Result(
@@ -548,7 +548,7 @@ public partial class Result
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result PaymentRequired(params Error[] errors)
+  public static Result PaymentRequired(params IEnumerable<Error> errors)
   {
     return new Result(FailureType.PaymentRequired, errors);
   }
@@ -558,7 +558,7 @@ public partial class Result
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result PaymentRequired(params Exception[] exceptions)
+  public static Result PaymentRequired(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.PaymentRequired;
     return new Result(
@@ -605,7 +605,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Error(params string[] errorMessages)
+  public static Result<TValue> Error(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Error;
     return new Result<TValue>(
@@ -618,7 +618,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Error(params Error[] errors)
+  public static Result<TValue> Error(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.Error, errors);
   }
@@ -628,7 +628,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Error(params Exception[] exceptions)
+  public static Result<TValue> Error(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Error;
     return new Result<TValue>(
@@ -652,7 +652,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Forbidden(params string[] errorMessages)
+  public static Result<TValue> Forbidden(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Forbidden;
     return new Result<TValue>(
@@ -665,7 +665,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Forbidden(params Error[] errors)
+  public static Result<TValue> Forbidden(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.Forbidden, errors);
   }
@@ -675,7 +675,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Forbidden(params Exception[] exceptions)
+  public static Result<TValue> Forbidden(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Forbidden;
     return new Result<TValue>(
@@ -699,7 +699,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Unauthorized(params string[] errorMessages)
+  public static Result<TValue> Unauthorized(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Unauthorized;
     return new Result<TValue>(
@@ -712,7 +712,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Unauthorized(params Error[] errors)
+  public static Result<TValue> Unauthorized(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.Unauthorized, errors);
   }
@@ -722,7 +722,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Unauthorized(params Exception[] exceptions)
+  public static Result<TValue> Unauthorized(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Unauthorized;
     return new Result<TValue>(
@@ -746,7 +746,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Invalid(params string[] errorMessages)
+  public static Result<TValue> Invalid(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Invalid;
     return new Result<TValue>(
@@ -759,7 +759,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Invalid(params Error[] errors)
+  public static Result<TValue> Invalid(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.Invalid, errors);
   }
@@ -769,7 +769,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Invalid(params Exception[] exceptions)
+  public static Result<TValue> Invalid(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Invalid;
     return new Result<TValue>(
@@ -793,7 +793,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> NotFound(params string[] errorMessages)
+  public static Result<TValue> NotFound(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.NotFound;
     return new Result<TValue>(
@@ -806,7 +806,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> NotFound(params Error[] errors)
+  public static Result<TValue> NotFound(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.NotFound, errors);
   }
@@ -816,7 +816,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> NotFound(params Exception[] exceptions)
+  public static Result<TValue> NotFound(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.NotFound;
     return new Result<TValue>(
@@ -840,7 +840,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Conflict(params string[] errorMessages)
+  public static Result<TValue> Conflict(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Conflict;
     return new Result<TValue>(
@@ -853,7 +853,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Conflict(params Error[] errors)
+  public static Result<TValue> Conflict(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.Conflict, errors);
   }
@@ -863,7 +863,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Conflict(params Exception[] exceptions)
+  public static Result<TValue> Conflict(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Conflict;
     return new Result<TValue>(
@@ -887,7 +887,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> CriticalError(params string[] errorMessages)
+  public static Result<TValue> CriticalError(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.CriticalError;
     return new Result<TValue>(
@@ -900,7 +900,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> CriticalError(params Error[] errors)
+  public static Result<TValue> CriticalError(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.CriticalError, errors);
   }
@@ -910,7 +910,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> CriticalError(params Exception[] exceptions)
+  public static Result<TValue> CriticalError(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.CriticalError;
     return new Result<TValue>(
@@ -934,7 +934,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Unavailable(params string[] errorMessages)
+  public static Result<TValue> Unavailable(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.Unavailable;
     return new Result<TValue>(
@@ -947,7 +947,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Unavailable(params Error[] errors)
+  public static Result<TValue> Unavailable(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.Unavailable, errors);
   }
@@ -957,7 +957,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> Unavailable(params Exception[] exceptions)
+  public static Result<TValue> Unavailable(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.Unavailable;
     return new Result<TValue>(
@@ -981,7 +981,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> GatewayError(params string[] errorMessages)
+  public static Result<TValue> GatewayError(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.GatewayError;
     return new Result<TValue>(
@@ -994,7 +994,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> GatewayError(params Error[] errors)
+  public static Result<TValue> GatewayError(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.GatewayError, errors);
   }
@@ -1004,7 +1004,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> GatewayError(params Exception[] exceptions)
+  public static Result<TValue> GatewayError(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.GatewayError;
     return new Result<TValue>(
@@ -1028,7 +1028,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> RateLimited(params string[] errorMessages)
+  public static Result<TValue> RateLimited(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.RateLimited;
     return new Result<TValue>(
@@ -1041,7 +1041,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> RateLimited(params Error[] errors)
+  public static Result<TValue> RateLimited(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.RateLimited, errors);
   }
@@ -1051,7 +1051,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> RateLimited(params Exception[] exceptions)
+  public static Result<TValue> RateLimited(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.RateLimited;
     return new Result<TValue>(
@@ -1075,7 +1075,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> TimedOut(params string[] errorMessages)
+  public static Result<TValue> TimedOut(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.TimedOut;
     return new Result<TValue>(
@@ -1088,7 +1088,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> TimedOut(params Error[] errors)
+  public static Result<TValue> TimedOut(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.TimedOut, errors);
   }
@@ -1098,7 +1098,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> TimedOut(params Exception[] exceptions)
+  public static Result<TValue> TimedOut(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.TimedOut;
     return new Result<TValue>(
@@ -1122,7 +1122,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errorMessages">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> PaymentRequired(params string[] errorMessages)
+  public static Result<TValue> PaymentRequired(params IEnumerable<string> errorMessages)
   {
     var failureType = FailureType.PaymentRequired;
     return new Result<TValue>(
@@ -1135,7 +1135,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="errors">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> PaymentRequired(params Error[] errors)
+  public static Result<TValue> PaymentRequired(params IEnumerable<Error> errors)
   {
     return new Result<TValue>(FailureType.PaymentRequired, errors);
   }
@@ -1145,7 +1145,7 @@ public partial class Result<TValue>
   /// </summary>
   /// <param name="exceptions">Used to create error collection under <see cref="Failure"/>.</param>
   /// <returns></returns>
-  public static Result<TValue> PaymentRequired(params Exception[] exceptions)
+  public static Result<TValue> PaymentRequired(params IEnumerable<Exception> exceptions)
   {
     var failureType = FailureType.PaymentRequired;
     return new Result<TValue>(

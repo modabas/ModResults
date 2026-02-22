@@ -2,117 +2,116 @@
 
 public static class ResultStatementExtensions
 {
-  /// <summary>
-  /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of a <see cref="Statements"/> object.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="statements"></param>
-  /// <returns></returns>
-  public static Result WithStatements(
-    this Result result,
-    Statements statements)
+  extension(Result result)
   {
-    if (statements.Facts.Count > 0)
+    /// <summary>
+    /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of a <see cref="Statements"/> object.
+    /// </summary>
+    /// <param name="statements"></param>
+    /// <returns></returns>
+    public Result WithStatements(
+      Statements statements)
     {
-      result = result.WithFacts(statements.Facts);
+      if (statements.HasFacts())
+      {
+        result = result.WithFacts(statements.Facts);
+      }
+      if (statements.HasWarnings())
+      {
+        result = result.WithWarnings(statements.Warnings);
+      }
+      return result;
     }
-    if (statements.Warnings.Count > 0)
+
+    /// <summary>
+    /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of another result object.
+    /// </summary>
+    /// <param name="fromResult"></param>
+    /// <returns></returns>
+    public Result WithStatementsFrom(
+      BaseResult fromResult)
     {
-      result = result.WithWarnings(statements.Warnings);
+      if (fromResult.HasStatements())
+      {
+        return result.WithStatements(fromResult.Statements);
+      }
+      return result;
     }
-    return result;
   }
 
-  /// <summary>
-  /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of another result object.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="fromResult"></param>
-  /// <returns></returns>
-  public static Result WithStatementsFrom(
-    this Result result,
-    IModResult fromResult)
+  extension<TValue>(Result<TValue> result) where TValue : notnull
   {
-    return result.WithStatements(fromResult.Statements);
-  }
-
-  /// <summary>
-  /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of a <see cref="Statements"/> object.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="statements"></param>
-  /// <returns></returns>
-  public static Result<TValue> WithStatements<TValue>(
-    this Result<TValue> result,
-    Statements statements)
-    where TValue : notnull
-  {
-    if (statements.Facts.Count > 0)
+    /// <summary>
+    /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of a <see cref="Statements"/> object.
+    /// </summary>
+    /// <param name="statements"></param>
+    /// <returns></returns>
+    public Result<TValue> WithStatements(
+      Statements statements)
     {
-      result = result.WithFacts(statements.Facts);
+      if (statements.HasFacts())
+      {
+        result = result.WithFacts(statements.Facts);
+      }
+      if (statements.HasWarnings())
+      {
+        result = result.WithWarnings(statements.Warnings);
+      }
+      return result;
     }
-    if (statements.Warnings.Count > 0)
+
+    /// <summary>
+    /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of another result object.
+    /// </summary>
+    /// <param name="fromResult"></param>
+    /// <returns></returns>
+    public Result<TValue> WithStatementsFrom(
+      BaseResult fromResult)
     {
-      result = result.WithWarnings(statements.Warnings);
+      if (fromResult.HasStatements())
+      {
+        return result.WithStatements(fromResult.Statements);
+      }
+      return result;
     }
-    return result;
   }
 
-  /// <summary>
-  /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of another result object.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="fromResult"></param>
-  /// <returns></returns>
-  public static Result<TValue> WithStatementsFrom<TValue>(
-    this Result<TValue> result,
-    IModResult fromResult)
-    where TValue : notnull
-  {
-    return result.WithStatements(fromResult.Statements);
-  }
-
-  /// <summary>
-  /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of a <see cref="Statements"/> object.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <typeparam name="TFailure"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="statements"></param>
-  /// <returns></returns>
-  public static Result<TValue, TFailure> WithStatements<TValue, TFailure>(
-    this Result<TValue, TFailure> result,
-    Statements statements)
+  extension<TValue, TFailure>(Result<TValue, TFailure> result)
     where TValue : notnull
     where TFailure : notnull
   {
-    if (statements.Facts.Count > 0)
+    /// <summary>
+    /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of a <see cref="Statements"/> object.
+    /// </summary>
+    /// <param name="statements"></param>
+    /// <returns></returns>
+    public Result<TValue, TFailure> WithStatements(
+      Statements statements)
     {
-      result = result.WithFacts(statements.Facts);
+      if (statements.HasFacts())
+      {
+        result = result.WithFacts(statements.Facts);
+      }
+      if (statements.HasWarnings())
+      {
+        result = result.WithWarnings(statements.Warnings);
+      }
+      return result;
     }
-    if (statements.Warnings.Count > 0)
-    {
-      result = result.WithWarnings(statements.Warnings);
-    }
-    return result;
-  }
 
-  /// <summary>
-  /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of another result object.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <typeparam name="TFailure"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="fromResult"></param>
-  /// <returns></returns>
-  public static Result<TValue, TFailure> WithStatementsFrom<TValue, TFailure>(
-    this Result<TValue, TFailure> result,
-    IModResult fromResult)
-    where TValue : notnull
-    where TFailure : notnull
-  {
-    return result.WithStatements(fromResult.Statements);
+    /// <summary>
+    /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of another result object.
+    /// </summary>
+    /// <param name="fromResult"></param>
+    /// <returns></returns>
+    public Result<TValue, TFailure> WithStatementsFrom(
+      BaseResult fromResult)
+    {
+      if (fromResult.HasStatements())
+      {
+        return result.WithStatements(fromResult.Statements);
+      }
+      return result;
+    }
   }
 }

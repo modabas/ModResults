@@ -2,175 +2,155 @@
 
 public static partial class ResultFactExtensions
 {
-  /// <summary>
-  /// Adds a collection of <see cref="Fact"/> to the <see cref="Result"/>.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="facts"></param>
-  /// <returns></returns>
-  public static Result WithFacts(
-    this Result result,
-    IReadOnlyList<Fact> facts)
+  extension(Result result)
   {
-    result.Statements.AddFacts(facts);
-    return result;
+    /// <summary>
+    /// Adds a collection of <see cref="Fact"/> to the <see cref="Result"/>.
+    /// </summary>
+    /// <param name="facts"></param>
+    /// <returns></returns>
+    public Result WithFacts(
+      IReadOnlyList<Fact> facts)
+    {
+      result.Statements.AddFacts(facts);
+      return result;
+    }
+
+    /// <summary>
+    /// Adds a collection of <see cref="Fact"/> to the <see cref="Result"/>.
+    /// </summary>
+    /// <param name="facts"></param>
+    /// <returns></returns>
+    public Result WithFacts(
+      IEnumerable<Fact> facts)
+    {
+      result.Statements.AddFacts(facts);
+      return result;
+    }
+
+    /// <summary>
+    /// Adds a collection of string messages as a collection of <see cref="Fact"/> to the <see cref="Result"/>.
+    /// </summary>
+    /// <param name="messages"></param>
+    /// <returns></returns>
+    public Result WithFacts(
+      IEnumerable<string> messages)
+    {
+      result.Statements.AddFacts(messages.Select(m => new Fact(m)));
+      return result;
+    }
+
+    /// <summary>
+    /// Adds all <see cref="Fact"/>s of another result object.
+    /// </summary>
+    /// <param name="fromResult"></param>
+    /// <returns></returns>
+    public Result WithFactsFrom(
+      BaseResult fromResult)
+    {
+      if (fromResult.HasFacts())
+      {
+        result.WithFacts(fromResult.Statements.Facts);
+      }
+      return result;
+    }
+
+    /// <summary>
+    /// Adds a <see cref="Fact"/> to the <see cref="Result"/>.
+    /// </summary>
+    /// <param name="fact"></param>
+    /// <returns></returns>
+    public Result WithFact(Fact fact)
+    {
+      result.Statements.AddFact(fact);
+      return result;
+    }
+
+    /// <summary>
+    /// Adds a string message as a <see cref="Fact"/> to the <see cref="Result"/>.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public Result WithFact(string message)
+    {
+      result.Statements.AddFact(new Fact(message));
+      return result;
+    }
   }
 
-  /// <summary>
-  /// Adds a collection of <see cref="Fact"/> to the <see cref="Result"/>.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="facts"></param>
-  /// <returns></returns>
-  public static Result WithFacts(
-    this Result result,
-    IEnumerable<Fact> facts)
+  extension<TValue>(Result<TValue> result) where TValue : notnull
   {
-    result.Statements.AddFacts(facts);
-    return result;
-  }
+    /// <summary>
+    /// Adds a collection of <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
+    /// </summary>
+    /// <param name="facts"></param>
+    /// <returns></returns>
+    public Result<TValue> WithFacts(
+      IReadOnlyList<Fact> facts)
+    {
+      result.Statements.AddFacts(facts);
+      return result;
+    }
 
-  /// <summary>
-  /// Adds a collection of string messages as a collection of <see cref="Fact"/> to the <see cref="Result"/>.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="messages"></param>
-  /// <returns></returns>
-  public static Result WithFacts(
-    this Result result,
-    IEnumerable<string> messages)
-  {
-    result.Statements.AddFacts(messages.Select(m => new Fact(m)));
-    return result;
-  }
+    /// <summary>
+    /// Adds a collection of <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
+    /// </summary>
+    /// <param name="facts"></param>
+    /// <returns></returns>
+    public Result<TValue> WithFacts(
+      IEnumerable<Fact> facts)
+    {
+      result.Statements.AddFacts(facts);
+      return result;
+    }
 
-  /// <summary>
-  /// Adds all <see cref="Fact"/>s of another result object.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="fromResult"></param>
-  /// <returns></returns>
-  public static Result WithFactsFrom(
-    this Result result,
-    IModResult fromResult)
-  {
-    result.WithFacts(fromResult.Statements.Facts);
-    return result;
-  }
+    /// <summary>
+    /// Adds a collection of string messages as a collection of <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
+    /// </summary>
+    /// <param name="messages"></param>
+    /// <returns></returns>
+    public Result<TValue> WithFacts(
+      IEnumerable<string> messages)
+    {
+      result.Statements.AddFacts(messages.Select(m => new Fact(m)));
+      return result;
+    }
 
-  /// <summary>
-  /// Adds a collection of <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="facts"></param>
-  /// <returns></returns>
-  public static Result<TValue> WithFacts<TValue>(
-    this Result<TValue> result,
-    IReadOnlyList<Fact> facts)
-    where TValue : notnull
-  {
-    result.Statements.AddFacts(facts);
-    return result;
-  }
+    /// <summary>
+    /// Adds all <see cref="Fact"/>s of another result object.
+    /// </summary>
+    /// <param name="fromResult"></param>
+    /// <returns></returns>
+    public Result<TValue> WithFactsFrom(
+      BaseResult fromResult)
+    {
+      if (fromResult.HasFacts())
+      {
+        result.WithFacts(fromResult.Statements.Facts);
+      }
+      return result;
+    }
 
-  /// <summary>
-  /// Adds a collection of <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="facts"></param>
-  /// <returns></returns>
-  public static Result<TValue> WithFacts<TValue>(
-    this Result<TValue> result,
-    IEnumerable<Fact> facts)
-    where TValue : notnull
-  {
-    result.Statements.AddFacts(facts);
-    return result;
-  }
+    /// <summary>
+    /// Adds a <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
+    /// </summary>
+    /// <param name="fact"></param>
+    /// <returns></returns>
+    public Result<TValue> WithFact(Fact fact)
+    {
+      result.Statements.AddFact(fact);
+      return result;
+    }
 
-  /// <summary>
-  /// Adds a collection of string messages as a collection of <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="messages"></param>
-  /// <returns></returns>
-  public static Result<TValue> WithFacts<TValue>(
-    this Result<TValue> result,
-    IEnumerable<string> messages)
-    where TValue : notnull
-  {
-    result.Statements.AddFacts(messages.Select(m => new Fact(m)));
-    return result;
-  }
-
-  /// <summary>
-  /// Adds all <see cref="Fact"/>s of another result object.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="fromResult"></param>
-  /// <returns></returns>
-  public static Result<TValue> WithFactsFrom<TValue>(
-    this Result<TValue> result,
-    IModResult fromResult)
-    where TValue : notnull
-  {
-    result.WithFacts(fromResult.Statements.Facts);
-    return result;
-  }
-
-  /// <summary>
-  /// Adds a <see cref="Fact"/> to the <see cref="Result"/>.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="fact"></param>
-  /// <returns></returns>
-  public static Result WithFact(this Result result, Fact fact)
-  {
-    result.Statements.AddFact(fact);
-    return result;
-  }
-
-  /// <summary>
-  /// Adds a string message as a <see cref="Fact"/> to the <see cref="Result"/>.
-  /// </summary>
-  /// <param name="result"></param>
-  /// <param name="message"></param>
-  /// <returns></returns>
-  public static Result WithFact(this Result result, string message)
-  {
-    result.Statements.AddFact(new Fact(message));
-    return result;
-  }
-
-  /// <summary>
-  /// Adds a <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="fact"></param>
-  /// <returns></returns>
-  public static Result<TValue> WithFact<TValue>(this Result<TValue> result, Fact fact)
-    where TValue : notnull
-  {
-    result.Statements.AddFact(fact);
-    return result;
-  }
-
-  /// <summary>
-  /// Adds a string message as a <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
-  /// </summary>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="result"></param>
-  /// <param name="message"></param>
-  /// <returns></returns>
-  public static Result<TValue> WithFact<TValue>(this Result<TValue> result, string message)
-    where TValue : notnull
-  {
-    result.Statements.AddFact(new Fact(message));
-    return result;
+    /// <summary>
+    /// Adds a string message as a <see cref="Fact"/> to the <see cref="Result{TValue}"/>.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public Result<TValue> WithFact(string message)
+    {
+      result.Statements.AddFact(new Fact(message));
+      return result;
+    }
   }
 }

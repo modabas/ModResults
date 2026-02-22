@@ -1,18 +1,47 @@
 ﻿namespace ModResults;
 
-public sealed class Statements : IStatements
+public sealed class Statements
 {
-  private readonly List<Warning> _warnings = [];
+  private List<Warning>? _warnings;
+  private List<Warning> GetWarnings()
+  {
+    return _warnings ??= [];
+  }
+
   /// <summary>
   /// Warning collection.
   /// </summary>
-  public IReadOnlyList<Warning> Warnings => _warnings.AsReadOnly();
+  public IReadOnlyList<Warning> Warnings => GetWarnings().AsReadOnly();
 
-  private readonly List<Fact> _facts = [];
+  /// <summary>
+  /// Determines whether the current statement contains any warnings without initializing the warnings property.
+  /// </summary>
+  /// <returns><see langword="true"/> if the result contains at least one warning; otherwise, <see langword="false"/>.</returns>
+
+  public bool HasWarnings()
+  {
+    return _warnings is not null && _warnings.Count > 0;
+  }
+
+  private List<Fact>? _facts;
+  private List<Fact> GetFacts()
+  {
+    return _facts ??= [];
+  }
+
   /// <summary>
   /// Fact collection.
   /// </summary>
-  public IReadOnlyList<Fact> Facts => _facts.AsReadOnly();
+  public IReadOnlyList<Fact> Facts => GetFacts().AsReadOnly();
+
+  /// <summary>
+  /// Determines whether the current statement contains any facts without initializing the facts property.
+  /// </summary>
+  /// <returns><see langword="true"/> if the result contains at least one fact; otherwise, <see langword="false"/>.</returns>
+  public bool HasFacts()
+  {
+    return _facts is not null && _facts.Count > 0;
+  }
 
   /// <summary>
   /// Adds a <see cref="Warning"/> to the <see cref="Statements"/>.
@@ -20,7 +49,7 @@ public sealed class Statements : IStatements
   /// <param name="warning"></param>
   public void AddWarning(Warning warning)
   {
-    _warnings.Add(warning);
+    GetWarnings().Add(warning);
   }
 
   /// <summary>
@@ -29,7 +58,7 @@ public sealed class Statements : IStatements
   /// <param name="warnings"></param>
   public void AddWarnings(IReadOnlyList<Warning> warnings)
   {
-    _warnings.AddRange(warnings);
+    GetWarnings().AddRange(warnings);
   }
 
   /// <summary>
@@ -38,7 +67,7 @@ public sealed class Statements : IStatements
   /// <param name="warnings"></param>
   public void AddWarnings(IEnumerable<Warning> warnings)
   {
-    _warnings.AddRange(warnings);
+    GetWarnings().AddRange(warnings);
   }
 
   /// <summary>
@@ -46,7 +75,7 @@ public sealed class Statements : IStatements
   /// </summary>
   public void ClearWarnings()
   {
-    _warnings.Clear();
+    _warnings = null;
   }
 
   /// <summary>
@@ -55,7 +84,7 @@ public sealed class Statements : IStatements
   /// <param name="fact"></param>
   public void AddFact(Fact fact)
   {
-    _facts.Add(fact);
+    GetFacts().Add(fact);
   }
 
   /// <summary>
@@ -64,7 +93,7 @@ public sealed class Statements : IStatements
   /// <param name="facts"></param>
   public void AddFacts(IReadOnlyList<Fact> facts)
   {
-    _facts.AddRange(facts);
+    GetFacts().AddRange(facts);
   }
 
   /// <summary>
@@ -73,7 +102,7 @@ public sealed class Statements : IStatements
   /// <param name="facts"></param>
   public void AddFacts(IEnumerable<Fact> facts)
   {
-    _facts.AddRange(facts);
+    GetFacts().AddRange(facts);
   }
 
   /// <summary>
@@ -81,13 +110,19 @@ public sealed class Statements : IStatements
   /// </summary>
   public void ClearFacts()
   {
-    _facts.Clear();
+    _facts = null;
   }
 
   //intended as single public constructor to be used from json deserialization
-  public Statements(IReadOnlyList<Fact> facts, IReadOnlyList<Warning> warnings)
+  public Statements(IReadOnlyList<Fact>? facts, IReadOnlyList<Warning>? warnings)
   {
-    _facts.AddRange(facts);
-    _warnings.AddRange(warnings);
+    if (facts?.Count > 0)
+    {
+      _facts = new(facts);
+    }
+    if (warnings?.Count > 0)
+    {
+      _warnings = new(warnings);
+    }
   }
 }

@@ -264,4 +264,55 @@ public class ResultOfTJsonSerializationTests
     Assert.False(resultOfT.IsFailedWith<Exception>());
     Assert.True(resultOfT.IsFailedWith<Exception>(true));
   }
+
+  [Fact]
+  public void BasicOkResultWithValueStruct()
+  {
+    // Arrange
+    var resultOfTOriginal = Result<ValueStruct>.Ok(
+      new ValueStruct() { Number = 42, String = "Meaning of life." });
+
+    // Act
+    var jsonString = JsonSerializer.Serialize(resultOfTOriginal, _jsonSerializerOptions);
+    var resultOfT = JsonSerializer.Deserialize<Result<ValueStruct>>(jsonString, _jsonSerializerOptions);
+
+
+    // Assert
+    Assert.NotNull(resultOfT);
+    Assert.True(resultOfT.IsOk);
+    Assert.False(resultOfT.IsFailed);
+    Assert.Null(resultOfT.Failure);
+    Assert.NotNull(resultOfT?.Value);
+    Assert.Equal(42, resultOfT.Value.Number);
+    Assert.Equal("Meaning of life.", resultOfT.Value.String);
+    Assert.False(resultOfT.HasStatements());
+    Assert.False(resultOfT.HasFacts());
+    Assert.False(resultOfT.HasWarnings());
+  }
+
+  [Fact]
+  public void BasicFailedResultWithValueRecord()
+  {
+    // Arrange
+    var resultOfTOriginal = Result<ValueRecord>.NotFound();
+
+    // Act
+    var jsonString = JsonSerializer.Serialize(resultOfTOriginal, _jsonSerializerOptions);
+    var resultOfT = JsonSerializer.Deserialize<Result<ValueRecord>>(jsonString, _jsonSerializerOptions);
+
+
+    // Assert
+    Assert.NotNull(resultOfT);
+    Assert.False(resultOfT.IsOk);
+    Assert.True(resultOfT.IsFailed);
+    Assert.NotNull(resultOfT.Failure);
+    Assert.False(resultOfT.HasStatements());
+    Assert.False(resultOfT.HasFacts());
+    Assert.False(resultOfT.HasWarnings());
+    Assert.False(resultOfT.Failure.HasErrors());
+    Assert.True(resultOfT.IsFailedWith(FailureType.NotFound));
+    Assert.False(resultOfT.IsFailedWith(FailureType.Conflict));
+    Assert.False(resultOfT.IsFailedWith("e2"));
+    Assert.False(resultOfT.IsFailedWith<Exception>());
+  }
 }

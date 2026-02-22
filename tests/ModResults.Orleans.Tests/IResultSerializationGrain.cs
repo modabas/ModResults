@@ -4,4 +4,6 @@ internal interface IResultSerializationGrain : IGrainWithIntegerKey
 {
   Task<Result> OkResult();
   Task<Result> FailedResult();
+  Task<Result> BasicOkResult();
+  Task<Result> BasicFailedResult();
 }

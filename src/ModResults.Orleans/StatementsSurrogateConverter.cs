@@ -15,8 +15,8 @@ public sealed class StatementsSurrogateConverter :
   {
     return new StatementsSurrogate()
     {
-      Facts = value.Facts,
-      Warnings = value.Warnings
+      Facts = value.HasFacts() ? value.Facts : null,
+      Warnings = value.HasWarnings() ? value.Warnings : null
     };
   }
 }

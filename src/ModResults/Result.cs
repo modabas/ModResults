@@ -5,32 +5,18 @@ namespace ModResults;
 /// <summary>
 /// A business result that represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
 /// </summary>
-public sealed partial class Result : IModResult<Failure>
+public sealed partial class Result : BaseResult<Failure>
 {
-  /// <summary>
-  /// Gets if state of result instance is Ok.
-  /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public bool IsOk { get; init; }
+  public override bool IsOk { get; init; }
 
-  /// <summary>
-  /// Gets if state of result instance is Failed.
-  /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public bool IsFailed => !IsOk;
+  public override bool IsFailed => !IsOk;
 
   /// <summary>
   /// Contains failure info for a failed <see cref="Result"/> instance. Not null when <see cref="IsFailed"/> is true.
   /// </summary>
-  public Failure? Failure { get; init; }
-
-  private readonly Statements _statements =
-    new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
-
-  /// <summary>
-  /// Contains facts and warnings for the result.
-  /// </summary>
-  public Statements Statements { get { return _statements; } init { _statements = value; } }
+  public override Failure? Failure { get; init; }
 
   private Result()
   {
@@ -38,7 +24,7 @@ public sealed partial class Result : IModResult<Failure>
     Failure = null;
   }
 
-  private Result(FailureType failureType, IReadOnlyList<Error> errors)
+  private Result(FailureType failureType, IReadOnlyList<Error>? errors)
   {
     IsOk = false;
     Failure = new Failure(failureType, errors);
@@ -47,13 +33,13 @@ public sealed partial class Result : IModResult<Failure>
   private Result(FailureType failureType, IEnumerable<Error> errors)
   {
     IsOk = false;
-    Failure = new Failure(failureType, errors.ToList().AsReadOnly());
+    Failure = Failure.Create(failureType, errors);
   }
 
   private Result(FailureType failureType)
   {
     IsOk = false;
-    Failure = new Failure(failureType, Definitions.EmptyErrors);
+    Failure = new Failure(failureType, null);
   }
 
   /// <summary>
@@ -67,7 +53,7 @@ public sealed partial class Result : IModResult<Failure>
   public Result(
     bool isOk,
     Failure? failure,
-    Statements statements)
+    Statements? statements)
   {
     //by design Failure cannot be null if isOk is false
     if (!isOk && failure is null)
@@ -76,7 +62,7 @@ public sealed partial class Result : IModResult<Failure>
     }
     IsOk = isOk;
     Failure = failure;
-    Statements = statements;
+    Statements = statements!;
   }
 
   /// <summary>
@@ -119,14 +105,19 @@ public sealed partial class Result : IModResult<Failure>
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static Result Fail(IModResult<Failure> result)
+  public static Result Fail(BaseResult<Failure> result)
   {
     if (result.Failure is null)
     {
       return new Result(FailureType.Unspecified)
         .WithStatementsFrom(result);
     }
-    return new Result(result.Failure.Type, result.Failure.Errors)
+    if (result.Failure.HasErrors())
+    {
+      return new Result(result.Failure.Type, result.Failure.Errors)
+        .WithStatementsFrom(result);
+    }
+    return new Result(result.Failure.Type, null)
       .WithStatementsFrom(result);
   }
 }
@@ -135,40 +126,26 @@ public sealed partial class Result : IModResult<Failure>
 /// A business result that represents the outcome of an operation, encapsulating either successful value of type <typeparamref name="TValue"/> or failure states, along with associated error messages and additional information.
 /// </summary>
 /// <typeparam name="TValue"></typeparam>
-public sealed partial class Result<TValue> : IModResult<TValue, Failure>
+public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
   where TValue : notnull
 {
-  /// <summary>
-  /// Gets if state of result instance is Ok.
-  /// </summary>
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public bool IsOk { get; init; }
+  public override bool IsOk { get; init; }
 
-  /// <summary>
-  /// Gets if state of result instance is Failed.
-  /// </summary>
   [MemberNotNullWhen(returnValue: false, nameof(Value))]
   [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public bool IsFailed => !IsOk;
+  public override bool IsFailed => !IsOk;
 
   /// <summary>
   /// Contains encapsulated value for an Ok <see cref="Result{TValue}"/> instance. Not null when <see cref="IsOk"/> is true.
   /// </summary>
-  public TValue? Value { get; init; }
+  public override TValue? Value { get; init; }
 
   /// <summary>
   /// Contains failure info for a failed <see cref="Result{TValue}"/> instance. Not null when <see cref="IsFailed"/> is true.
   /// </summary>
-  public Failure? Failure { get; init; }
-
-  private readonly Statements _statements =
-    new(Definitions.EmptyFacts, Definitions.EmptyWarnings);
-
-  /// <summary>
-  /// Contains facts and warnings for the result.
-  /// </summary>
-  public Statements Statements { get { return _statements; } init { _statements = value; } }
+  public override Failure? Failure { get; init; }
 
   private Result(TValue value)
   {
@@ -176,7 +153,7 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
     Value = value;
   }
 
-  private Result(FailureType failureType, IReadOnlyList<Error> errors)
+  private Result(FailureType failureType, IReadOnlyList<Error>? errors)
   {
     IsOk = false;
     Failure = new Failure(failureType, errors);
@@ -185,13 +162,13 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   private Result(FailureType failureType, IEnumerable<Error> errors)
   {
     IsOk = false;
-    Failure = new Failure(failureType, errors.ToList().AsReadOnly());
+    Failure = Failure.Create(failureType, errors);
   }
 
   private Result(FailureType failureType)
   {
     IsOk = false;
-    Failure = new Failure(failureType, Definitions.EmptyErrors);
+    Failure = new Failure(failureType, null);
   }
 
   /// <summary>
@@ -207,7 +184,7 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
     bool isOk,
     TValue? value,
     Failure? failure,
-    Statements statements)
+    Statements? statements)
   {
     //by design Value cannot be null if isOk is true
     if (isOk && value is null)
@@ -222,7 +199,7 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
     IsOk = isOk;
     Value = value;
     Failure = failure;
-    Statements = statements;
+    Statements = statements!;
   }
 
   /// <summary>
@@ -240,15 +217,20 @@ public sealed partial class Result<TValue> : IModResult<TValue, Failure>
   /// </summary>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static Result<TValue> Fail(IModResult<Failure> result)
+  public static Result<TValue> Fail(BaseResult<Failure> result)
   {
     if (result.Failure is null)
     {
       return new Result<TValue>(FailureType.Unspecified)
         .WithStatementsFrom(result);
     }
-    return new Result<TValue>(result.Failure.Type, result.Failure.Errors)
+    if (result.Failure.HasErrors())
+    {
+      return new Result<TValue>(result.Failure.Type, result.Failure.Errors)
         .WithStatementsFrom(result);
+    }
+    return new Result<TValue>(result.Failure.Type, null)
+      .WithStatementsFrom(result);
   }
 
   /// <summary>

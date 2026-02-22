@@ -11,7 +11,7 @@ public struct ResultSurrogate
   public Failure? Failure;
 
   [Id(2)]
-  public Statements Statements;
+  public Statements? Statements;
 }
 
 [GenerateSerializer]
@@ -28,5 +28,5 @@ public struct ResultSurrogate<TValue>
   public Failure? Failure;
 
   [Id(3)]
-  public Statements Statements;
+  public Statements? Statements;
 }
