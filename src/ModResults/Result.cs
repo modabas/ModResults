@@ -42,6 +42,16 @@ public sealed partial class Result : BaseResult<Failure>
     Failure = new Failure(failureType, null);
   }
 
+  internal static Result Create(FailureType failureType, IEnumerable<Error> errors)
+  {
+    return new(failureType, errors);
+  }
+
+  internal static Result Create(FailureType failureType)
+  {
+    return new(failureType);
+  }
+
   /// <summary>
   /// This constructor is intended as single public constructor to be used from Json deserialization.
   /// Use provided static methods to create instances of <see cref="Result"/>.
@@ -120,6 +130,24 @@ public sealed partial class Result : BaseResult<Failure>
     return new Result(result.Failure.Type, null)
       .WithStatementsFrom(result);
   }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.CriticalError"/> containing an error constructed from specified exception.
+  /// </summary>
+  /// <param name="exception">The <see cref="Exception"/> that will used to construct an error instance from.</param>
+  public static implicit operator Result(Exception exception)
+  {
+    return Result.CriticalError(exception);
+  }
+
+  /// <summary>
+  /// Creates a <see cref="Result"/> in Failed state with input failure type.
+  /// </summary>
+  /// <param name="failureType">Failure type that will be encapsulated in a Failed <see cref="Result"/>.</param>
+  public static implicit operator Result(FailureType failureType)
+  {
+    return new Result(failureType);
+  }
 }
 
 /// <summary>
@@ -164,11 +192,20 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
     IsOk = false;
     Failure = Failure.Create(failureType, errors);
   }
-
   private Result(FailureType failureType)
   {
     IsOk = false;
     Failure = new Failure(failureType, null);
+  }
+
+  internal static Result<TValue> Create(FailureType failureType, IEnumerable<Error> errors)
+  {
+    return new(failureType, errors);
+  }
+
+  internal static Result<TValue> Create(FailureType failureType)
+  {
+    return new(failureType);
   }
 
   /// <summary>
@@ -254,5 +291,23 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
   public static implicit operator Result<TValue>(Result<TValue, Failure> resultOfTValueAndFailure)
   {
     return resultOfTValueAndFailure.ToResultOfTValue();
+  }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.CriticalError"/> containing an error constructed from specified exception.
+  /// </summary>
+  /// <param name="exception">The <see cref="Exception"/> that will used to construct an error instance from.</param>
+  public static implicit operator Result<TValue>(Exception exception)
+  {
+    return Result<TValue>.CriticalError(exception);
+  }
+
+  /// <summary>
+  /// Creates a <see cref="Result{TValue}"/> in Failed state with input failure type.
+  /// </summary>
+  /// <param name="failureType">Failure type that will be encapsulated in a Failed <see cref="Result{TValue}"/>.</param>
+  public static implicit operator Result<TValue>(FailureType failureType)
+  {
+    return new Result<TValue>(failureType);
   }
 }
