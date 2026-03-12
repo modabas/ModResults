@@ -11,15 +11,14 @@ namespace ModResults;
 /// This class is mainly intended as a helper class to be passes to implicit operator of <see cref="Result{TValue}"/> class for easy creation of failed results without specifying TValue type.</remarks>
 public sealed class FailedResult : BaseResult<Failure>
 {
-  [MemberNotNullWhen(returnValue: false, nameof(Failure))]
   public override bool IsOk { get; init; }
 
-  [MemberNotNullWhen(returnValue: true, nameof(Failure))]
   public override bool IsFailed => !IsOk;
 
   /// <summary>
   /// Contains failure info for <see cref="FailedResult"/> instance. Not null.
   /// </summary>
+  [NotNull]
   public override Failure? Failure { get; init; }
 
   private FailedResult(FailureType failureType, IEnumerable<Error> errors)
