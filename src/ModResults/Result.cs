@@ -30,26 +30,10 @@ public sealed partial class Result : BaseResult<Failure>
     Failure = new Failure(failureType, errors);
   }
 
-  private Result(FailureType failureType, IEnumerable<Error> errors)
-  {
-    IsOk = false;
-    Failure = Failure.Create(failureType, errors);
-  }
-
   private Result(FailureType failureType)
   {
     IsOk = false;
     Failure = new Failure(failureType, null);
-  }
-
-  internal static Result Create(FailureType failureType, IEnumerable<Error> errors)
-  {
-    return new(failureType, errors);
-  }
-
-  internal static Result Create(FailureType failureType)
-  {
-    return new(failureType);
   }
 
   /// <summary>
@@ -148,6 +132,15 @@ public sealed partial class Result : BaseResult<Failure>
   {
     return new Result(failureType);
   }
+
+  /// <summary>
+  /// Creates a <see cref="Result"/> in Failed state from input failed result.
+  /// </summary>
+  /// <param name="failedResult">FailedResult instance that will be converted to a Failed <see cref="Result"/>.</param>
+  public static implicit operator Result(FailedResult failedResult)
+  {
+    return Fail(failedResult);
+  }
 }
 
 /// <summary>
@@ -187,25 +180,10 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
     Failure = new Failure(failureType, errors);
   }
 
-  private Result(FailureType failureType, IEnumerable<Error> errors)
-  {
-    IsOk = false;
-    Failure = Failure.Create(failureType, errors);
-  }
   private Result(FailureType failureType)
   {
     IsOk = false;
     Failure = new Failure(failureType, null);
-  }
-
-  internal static Result<TValue> Create(FailureType failureType, IEnumerable<Error> errors)
-  {
-    return new(failureType, errors);
-  }
-
-  internal static Result<TValue> Create(FailureType failureType)
-  {
-    return new(failureType);
   }
 
   /// <summary>
@@ -309,5 +287,14 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
   public static implicit operator Result<TValue>(FailureType failureType)
   {
     return new Result<TValue>(failureType);
+  }
+
+  /// <summary>
+  /// Creates a <see cref="Result{TValue}"/> in Failed state from input failed result.
+  /// </summary>
+  /// <param name="failedResult">FailedResult instance that will be converted to a Failed <see cref="Result{TValue}"/>.</param>
+  public static implicit operator Result<TValue>(FailedResult failedResult)
+  {
+    return Fail(failedResult);
   }
 }

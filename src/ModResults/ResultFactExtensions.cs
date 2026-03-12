@@ -153,4 +153,80 @@ public static partial class ResultFactExtensions
       return result;
     }
   }
+
+  extension(FailedResult result)
+  {
+    /// <summary>
+    /// Adds a collection of <see cref="Fact"/> to the <see cref="FailedResult"/>.
+    /// </summary>
+    /// <param name="facts"></param>
+    /// <returns></returns>
+    public FailedResult WithFacts(
+      IReadOnlyList<Fact> facts)
+    {
+      result.Statements.AddFacts(facts);
+      return result;
+    }
+
+    /// <summary>
+    /// Adds a collection of <see cref="Fact"/> to the <see cref="FailedResult"/>.
+    /// </summary>
+    /// <param name="facts"></param>
+    /// <returns></returns>
+    public FailedResult WithFacts(
+      IEnumerable<Fact> facts)
+    {
+      result.Statements.AddFacts(facts);
+      return result;
+    }
+
+    /// <summary>
+    /// Adds a collection of string messages as a collection of <see cref="Fact"/> to the <see cref="FailedResult"/>.
+    /// </summary>
+    /// <param name="messages"></param>
+    /// <returns></returns>
+    public FailedResult WithFacts(
+      IEnumerable<string> messages)
+    {
+      result.Statements.AddFacts(messages.Select(m => new Fact(m)));
+      return result;
+    }
+
+    /// <summary>
+    /// Adds all <see cref="Fact"/>s of another result object.
+    /// </summary>
+    /// <param name="fromResult"></param>
+    /// <returns></returns>
+    public FailedResult WithFactsFrom(
+      BaseResult fromResult)
+    {
+      if (fromResult.HasFacts())
+      {
+        result.WithFacts(fromResult.Statements.Facts);
+      }
+      return result;
+    }
+
+    /// <summary>
+    /// Adds a <see cref="Fact"/> to the <see cref="FailedResult"/>.
+    /// </summary>
+    /// <param name="fact"></param>
+    /// <returns></returns>
+    public FailedResult WithFact(Fact fact)
+    {
+      result.Statements.AddFact(fact);
+      return result;
+    }
+
+    /// <summary>
+    /// Adds a string message as a <see cref="Fact"/> to the <see cref="FailedResult"/>.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public FailedResult WithFact(string message)
+    {
+      result.Statements.AddFact(new Fact(message));
+      return result;
+    }
+  }
 }
