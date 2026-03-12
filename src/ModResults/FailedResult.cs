@@ -8,7 +8,8 @@ namespace ModResults;
 /// </summary>
 /// <remarks>Use the provided static factory methods to create instances of this class for failed operations. 
 /// The failure details are always available and provide information about the reason for the failure. 
-/// This class is mainly intended as a helper class to be passes to implicit operator of <see cref="Result{TValue}"/> class for easy creation of failed results without specifying TValue type.</remarks>
+/// This class is mainly intended as helper for returning failed <see cref="Result{TValue}"/> instances without needing to specify TValue directly, using implicit conversion operators. 
+/// It is also designed for easy conversion to both <see cref="Result"/> and <see cref="Result{TValue}"/> types, enabling seamless integration of failure information into result handling.</remarks>
 public sealed class FailedResult : BaseResult<Failure>
 {
   public override bool IsOk { get; init; }
@@ -62,5 +63,23 @@ public sealed class FailedResult : BaseResult<Failure>
     IsOk = false;
     Failure = failure;
     Statements = statements!;
+  }
+
+  /// <summary>
+  /// Creates a failed <see cref="FailedResult"/> with failure type <see cref="FailureType.CriticalError"/> containing an error constructed from specified exception.
+  /// </summary>
+  /// <param name="exception">The <see cref="Exception"/> that will used to construct an error instance from.</param>
+  public static implicit operator FailedResult(Exception exception)
+  {
+    return FailedResult.CriticalError(exception);
+  }
+
+  /// <summary>
+  /// Creates a <see cref="FailedResult"/> in Failed state with input failure type.
+  /// </summary>
+  /// <param name="failureType">Failure type that will be encapsulated in a Failed <see cref="FailedResult"/>.</param>
+  public static implicit operator FailedResult(FailureType failureType)
+  {
+    return new FailedResult(failureType);
   }
 }
