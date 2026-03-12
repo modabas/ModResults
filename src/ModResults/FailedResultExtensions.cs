@@ -2,8 +2,12 @@
 
 public static class FailedResultExtensions
 {
-  extension(FailedResult)
+  extension(FailedResult result)
   {
+    public Result ToResult() => result;
+
+    public Result<TValue> ToResult<TValue>() where TValue : notnull => result;
+
     #region "Error"
     /// <summary>
     /// Creates a failed <see cref="FailedResult"/> with failure type <see cref="FailureType.Error"/>.
