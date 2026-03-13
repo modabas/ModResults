@@ -1,6 +1,6 @@
-## Create a Failed Result or Result&lt;TValue&gt; instance from an exception
+## Create a Result or Result&lt;TValue&gt; instance in failed state, from an exception
 
-A Failed Result instance can be created from an exception by calling [corresponding static method](../src/ModResults/FailedResult.cs) with an exception input parameter for each FailureType, or can be left to implicit operator which creates a Failed Result with FailureType CriticalError by default.
+A Result instance in failed state can be created from an exception by calling [corresponding static method](../src/ModResults/ResultFailureExtensions.cs) with an exception input parameter for each FailureType, or can be left to implicit operator which creates a Failed Result with FailureType CriticalError by default.
 
 Exception object is converted to an [Error](../src/ModResults/Error.cs) object and added to Error collection of [Failure](../src/ModResults/Failure.cs).
 

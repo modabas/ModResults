@@ -6,7 +6,7 @@ See various [WithFact](../src/ModResults/ResultFactExtensions.cs) and [WithWarni
 
 Default [Failure](../src/ModResults/Failure.cs) implementation used in Result and Result&lt;TValue&gt; objects, has a Type property holding [FailureType](../src/ModResults/FailureType.cs) and also contains a collection of [Errors](../src/ModResults/Error.cs).
 
-See various static methods of Result objects to [create a Failed Result](../src/ModResults/FailedResult.cs) containing Error information. Errors can only be attached to a Failed Result instance during Result instance creation and cannot be added or removed afterwards.
+See various static methods of Result objects to [create a Result in failed state](../src/ModResults/ResultFailureExtensions.cs) containing Error information. Errors can only be attached to a Failed Result instance during Result instance creation and cannot be added or removed afterwards.
 
 ``` csharp
 public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest req, CancellationToken ct)
