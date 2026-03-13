@@ -218,16 +218,14 @@ public static partial class ResultConversionExtensions
 
   extension<TValue>(Result<TValue, Failure> result) where TValue : notnull
   {
-    public Result ToResult(
-)
+    public Result ToResult()
     {
       return result.Map<TValue, Failure, Result>(
         okResult => Result.Ok().WithStatementsFrom(okResult),
         failResult => Result.Fail(failResult));
     }
 
-    public Result<TValue> ToResultOfTValue(
-  )
+    public Result<TValue> ToResultOfTValue()
     {
       return result.Map<TValue, Failure, Result<TValue>>(
         okResult => Result<TValue>.Ok(result.Value!).WithStatementsFrom(okResult),
