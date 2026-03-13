@@ -3,6 +3,16 @@
 `Result` and `Result<TValue>` classes provide implicit operators and quality of life (QoL) features to simplify the creation and handling of results in your code. These features allow you to easily convert between different types and create results without needing to explicitly call factory methods.
 
 The `FailedResult` class serves as a helper for returning failed `Result<TValue>` instances without needing to specify `TValue` directly, using implicit conversion operators. It is also designed for easy conversion to both `Result` and `Result<TValue>` types, enabling seamless integration of failure information into your result handling.
+``` csharp
+    public Result<TValue> AwesomeMethod<TValue>()
+    {
+      // Some logic that determines the result of the operation
+      //...
+      // If the operation fails, return a FailedResult which will be implicitly
+      // converted to Result<TValue> with FailureType set to Conflict by default
+      return FailedResult.Conflict();
+    }
+```
 
 ### Implicit Operators
 
