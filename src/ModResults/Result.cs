@@ -3,7 +3,7 @@
 /// <summary>
 /// A business result that represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
 /// </summary>
-public sealed class Result : BaseResultWithFailure
+public sealed class Result : BaseResultWithFixedFailureType
 {
   private Result()
   {
@@ -134,7 +134,7 @@ public sealed class Result : BaseResultWithFailure
 /// A business result that represents the outcome of an operation, encapsulating either successful value of type <typeparamref name="TValue"/> or failure states, along with associated error messages and additional information.
 /// </summary>
 /// <typeparam name="TValue"></typeparam>
-public sealed class Result<TValue> : BaseResultWithFailure<TValue>
+public sealed class Result<TValue> : BaseResultWithFixedFailureType<TValue>
   where TValue : notnull
 {
   private Result(TValue value)

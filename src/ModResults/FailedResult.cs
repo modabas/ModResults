@@ -10,7 +10,7 @@ namespace ModResults;
 /// The failure details are always available and provide information about the reason for the failure. 
 /// This class is mainly intended as helper for returning failed <see cref="Result{TValue}"/> instances without needing to specify TValue directly, using implicit conversion operators. 
 /// It is also designed for easy conversion to both <see cref="Result"/> and <see cref="Result{TValue}"/> types, enabling seamless integration of failure information into result handling.</remarks>
-public sealed class FailedResult : BaseResultWithFailure
+public sealed class FailedResult : BaseResultWithFixedFailureType
 {
   /// <summary>
   /// Contains failure info for <see cref="FailedResult"/> instance. Not null.
