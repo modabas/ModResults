@@ -4,9 +4,71 @@ public static class FailedResultExtensions
 {
   extension(FailedResult result)
   {
+    #region "ToResult"
+    /// <summary>
+    /// Converts a <see cref="FailedResult"/> to a <see cref="Result"/>, copying over Failure and Statements information.
+    /// </summary>
+    /// <returns></returns>
     public Result ToResult() => result;
 
+    /// <summary>
+    /// Converts a <see cref="FailedResult"/> to a <see cref="Result{TValue}"/>, copying over Failure and Statements information.
+    /// </summary>
+    /// <typeparam name="TValue"></typeparam>
+    /// <returns></returns>
     public Result<TValue> ToResult<TValue>() where TValue : notnull => result;
+    #endregion
+
+    #region "IsFailedWith"
+    /// <summary>
+    /// Checks if the result is failed with a specific <see cref="FailureType"/>.
+    /// </summary>
+    /// <param name="failureType"></param>
+    /// <returns></returns>
+    public bool IsFailedWith(FailureType failureType)
+    {
+      return result.Failure.Type == failureType;
+    }
+
+    /// <summary>
+    /// Checks if the result has an <see cref="ModResults.Error"/> with the specified code.
+    /// </summary>
+    /// <param name="errorCode">Error code to check for.</param>
+    /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared.</param>
+    /// <returns></returns>
+    public bool IsFailedWith(
+      string errorCode,
+      StringComparison comparisonType = Definitions.DefaultComparisonType)
+    {
+      return result.HasError(errorCode, comparisonType);
+    }
+
+    /// <summary>
+    /// Checks if the result has an <see cref="ModResults.Error"/> constructed from an exception of the specified type.
+    /// </summary>
+    /// <typeparam name="TException"></typeparam>
+    /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+    /// <returns></returns>
+    public bool IsFailedWith<TException>(
+      bool includeAssignableTo = false)
+      where TException : Exception
+    {
+      return result.HasErrorWithException<TException>(includeAssignableTo);
+    }
+
+    /// <summary>
+    /// Checks if the result has an <see cref="ModResults.Error"/> constructed from an exception of the specified type.
+    /// </summary>
+    /// <param name="exceptionType">Exception type</param>
+    /// <param name="includeAssignableTo">If true, checks whether input exception type is assignable from exception contained by error instance. If false, only checks for exact match.</param>
+    /// <returns></returns>
+    public bool IsFailedWith(
+      Type exceptionType,
+      bool includeAssignableTo = false)
+    {
+      return result.HasErrorWithException(exceptionType, includeAssignableTo);
+    }
+    #endregion
 
     #region "Error"
     /// <summary>

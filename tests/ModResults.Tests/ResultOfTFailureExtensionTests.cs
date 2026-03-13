@@ -1,12 +1,12 @@
 ﻿namespace ModResults.Tests;
 
-public class FailedResultTests
+public class ResultOfTFailureExtensionTests
 {
   private readonly Error _error1, _error2;
   private readonly InvalidOperationException _ex1;
   private readonly ApplicationException _ex2;
 
-  public FailedResultTests()
+  public ResultOfTFailureExtensionTests()
   {
     _error1 = new Error("Error 1");
     _error2 = new Error("Error 2", code: "E2");
@@ -18,7 +18,7 @@ public class FailedResultTests
   public void Error()
   {
     // Arrange
-    var result = Result.Error();
+    var result = Result<ValueClass>.Error();
 
     // Assert
     Assert.NotNull(result);
@@ -37,7 +37,7 @@ public class FailedResultTests
   public void ErrorWithMessages()
   {
     // Arrange
-    var result = Result.Error("Error1", "Error2");
+    var result = Result<ValueClass>.Error("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -59,7 +59,7 @@ public class FailedResultTests
   public void ErrorWithErrors()
   {
     // Arrange
-    var result = Result.Error(_error1, _error2);
+    var result = Result<ValueClass>.Error(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -82,7 +82,7 @@ public class FailedResultTests
   public void ErrorWithExceptions()
   {
     // Arrange
-    var result = Result.Error(_ex1, _ex2);
+    var result = Result<ValueClass>.Error(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -107,7 +107,7 @@ public class FailedResultTests
   public void Forbidden()
   {
     // Arrange
-    var result = Result.Forbidden();
+    var result = Result<ValueClass>.Forbidden();
 
     // Assert
     Assert.NotNull(result);
@@ -126,7 +126,7 @@ public class FailedResultTests
   public void ForbiddenWithMessages()
   {
     // Arrange
-    var result = Result.Forbidden("Error1", "Error2");
+    var result = Result<ValueClass>.Forbidden("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -148,7 +148,7 @@ public class FailedResultTests
   public void ForbiddenWithErrors()
   {
     // Arrange
-    var result = Result.Forbidden(_error1, _error2);
+    var result = Result<ValueClass>.Forbidden(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -171,7 +171,7 @@ public class FailedResultTests
   public void ForbiddenWithExceptions()
   {
     // Arrange
-    var result = Result.Forbidden(_ex1, _ex2);
+    var result = Result<ValueClass>.Forbidden(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -196,7 +196,7 @@ public class FailedResultTests
   public void Unauthorized()
   {
     // Arrange
-    var result = Result.Unauthorized();
+    var result = Result<ValueClass>.Unauthorized();
 
     // Assert
     Assert.NotNull(result);
@@ -215,7 +215,7 @@ public class FailedResultTests
   public void UnauthorizedWithMessages()
   {
     // Arrange
-    var result = Result.Unauthorized("Error1", "Error2");
+    var result = Result<ValueClass>.Unauthorized("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -237,7 +237,7 @@ public class FailedResultTests
   public void UnauthorizedWithErrors()
   {
     // Arrange
-    var result = Result.Unauthorized(_error1, _error2);
+    var result = Result<ValueClass>.Unauthorized(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -260,7 +260,7 @@ public class FailedResultTests
   public void UnauthorizedWithExceptions()
   {
     // Arrange
-    var result = Result.Unauthorized(_ex1, _ex2);
+    var result = Result<ValueClass>.Unauthorized(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -285,7 +285,7 @@ public class FailedResultTests
   public void Invalid()
   {
     // Arrange
-    var result = Result.Invalid();
+    var result = Result<ValueClass>.Invalid();
 
     // Assert
     Assert.NotNull(result);
@@ -304,7 +304,7 @@ public class FailedResultTests
   public void InvalidWithMessages()
   {
     // Arrange
-    var result = Result.Invalid("Error1", "Error2");
+    var result = Result<ValueClass>.Invalid("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -326,7 +326,7 @@ public class FailedResultTests
   public void InvalidWithErrors()
   {
     // Arrange
-    var result = Result.Invalid(_error1, _error2);
+    var result = Result<ValueClass>.Invalid(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -349,7 +349,7 @@ public class FailedResultTests
   public void InvalidWithExceptions()
   {
     // Arrange
-    var result = Result.Invalid(_ex1, _ex2);
+    var result = Result<ValueClass>.Invalid(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -374,7 +374,7 @@ public class FailedResultTests
   public void NotFound()
   {
     // Arrange
-    var result = Result.NotFound();
+    var result = Result<ValueClass>.NotFound();
 
     // Assert
     Assert.NotNull(result);
@@ -393,7 +393,7 @@ public class FailedResultTests
   public void NotFoundWithMessages()
   {
     // Arrange
-    var result = Result.NotFound("Error1", "Error2");
+    var result = Result<ValueClass>.NotFound("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -415,7 +415,7 @@ public class FailedResultTests
   public void NotFoundWithErrors()
   {
     // Arrange
-    var result = Result.NotFound(_error1, _error2);
+    var result = Result<ValueClass>.NotFound(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -438,7 +438,7 @@ public class FailedResultTests
   public void NotFoundWithExceptions()
   {
     // Arrange
-    var result = Result.NotFound(_ex1, _ex2);
+    var result = Result<ValueClass>.NotFound(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -463,7 +463,7 @@ public class FailedResultTests
   public void Conflict()
   {
     // Arrange
-    var result = Result.Conflict();
+    var result = Result<ValueClass>.Conflict();
 
     // Assert
     Assert.NotNull(result);
@@ -482,7 +482,7 @@ public class FailedResultTests
   public void ConflictWithMessages()
   {
     // Arrange
-    var result = Result.Conflict("Error1", "Error2");
+    var result = Result<ValueClass>.Conflict("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -504,7 +504,7 @@ public class FailedResultTests
   public void ConflictWithErrors()
   {
     // Arrange
-    var result = Result.Conflict(_error1, _error2);
+    var result = Result<ValueClass>.Conflict(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -527,7 +527,7 @@ public class FailedResultTests
   public void ConflictWithExceptions()
   {
     // Arrange
-    var result = Result.Conflict(_ex1, _ex2);
+    var result = Result<ValueClass>.Conflict(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -552,7 +552,7 @@ public class FailedResultTests
   public void CriticalError()
   {
     // Arrange
-    var result = Result.CriticalError();
+    var result = Result<ValueClass>.CriticalError();
 
     // Assert
     Assert.NotNull(result);
@@ -571,7 +571,7 @@ public class FailedResultTests
   public void CriticalErrorWithMessages()
   {
     // Arrange
-    var result = Result.CriticalError("Error1", "Error2");
+    var result = Result<ValueClass>.CriticalError("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -593,7 +593,7 @@ public class FailedResultTests
   public void CriticalErrorWithErrors()
   {
     // Arrange
-    var result = Result.CriticalError(_error1, _error2);
+    var result = Result<ValueClass>.CriticalError(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -616,7 +616,7 @@ public class FailedResultTests
   public void CriticalErrorWithExceptions()
   {
     // Arrange
-    var result = Result.CriticalError(_ex1, _ex2);
+    var result = Result<ValueClass>.CriticalError(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -641,7 +641,7 @@ public class FailedResultTests
   public void Unavailable()
   {
     // Arrange
-    var result = Result.Unavailable();
+    var result = Result<ValueClass>.Unavailable();
 
     // Assert
     Assert.NotNull(result);
@@ -660,7 +660,7 @@ public class FailedResultTests
   public void UnavailableWithMessages()
   {
     // Arrange
-    var result = Result.Unavailable("Error1", "Error2");
+    var result = Result<ValueClass>.Unavailable("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -682,7 +682,7 @@ public class FailedResultTests
   public void UnavailableWithErrors()
   {
     // Arrange
-    var result = Result.Unavailable(_error1, _error2);
+    var result = Result<ValueClass>.Unavailable(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -705,7 +705,7 @@ public class FailedResultTests
   public void UnavailableWithExceptions()
   {
     // Arrange
-    var result = Result.Unavailable(_ex1, _ex2);
+    var result = Result<ValueClass>.Unavailable(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -730,7 +730,7 @@ public class FailedResultTests
   public void GatewayError()
   {
     // Arrange
-    var result = Result.GatewayError();
+    var result = Result<ValueClass>.GatewayError();
 
     // Assert
     Assert.NotNull(result);
@@ -749,7 +749,7 @@ public class FailedResultTests
   public void GatewayErrorWithMessages()
   {
     // Arrange
-    var result = Result.GatewayError("Error1", "Error2");
+    var result = Result<ValueClass>.GatewayError("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -771,7 +771,7 @@ public class FailedResultTests
   public void GatewayErrorWithErrors()
   {
     // Arrange
-    var result = Result.GatewayError(_error1, _error2);
+    var result = Result<ValueClass>.GatewayError(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -794,7 +794,7 @@ public class FailedResultTests
   public void GatewayErrorWithExceptions()
   {
     // Arrange
-    var result = Result.GatewayError(_ex1, _ex2);
+    var result = Result<ValueClass>.GatewayError(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -819,7 +819,7 @@ public class FailedResultTests
   public void RateLimited()
   {
     // Arrange
-    var result = Result.RateLimited();
+    var result = Result<ValueClass>.RateLimited();
 
     // Assert
     Assert.NotNull(result);
@@ -838,7 +838,7 @@ public class FailedResultTests
   public void RateLimitedWithMessages()
   {
     // Arrange
-    var result = Result.RateLimited("Error1", "Error2");
+    var result = Result<ValueClass>.RateLimited("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -860,7 +860,7 @@ public class FailedResultTests
   public void RateLimitedWithErrors()
   {
     // Arrange
-    var result = Result.RateLimited(_error1, _error2);
+    var result = Result<ValueClass>.RateLimited(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -883,7 +883,7 @@ public class FailedResultTests
   public void RateLimitedWithExceptions()
   {
     // Arrange
-    var result = Result.RateLimited(_ex1, _ex2);
+    var result = Result<ValueClass>.RateLimited(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -908,7 +908,7 @@ public class FailedResultTests
   public void TimedOut()
   {
     // Arrange
-    var result = Result.TimedOut();
+    var result = Result<ValueClass>.TimedOut();
 
     // Assert
     Assert.NotNull(result);
@@ -927,7 +927,7 @@ public class FailedResultTests
   public void TimedOutWithMessages()
   {
     // Arrange
-    var result = Result.TimedOut("Error1", "Error2");
+    var result = Result<ValueClass>.TimedOut("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -949,7 +949,7 @@ public class FailedResultTests
   public void TimedOutWithErrors()
   {
     // Arrange
-    var result = Result.TimedOut(_error1, _error2);
+    var result = Result<ValueClass>.TimedOut(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -972,7 +972,7 @@ public class FailedResultTests
   public void TimedOutWithExceptions()
   {
     // Arrange
-    var result = Result.TimedOut(_ex1, _ex2);
+    var result = Result<ValueClass>.TimedOut(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -997,7 +997,7 @@ public class FailedResultTests
   public void PaymentRequired()
   {
     // Arrange
-    var result = Result.PaymentRequired();
+    var result = Result<ValueClass>.PaymentRequired();
 
     // Assert
     Assert.NotNull(result);
@@ -1016,7 +1016,7 @@ public class FailedResultTests
   public void PaymentRequiredWithMessages()
   {
     // Arrange
-    var result = Result.PaymentRequired("Error1", "Error2");
+    var result = Result<ValueClass>.PaymentRequired("Error1", "Error2");
 
     // Assert
     Assert.NotNull(result);
@@ -1038,7 +1038,7 @@ public class FailedResultTests
   public void PaymentRequiredWithErrors()
   {
     // Arrange
-    var result = Result.PaymentRequired(_error1, _error2);
+    var result = Result<ValueClass>.PaymentRequired(_error1, _error2);
 
     // Assert
     Assert.NotNull(result);
@@ -1061,7 +1061,7 @@ public class FailedResultTests
   public void PaymentRequiredWithExceptions()
   {
     // Arrange
-    var result = Result.PaymentRequired(_ex1, _ex2);
+    var result = Result<ValueClass>.PaymentRequired(_ex1, _ex2);
 
     // Assert
     Assert.NotNull(result);
@@ -1086,7 +1086,7 @@ public class FailedResultTests
   public void ExceptionImplicitOperator()
   {
     // Arrange
-    Result result = _ex1;
+    Result<ValueClass> result = _ex1;
 
     // Assert
     Assert.NotNull(result);
@@ -1110,7 +1110,7 @@ public class FailedResultTests
   public void FailureTypeImplicitOperator()
   {
     // Arrange
-    Result result = FailureType.Forbidden;
+    Result<ValueClass> result = FailureType.Forbidden;
 
     // Assert
     Assert.NotNull(result);
