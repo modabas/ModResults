@@ -1,23 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace ModResults;
+﻿namespace ModResults;
 
 /// <summary>
 /// A business result that represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
 /// </summary>
-public sealed partial class Result : BaseResult<Failure>
+public sealed class Result : BaseResultWithFailure
 {
-  [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public override bool IsOk { get; init; }
-
-  [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public override bool IsFailed => !IsOk;
-
-  /// <summary>
-  /// Contains failure info for a failed <see cref="Result"/> instance. Not null when <see cref="IsFailed"/> is true.
-  /// </summary>
-  public override Failure? Failure { get; init; }
-
   private Result()
   {
     IsOk = true;
@@ -147,27 +134,9 @@ public sealed partial class Result : BaseResult<Failure>
 /// A business result that represents the outcome of an operation, encapsulating either successful value of type <typeparamref name="TValue"/> or failure states, along with associated error messages and additional information.
 /// </summary>
 /// <typeparam name="TValue"></typeparam>
-public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
+public sealed class Result<TValue> : BaseResultWithFailure<TValue>
   where TValue : notnull
 {
-  [MemberNotNullWhen(returnValue: true, nameof(Value))]
-  [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public override bool IsOk { get; init; }
-
-  [MemberNotNullWhen(returnValue: false, nameof(Value))]
-  [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public override bool IsFailed => !IsOk;
-
-  /// <summary>
-  /// Contains encapsulated value for an Ok <see cref="Result{TValue}"/> instance. Not null when <see cref="IsOk"/> is true.
-  /// </summary>
-  public override TValue? Value { get; init; }
-
-  /// <summary>
-  /// Contains failure info for a failed <see cref="Result{TValue}"/> instance. Not null when <see cref="IsFailed"/> is true.
-  /// </summary>
-  public override Failure? Failure { get; init; }
-
   private Result(TValue value)
   {
     IsOk = true;

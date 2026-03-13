@@ -4,18 +4,14 @@ namespace ModResults;
 
 
 /// <summary>
-/// Represents the result of an operation that has failed, containing detailed failure information.
+/// A business result that represents the outcome of an operation that has failed, containing detailed failure and additional information.
 /// </summary>
 /// <remarks>Use the provided static factory methods to create instances of this class for failed operations. 
 /// The failure details are always available and provide information about the reason for the failure. 
 /// This class is mainly intended as helper for returning failed <see cref="Result{TValue}"/> instances without needing to specify TValue directly, using implicit conversion operators. 
 /// It is also designed for easy conversion to both <see cref="Result"/> and <see cref="Result{TValue}"/> types, enabling seamless integration of failure information into result handling.</remarks>
-public sealed class FailedResult : BaseResult<Failure>
+public sealed class FailedResult : BaseResultWithFailure
 {
-  public override bool IsOk { get; init; }
-
-  public override bool IsFailed => !IsOk;
-
   /// <summary>
   /// Contains failure info for <see cref="FailedResult"/> instance. Not null.
   /// </summary>
