@@ -156,14 +156,14 @@ public static partial class ResultWarningExtensions
     }
   }
 
-  extension(FailedResult result)
+  extension(FailureResult result)
   {
     /// <summary>
-    /// Adds a collection of <see cref="Warning"/> to the <see cref="FailedResult"/>.
+    /// Adds a collection of <see cref="Warning"/> to the <see cref="FailureResult"/>.
     /// </summary>
     /// <param name="warnings"></param>
     /// <returns></returns>
-    public FailedResult WithWarnings(
+    public FailureResult WithWarnings(
       IReadOnlyList<Warning> warnings)
     {
       result.Statements.AddWarnings(warnings);
@@ -171,11 +171,11 @@ public static partial class ResultWarningExtensions
     }
 
     /// <summary>
-    /// Adds a collection of <see cref="Warning"/> to the <see cref="FailedResult"/>.
+    /// Adds a collection of <see cref="Warning"/> to the <see cref="FailureResult"/>.
     /// </summary>
     /// <param name="warnings"></param>
     /// <returns></returns>
-    public FailedResult WithWarnings(
+    public FailureResult WithWarnings(
       IEnumerable<Warning> warnings)
     {
       result.Statements.AddWarnings(warnings);
@@ -183,11 +183,11 @@ public static partial class ResultWarningExtensions
     }
 
     /// <summary>
-    /// Adds a collection of string messages as a collection of <see cref="Warning"/> to the <see cref="FailedResult"/>.
+    /// Adds a collection of string messages as a collection of <see cref="Warning"/> to the <see cref="FailureResult"/>.
     /// </summary>
     /// <param name="messages"></param>
     /// <returns></returns>
-    public FailedResult WithWarnings(
+    public FailureResult WithWarnings(
       IEnumerable<string> messages)
     {
       result.Statements.AddWarnings(messages.Select(m => new Warning(m)));
@@ -199,7 +199,7 @@ public static partial class ResultWarningExtensions
     /// </summary>
     /// <param name="fromResult"></param>
     /// <returns></returns>
-    public FailedResult WithWarningsFrom(
+    public FailureResult WithWarningsFrom(
       BaseResult fromResult)
     {
       if (fromResult.HasWarnings())
@@ -210,22 +210,22 @@ public static partial class ResultWarningExtensions
     }
 
     /// <summary>
-    /// Adds a <see cref="Warning"/> to the <see cref="FailedResult"/>.
+    /// Adds a <see cref="Warning"/> to the <see cref="FailureResult"/>.
     /// </summary>
     /// <param name="warning"></param>
     /// <returns></returns>
-    public FailedResult WithWarning(Warning warning)
+    public FailureResult WithWarning(Warning warning)
     {
       result.Statements.AddWarning(warning);
       return result;
     }
 
     /// <summary>
-    /// Adds a string message as a <see cref="Warning"/> to the <see cref="FailedResult"/>.
+    /// Adds a string message as a <see cref="Warning"/> to the <see cref="FailureResult"/>.
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public FailedResult WithWarning(string message)
+    public FailureResult WithWarning(string message)
     {
       result.Statements.AddWarning(new Warning(message));
       return result;

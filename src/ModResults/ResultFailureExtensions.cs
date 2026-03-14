@@ -12,7 +12,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Error()
     {
-      return FailedResult.Error();
+      return FailureResult.Error();
     }
 
     /// <summary>
@@ -22,7 +22,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Error(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Error(errorMessages);
+      return FailureResult.Error(errorMessages);
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Error(params IEnumerable<Error> errors)
     {
-      return FailedResult.Error(errors);
+      return FailureResult.Error(errors);
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Error(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Error(exceptions);
+      return FailureResult.Error(exceptions);
     }
     #endregion
 
@@ -53,7 +53,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Forbidden()
     {
-      return FailedResult.Forbidden();
+      return FailureResult.Forbidden();
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Forbidden(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Forbidden(errorMessages);
+      return FailureResult.Forbidden(errorMessages);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Forbidden(params IEnumerable<Error> errors)
     {
-      return FailedResult.Forbidden(errors);
+      return FailureResult.Forbidden(errors);
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Forbidden(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Forbidden(exceptions);
+      return FailureResult.Forbidden(exceptions);
     }
     #endregion
 
@@ -94,7 +94,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unauthorized()
     {
-      return FailedResult.Unauthorized();
+      return FailureResult.Unauthorized();
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unauthorized(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Unauthorized(errorMessages);
+      return FailureResult.Unauthorized(errorMessages);
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unauthorized(params IEnumerable<Error> errors)
     {
-      return FailedResult.Unauthorized(errors);
+      return FailureResult.Unauthorized(errors);
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unauthorized(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Unauthorized(exceptions);
+      return FailureResult.Unauthorized(exceptions);
     }
     #endregion
 
@@ -135,7 +135,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Invalid()
     {
-      return FailedResult.Invalid();
+      return FailureResult.Invalid();
     }
 
     /// <summary>
@@ -145,7 +145,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Invalid(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Invalid(errorMessages);
+      return FailureResult.Invalid(errorMessages);
     }
 
     /// <summary>
@@ -155,7 +155,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Invalid(params IEnumerable<Error> errors)
     {
-      return FailedResult.Invalid(errors);
+      return FailureResult.Invalid(errors);
     }
 
     /// <summary>
@@ -165,7 +165,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Invalid(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Invalid(exceptions);
+      return FailureResult.Invalid(exceptions);
     }
     #endregion
 
@@ -176,7 +176,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result NotFound()
     {
-      return FailedResult.NotFound();
+      return FailureResult.NotFound();
     }
 
     /// <summary>
@@ -186,7 +186,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result NotFound(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.NotFound(errorMessages);
+      return FailureResult.NotFound(errorMessages);
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result NotFound(params IEnumerable<Error> errors)
     {
-      return FailedResult.NotFound(errors);
+      return FailureResult.NotFound(errors);
     }
 
     /// <summary>
@@ -206,7 +206,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result NotFound(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.NotFound(exceptions);
+      return FailureResult.NotFound(exceptions);
     }
     #endregion
 
@@ -217,7 +217,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Conflict()
     {
-      return FailedResult.Conflict();
+      return FailureResult.Conflict();
     }
 
     /// <summary>
@@ -227,7 +227,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Conflict(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Conflict(errorMessages);
+      return FailureResult.Conflict(errorMessages);
     }
 
     /// <summary>
@@ -237,7 +237,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Conflict(params IEnumerable<Error> errors)
     {
-      return FailedResult.Conflict(errors);
+      return FailureResult.Conflict(errors);
     }
 
     /// <summary>
@@ -247,7 +247,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Conflict(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Conflict(exceptions);
+      return FailureResult.Conflict(exceptions);
     }
     #endregion
 
@@ -258,7 +258,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result CriticalError()
     {
-      return FailedResult.CriticalError();
+      return FailureResult.CriticalError();
     }
 
     /// <summary>
@@ -268,7 +268,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result CriticalError(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.CriticalError(errorMessages);
+      return FailureResult.CriticalError(errorMessages);
     }
 
     /// <summary>
@@ -278,7 +278,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result CriticalError(params IEnumerable<Error> errors)
     {
-      return FailedResult.CriticalError(errors);
+      return FailureResult.CriticalError(errors);
     }
 
     /// <summary>
@@ -288,7 +288,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result CriticalError(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.CriticalError(exceptions);
+      return FailureResult.CriticalError(exceptions);
     }
     #endregion
 
@@ -299,7 +299,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unavailable()
     {
-      return FailedResult.Unavailable();
+      return FailureResult.Unavailable();
     }
 
     /// <summary>
@@ -309,7 +309,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unavailable(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Unavailable(errorMessages);
+      return FailureResult.Unavailable(errorMessages);
     }
 
     /// <summary>
@@ -319,7 +319,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unavailable(params IEnumerable<Error> errors)
     {
-      return FailedResult.Unavailable(errors);
+      return FailureResult.Unavailable(errors);
     }
 
     /// <summary>
@@ -329,7 +329,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unavailable(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Unavailable(exceptions);
+      return FailureResult.Unavailable(exceptions);
     }
     #endregion
 
@@ -340,7 +340,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result GatewayError()
     {
-      return FailedResult.GatewayError();
+      return FailureResult.GatewayError();
     }
 
     /// <summary>
@@ -350,7 +350,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result GatewayError(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.GatewayError(errorMessages);
+      return FailureResult.GatewayError(errorMessages);
     }
 
     /// <summary>
@@ -360,7 +360,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result GatewayError(params IEnumerable<Error> errors)
     {
-      return FailedResult.GatewayError(errors);
+      return FailureResult.GatewayError(errors);
     }
 
     /// <summary>
@@ -370,7 +370,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result GatewayError(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.GatewayError(exceptions);
+      return FailureResult.GatewayError(exceptions);
     }
     #endregion
 
@@ -381,7 +381,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result RateLimited()
     {
-      return FailedResult.RateLimited();
+      return FailureResult.RateLimited();
     }
 
     /// <summary>
@@ -391,7 +391,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result RateLimited(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.RateLimited(errorMessages);
+      return FailureResult.RateLimited(errorMessages);
     }
 
     /// <summary>
@@ -401,7 +401,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result RateLimited(params IEnumerable<Error> errors)
     {
-      return FailedResult.RateLimited(errors);
+      return FailureResult.RateLimited(errors);
     }
 
     /// <summary>
@@ -411,7 +411,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result RateLimited(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.RateLimited(exceptions);
+      return FailureResult.RateLimited(exceptions);
     }
     #endregion
 
@@ -422,7 +422,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result TimedOut()
     {
-      return FailedResult.TimedOut();
+      return FailureResult.TimedOut();
     }
 
     /// <summary>
@@ -432,7 +432,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result TimedOut(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.TimedOut(errorMessages);
+      return FailureResult.TimedOut(errorMessages);
     }
 
     /// <summary>
@@ -442,7 +442,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result TimedOut(params IEnumerable<Error> errors)
     {
-      return FailedResult.TimedOut(errors);
+      return FailureResult.TimedOut(errors);
     }
 
     /// <summary>
@@ -452,7 +452,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result TimedOut(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.TimedOut(exceptions);
+      return FailureResult.TimedOut(exceptions);
     }
     #endregion
 
@@ -463,7 +463,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result PaymentRequired()
     {
-      return FailedResult.PaymentRequired();
+      return FailureResult.PaymentRequired();
     }
 
     /// <summary>
@@ -473,7 +473,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result PaymentRequired(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.PaymentRequired(errorMessages);
+      return FailureResult.PaymentRequired(errorMessages);
     }
 
     /// <summary>
@@ -483,7 +483,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result PaymentRequired(params IEnumerable<Error> errors)
     {
-      return FailedResult.PaymentRequired(errors);
+      return FailureResult.PaymentRequired(errors);
     }
 
     /// <summary>
@@ -493,7 +493,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result PaymentRequired(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.PaymentRequired(exceptions);
+      return FailureResult.PaymentRequired(exceptions);
     }
     #endregion
   }
@@ -507,7 +507,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Error()
     {
-      return FailedResult.Error();
+      return FailureResult.Error();
     }
 
     /// <summary>
@@ -517,7 +517,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Error(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Error(errorMessages);
+      return FailureResult.Error(errorMessages);
     }
 
     /// <summary>
@@ -527,7 +527,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Error(params IEnumerable<Error> errors)
     {
-      return FailedResult.Error(errors);
+      return FailureResult.Error(errors);
     }
 
     /// <summary>
@@ -537,7 +537,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Error(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Error(exceptions);
+      return FailureResult.Error(exceptions);
     }
     #endregion
 
@@ -548,7 +548,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Forbidden()
     {
-      return FailedResult.Forbidden();
+      return FailureResult.Forbidden();
     }
 
     /// <summary>
@@ -558,7 +558,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Forbidden(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Forbidden(errorMessages);
+      return FailureResult.Forbidden(errorMessages);
     }
 
     /// <summary>
@@ -568,7 +568,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Forbidden(params IEnumerable<Error> errors)
     {
-      return FailedResult.Forbidden(errors);
+      return FailureResult.Forbidden(errors);
     }
 
     /// <summary>
@@ -578,7 +578,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Forbidden(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Forbidden(exceptions);
+      return FailureResult.Forbidden(exceptions);
     }
     #endregion
 
@@ -589,7 +589,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unauthorized()
     {
-      return FailedResult.Unauthorized();
+      return FailureResult.Unauthorized();
     }
 
     /// <summary>
@@ -599,7 +599,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unauthorized(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Unauthorized(errorMessages);
+      return FailureResult.Unauthorized(errorMessages);
     }
 
     /// <summary>
@@ -609,7 +609,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unauthorized(params IEnumerable<Error> errors)
     {
-      return FailedResult.Unauthorized(errors);
+      return FailureResult.Unauthorized(errors);
     }
 
     /// <summary>
@@ -619,7 +619,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unauthorized(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Unauthorized(exceptions);
+      return FailureResult.Unauthorized(exceptions);
     }
     #endregion
 
@@ -630,7 +630,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Invalid()
     {
-      return FailedResult.Invalid();
+      return FailureResult.Invalid();
     }
 
     /// <summary>
@@ -640,7 +640,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Invalid(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Invalid(errorMessages);
+      return FailureResult.Invalid(errorMessages);
     }
 
     /// <summary>
@@ -650,7 +650,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Invalid(params IEnumerable<Error> errors)
     {
-      return FailedResult.Invalid(errors);
+      return FailureResult.Invalid(errors);
     }
 
     /// <summary>
@@ -660,7 +660,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Invalid(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Invalid(exceptions);
+      return FailureResult.Invalid(exceptions);
     }
     #endregion
 
@@ -671,7 +671,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> NotFound()
     {
-      return FailedResult.NotFound();
+      return FailureResult.NotFound();
     }
 
     /// <summary>
@@ -681,7 +681,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> NotFound(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.NotFound(errorMessages);
+      return FailureResult.NotFound(errorMessages);
     }
 
     /// <summary>
@@ -691,7 +691,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> NotFound(params IEnumerable<Error> errors)
     {
-      return FailedResult.NotFound(errors);
+      return FailureResult.NotFound(errors);
     }
 
     /// <summary>
@@ -701,7 +701,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> NotFound(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.NotFound(exceptions);
+      return FailureResult.NotFound(exceptions);
     }
     #endregion
 
@@ -712,7 +712,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Conflict()
     {
-      return FailedResult.Conflict();
+      return FailureResult.Conflict();
     }
 
     /// <summary>
@@ -722,7 +722,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Conflict(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Conflict(errorMessages);
+      return FailureResult.Conflict(errorMessages);
     }
 
     /// <summary>
@@ -732,7 +732,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Conflict(params IEnumerable<Error> errors)
     {
-      return FailedResult.Conflict(errors);
+      return FailureResult.Conflict(errors);
     }
 
     /// <summary>
@@ -742,7 +742,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Conflict(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Conflict(exceptions);
+      return FailureResult.Conflict(exceptions);
     }
     #endregion
 
@@ -753,7 +753,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> CriticalError()
     {
-      return FailedResult.CriticalError();
+      return FailureResult.CriticalError();
     }
 
     /// <summary>
@@ -763,7 +763,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> CriticalError(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.CriticalError(errorMessages);
+      return FailureResult.CriticalError(errorMessages);
     }
 
     /// <summary>
@@ -773,7 +773,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> CriticalError(params IEnumerable<Error> errors)
     {
-      return FailedResult.CriticalError(errors);
+      return FailureResult.CriticalError(errors);
     }
 
     /// <summary>
@@ -783,7 +783,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> CriticalError(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.CriticalError(exceptions);
+      return FailureResult.CriticalError(exceptions);
     }
     #endregion
 
@@ -794,7 +794,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unavailable()
     {
-      return FailedResult.Unavailable();
+      return FailureResult.Unavailable();
     }
 
     /// <summary>
@@ -804,7 +804,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unavailable(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.Unavailable(errorMessages);
+      return FailureResult.Unavailable(errorMessages);
     }
 
     /// <summary>
@@ -814,7 +814,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unavailable(params IEnumerable<Error> errors)
     {
-      return FailedResult.Unavailable(errors);
+      return FailureResult.Unavailable(errors);
     }
 
     /// <summary>
@@ -824,7 +824,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unavailable(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.Unavailable(exceptions);
+      return FailureResult.Unavailable(exceptions);
     }
     #endregion
 
@@ -835,7 +835,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> GatewayError()
     {
-      return FailedResult.GatewayError();
+      return FailureResult.GatewayError();
     }
 
     /// <summary>
@@ -845,7 +845,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> GatewayError(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.GatewayError(errorMessages);
+      return FailureResult.GatewayError(errorMessages);
     }
 
     /// <summary>
@@ -855,7 +855,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> GatewayError(params IEnumerable<Error> errors)
     {
-      return FailedResult.GatewayError(errors);
+      return FailureResult.GatewayError(errors);
     }
 
     /// <summary>
@@ -865,7 +865,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> GatewayError(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.GatewayError(exceptions);
+      return FailureResult.GatewayError(exceptions);
     }
     #endregion
 
@@ -876,7 +876,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> RateLimited()
     {
-      return FailedResult.RateLimited();
+      return FailureResult.RateLimited();
     }
 
     /// <summary>
@@ -886,7 +886,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> RateLimited(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.RateLimited(errorMessages);
+      return FailureResult.RateLimited(errorMessages);
     }
 
     /// <summary>
@@ -896,7 +896,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> RateLimited(params IEnumerable<Error> errors)
     {
-      return FailedResult.RateLimited(errors);
+      return FailureResult.RateLimited(errors);
     }
 
     /// <summary>
@@ -906,7 +906,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> RateLimited(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.RateLimited(exceptions);
+      return FailureResult.RateLimited(exceptions);
     }
     #endregion
 
@@ -917,7 +917,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> TimedOut()
     {
-      return FailedResult.TimedOut();
+      return FailureResult.TimedOut();
     }
 
     /// <summary>
@@ -927,7 +927,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> TimedOut(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.TimedOut(errorMessages);
+      return FailureResult.TimedOut(errorMessages);
     }
 
     /// <summary>
@@ -937,7 +937,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> TimedOut(params IEnumerable<Error> errors)
     {
-      return FailedResult.TimedOut(errors);
+      return FailureResult.TimedOut(errors);
     }
 
     /// <summary>
@@ -947,7 +947,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> TimedOut(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.TimedOut(exceptions);
+      return FailureResult.TimedOut(exceptions);
     }
     #endregion
 
@@ -958,7 +958,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> PaymentRequired()
     {
-      return FailedResult.PaymentRequired();
+      return FailureResult.PaymentRequired();
     }
 
     /// <summary>
@@ -968,7 +968,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> PaymentRequired(params IEnumerable<string> errorMessages)
     {
-      return FailedResult.PaymentRequired(errorMessages);
+      return FailureResult.PaymentRequired(errorMessages);
     }
 
     /// <summary>
@@ -978,7 +978,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> PaymentRequired(params IEnumerable<Error> errors)
     {
-      return FailedResult.PaymentRequired(errors);
+      return FailureResult.PaymentRequired(errors);
     }
 
     /// <summary>
@@ -988,7 +988,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> PaymentRequired(params IEnumerable<Exception> exceptions)
     {
-      return FailedResult.PaymentRequired(exceptions);
+      return FailureResult.PaymentRequired(exceptions);
     }
     #endregion
   }

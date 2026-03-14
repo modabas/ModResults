@@ -3,11 +3,11 @@
 namespace ModResults.Orleans.Tests;
 
 [Collection(ClusterCollection.Name)]
-public class FailedResultSerializationTests
+public class FailureResultSerializationTests
 {
   private readonly TestCluster _cluster;
 
-  public FailedResultSerializationTests(ClusterFixture fixture)
+  public FailureResultSerializationTests(ClusterFixture fixture)
   {
     _cluster = fixture.Cluster;
   }
@@ -16,10 +16,10 @@ public class FailedResultSerializationTests
   public async Task FailedResultAsync()
   {
     // Arrange
-    var testGrain = _cluster.GrainFactory.GetGrain<IFailedResultSerializationGrain>(0);
+    var testGrain = _cluster.GrainFactory.GetGrain<IFailureResultSerializationGrain>(0);
 
     // Act
-    var result = await testGrain.FailedResultTest();
+    var result = await testGrain.FailedResult();
 
     // Assert
     Assert.NotNull(result);
@@ -55,7 +55,7 @@ public class FailedResultSerializationTests
   public async Task BasicFailedResultAsync()
   {
     // Arrange
-    var testGrain = _cluster.GrainFactory.GetGrain<IFailedResultSerializationGrain>(0);
+    var testGrain = _cluster.GrainFactory.GetGrain<IFailureResultSerializationGrain>(0);
 
     // Act
     var result = await testGrain.BasicFailedResult();

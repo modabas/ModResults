@@ -3,14 +3,14 @@ using System.Text.Json.Serialization;
 
 namespace ModResults.Tests;
 
-public class FailedResultJsonSerializationTests
+public class FailureResultJsonSerializationTests
 {
   private readonly Fact _fact1;
   private readonly Warning _warning3;
   private readonly Error _error1, _error2, _error5;
   private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-  public FailedResultJsonSerializationTests()
+  public FailureResultJsonSerializationTests()
   {
     _jsonSerializerOptions = new()
     {
@@ -30,11 +30,11 @@ public class FailedResultJsonSerializationTests
   {
     // Arrange
     var errors = new List<Error> { _error1, _error2, _error5 };
-    var resultOriginal = FailedResult.Error(errors.ToArray()).WithFact(_fact1).WithWarning(_warning3);
+    var resultOriginal = FailureResult.Error(errors.ToArray()).WithFact(_fact1).WithWarning(_warning3);
 
     // Act
     var jsonString = JsonSerializer.Serialize(resultOriginal, _jsonSerializerOptions);
-    var result = JsonSerializer.Deserialize<FailedResult>(jsonString, _jsonSerializerOptions);
+    var result = JsonSerializer.Deserialize<FailureResult>(jsonString, _jsonSerializerOptions);
 
     // Assert
     Assert.NotNull(result);
@@ -66,11 +66,11 @@ public class FailedResultJsonSerializationTests
   public void BasicFailedResult()
   {
     // Arrange
-    var resultOriginal = FailedResult.Error();
+    var resultOriginal = FailureResult.Error();
 
     // Act
     var jsonString = JsonSerializer.Serialize(resultOriginal, _jsonSerializerOptions);
-    var result = JsonSerializer.Deserialize<FailedResult>(jsonString, _jsonSerializerOptions);
+    var result = JsonSerializer.Deserialize<FailureResult>(jsonString, _jsonSerializerOptions);
 
     // Assert
     Assert.NotNull(result);

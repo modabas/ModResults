@@ -1,6 +1,6 @@
 ﻿namespace ModResults.Tests;
 
-public class FailedResultConversionTests
+public class FailureResultConversionTests
 {
   private readonly Fact _fact1, _fact2, _fact3;
   private readonly Warning _warning1, _warning2, _warning3;
@@ -8,7 +8,7 @@ public class FailedResultConversionTests
   private readonly InvalidOperationException _ex1;
   private readonly ApplicationException _ex2;
 
-  public FailedResultConversionTests()
+  public FailureResultConversionTests()
   {
     _fact1 = new Fact();
     _fact2 = new Fact("Fact 2", "F2");
@@ -26,7 +26,7 @@ public class FailedResultConversionTests
   public void BasicFailedResultToResult()
   {
     //Arrange
-    var resultOriginal = FailedResult.TimedOut();
+    var resultOriginal = FailureResult.TimedOut();
 
     //Act
     var result = resultOriginal.ToResult();
@@ -46,7 +46,7 @@ public class FailedResultConversionTests
   public void FailedResultToResultOfT()
   {
     //Arrange
-    var resultOriginal = FailedResult
+    var resultOriginal = FailureResult
       .Error(
         _error1,
         _error2,

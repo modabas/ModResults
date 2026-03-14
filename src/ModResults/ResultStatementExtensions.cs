@@ -76,14 +76,14 @@ public static partial class ResultStatementExtensions
     }
   }
 
-  extension(FailedResult result)
+  extension(FailureResult result)
   {
     /// <summary>
     /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of a <see cref="Statements"/> object.
     /// </summary>
     /// <param name="statements"></param>
     /// <returns></returns>
-    public FailedResult WithStatements(
+    public FailureResult WithStatements(
       Statements statements)
     {
       if (statements.HasFacts())
@@ -102,7 +102,7 @@ public static partial class ResultStatementExtensions
     /// </summary>
     /// <param name="fromResult"></param>
     /// <returns></returns>
-    public FailedResult WithStatementsFrom(
+    public FailureResult WithStatementsFrom(
       BaseResult fromResult)
     {
       if (fromResult.HasStatements())

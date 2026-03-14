@@ -2,7 +2,7 @@
 
 namespace ModResults;
 
-public abstract class BaseResultWithFixedFailureType : BaseResult<Failure>, IModResult<Failure>
+public abstract class BaseModResult : BaseResult<Failure>, IModResult<Failure>
 {
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
   public override bool IsOk { get; init; }
@@ -69,7 +69,7 @@ public abstract class BaseResultWithFixedFailureType : BaseResult<Failure>, IMod
   }
 }
 
-public abstract class BaseResultWithFixedFailureType<TValue> : BaseResultWithFixedFailureType, IModResult<TValue, Failure>
+public abstract class BaseModResult<TValue> : BaseModResult, IModResult<TValue, Failure>
   where TValue : notnull
 {
   [MemberNotNullWhen(returnValue: true, nameof(Value))]

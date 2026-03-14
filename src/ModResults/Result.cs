@@ -3,7 +3,7 @@
 /// <summary>
 /// A business result that represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
 /// </summary>
-public sealed class Result : BaseResultWithFixedFailureType
+public sealed class Result : BaseModResult
 {
   private Result()
   {
@@ -123,8 +123,8 @@ public sealed class Result : BaseResultWithFixedFailureType
   /// <summary>
   /// Creates a <see cref="Result"/> in Failed state from input failed result.
   /// </summary>
-  /// <param name="failedResult">FailedResult instance that will be converted to a Failed <see cref="Result"/>.</param>
-  public static implicit operator Result(FailedResult failedResult)
+  /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result"/>.</param>
+  public static implicit operator Result(FailureResult failedResult)
   {
     return Fail(failedResult);
   }
@@ -134,7 +134,7 @@ public sealed class Result : BaseResultWithFixedFailureType
 /// A business result that represents the outcome of an operation, encapsulating either successful value of type <typeparamref name="TValue"/> or failure states, along with associated error messages and additional information.
 /// </summary>
 /// <typeparam name="TValue"></typeparam>
-public sealed class Result<TValue> : BaseResultWithFixedFailureType<TValue>
+public sealed class Result<TValue> : BaseModResult<TValue>
   where TValue : notnull
 {
   private Result(TValue value)
@@ -261,8 +261,8 @@ public sealed class Result<TValue> : BaseResultWithFixedFailureType<TValue>
   /// <summary>
   /// Creates a <see cref="Result{TValue}"/> in Failed state from input failed result.
   /// </summary>
-  /// <param name="failedResult">FailedResult instance that will be converted to a Failed <see cref="Result{TValue}"/>.</param>
-  public static implicit operator Result<TValue>(FailedResult failedResult)
+  /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result{TValue}"/>.</param>
+  public static implicit operator Result<TValue>(FailureResult failedResult)
   {
     return Fail(failedResult);
   }
