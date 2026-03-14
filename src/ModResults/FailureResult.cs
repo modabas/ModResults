@@ -62,7 +62,7 @@ public sealed class FailureResult : BaseModResult
   }
 
   /// <summary>
-  /// Creates a failed <see cref="FailureResult"/> with failure type <see cref="FailureType.CriticalError"/> containing an error constructed from specified exception.
+  /// Creates a <see cref="FailureResult"/> with failure type <see cref="FailureType.CriticalError"/> containing an error constructed from specified exception.
   /// </summary>
   /// <param name="exception">The <see cref="Exception"/> that will used to construct an error instance from.</param>
   public static implicit operator FailureResult(Exception exception)
@@ -71,7 +71,7 @@ public sealed class FailureResult : BaseModResult
   }
 
   /// <summary>
-  /// Creates a <see cref="FailureResult"/> in Failed state with input failure type.
+  /// Creates a <see cref="FailureResult"/> with input failure type.
   /// </summary>
   /// <param name="failureType">Failure type that will be encapsulated in a Failed <see cref="FailureResult"/>.</param>
   public static implicit operator FailureResult(FailureType failureType)

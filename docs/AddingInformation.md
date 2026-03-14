@@ -6,7 +6,7 @@ See various [WithFact](../src/ModResults/ResultFactExtensions.cs) and [WithWarni
 
 Default [Failure](../src/ModResults/Failure.cs) implementation used in Result and Result&lt;TValue&gt; objects, has a Type property holding [FailureType](../src/ModResults/FailureType.cs) and also contains a collection of [Errors](../src/ModResults/Error.cs).
 
-See various static methods of Result objects to [create a Result in failed state](../src/ModResults/ResultFailureExtensions.cs) containing Error information. Errors can only be attached to a Failed Result instance during Result instance creation and cannot be added or removed afterwards.
+See various static methods of Result objects to [create a failed Result](../src/ModResults/ResultFailureExtensions.cs) containing Error information. Errors can only be attached to a failed Result instance during Result instance creation and cannot be added or removed afterwards.
 
 ``` csharp
 public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest req, CancellationToken ct)
@@ -14,7 +14,7 @@ public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest re
     var entity = await db.Books.FirstOrDefaultAsync(b => b.Id == req.Id, ct);
 
     return entity is null ?
-      Result<GetBookByIdResponse>.NotFound($"Book with id: {0} not found.", req.Id)
+      FailureResult.NotFound($"Book with id: {0} not found.", req.Id)
         .WithFact($"dbContextId: {db.ContextId}") :
       Result.Ok(new GetBookByIdResponse(
         Id: entity.Id,
