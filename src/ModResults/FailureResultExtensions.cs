@@ -9,14 +9,14 @@ public static class FailureResultExtensions
     /// Converts a <see cref="FailureResult"/> to a <see cref="Result"/>, copying over Failure and Statements information.
     /// </summary>
     /// <returns></returns>
-    public Result ToResult() => result;
+    public Result ToResult() => Result.Fail(result);
 
     /// <summary>
     /// Converts a <see cref="FailureResult"/> to a <see cref="Result{TValue}"/>, copying over Failure and Statements information.
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
     /// <returns></returns>
-    public Result<TValue> ToResult<TValue>() where TValue : notnull => result;
+    public Result<TValue> ToResult<TValue>() where TValue : notnull => Result<TValue>.Fail(result);
     #endregion
 
     #region "Error"

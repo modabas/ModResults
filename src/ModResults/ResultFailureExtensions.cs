@@ -12,7 +12,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Error()
     {
-      return FailureResult.Error();
+      return Result.Create(FailureType.Error);
     }
 
     /// <summary>
@@ -22,7 +22,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Error(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Error(errorMessages);
+      var failureType = FailureType.Error;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -32,7 +35,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Error(params IEnumerable<Error> errors)
     {
-      return FailureResult.Error(errors);
+      return Result.Create(FailureType.Error, errors);
     }
 
     /// <summary>
@@ -42,18 +45,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Error(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Error(exceptions);
+      var failureType = FailureType.Error;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Forbidden"
+    #region Forbidden
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.Forbidden"/>.
     /// </summary>
     /// <returns></returns>
     public static Result Forbidden()
     {
-      return FailureResult.Forbidden();
+      return Result.Create(FailureType.Forbidden);
     }
 
     /// <summary>
@@ -63,7 +69,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Forbidden(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Forbidden(errorMessages);
+      var failureType = FailureType.Forbidden;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -73,7 +82,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Forbidden(params IEnumerable<Error> errors)
     {
-      return FailureResult.Forbidden(errors);
+      return Result.Create(FailureType.Forbidden, errors);
     }
 
     /// <summary>
@@ -83,18 +92,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Forbidden(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Forbidden(exceptions);
+      var failureType = FailureType.Forbidden;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Unauthorized"
+    #region Unauthorized
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.Unauthorized"/>.
     /// </summary>
     /// <returns></returns>
     public static Result Unauthorized()
     {
-      return FailureResult.Unauthorized();
+      return Result.Create(FailureType.Unauthorized);
     }
 
     /// <summary>
@@ -104,7 +116,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unauthorized(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Unauthorized(errorMessages);
+      var failureType = FailureType.Unauthorized;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -114,7 +129,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unauthorized(params IEnumerable<Error> errors)
     {
-      return FailureResult.Unauthorized(errors);
+      return Result.Create(FailureType.Unauthorized, errors);
     }
 
     /// <summary>
@@ -124,18 +139,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unauthorized(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Unauthorized(exceptions);
+      var failureType = FailureType.Unauthorized;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Invalid"
+    #region Invalid
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.Invalid"/>.
     /// </summary>
     /// <returns></returns>
     public static Result Invalid()
     {
-      return FailureResult.Invalid();
+      return Result.Create(FailureType.Invalid);
     }
 
     /// <summary>
@@ -145,7 +163,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Invalid(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Invalid(errorMessages);
+      var failureType = FailureType.Invalid;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -155,7 +176,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Invalid(params IEnumerable<Error> errors)
     {
-      return FailureResult.Invalid(errors);
+      return Result.Create(FailureType.Invalid, errors);
     }
 
     /// <summary>
@@ -165,18 +186,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Invalid(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Invalid(exceptions);
+      var failureType = FailureType.Invalid;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "NotFound"
+    #region NotFound
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.NotFound"/>.
     /// </summary>
     /// <returns></returns>
     public static Result NotFound()
     {
-      return FailureResult.NotFound();
+      return Result.Create(FailureType.NotFound);
     }
 
     /// <summary>
@@ -186,7 +210,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result NotFound(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.NotFound(errorMessages);
+      var failureType = FailureType.NotFound;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -196,7 +223,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result NotFound(params IEnumerable<Error> errors)
     {
-      return FailureResult.NotFound(errors);
+      return Result.Create(FailureType.NotFound, errors);
     }
 
     /// <summary>
@@ -206,18 +233,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result NotFound(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.NotFound(exceptions);
+      var failureType = FailureType.NotFound;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Conflict"
+    #region Conflict
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.Conflict"/>.
     /// </summary>
     /// <returns></returns>
     public static Result Conflict()
     {
-      return FailureResult.Conflict();
+      return Result.Create(FailureType.Conflict);
     }
 
     /// <summary>
@@ -227,7 +257,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Conflict(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Conflict(errorMessages);
+      var failureType = FailureType.Conflict;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -237,7 +270,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Conflict(params IEnumerable<Error> errors)
     {
-      return FailureResult.Conflict(errors);
+      return Result.Create(FailureType.Conflict, errors);
     }
 
     /// <summary>
@@ -247,18 +280,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Conflict(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Conflict(exceptions);
+      var failureType = FailureType.Conflict;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "CriticalError"
+    #region CriticalError
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.CriticalError"/>.
     /// </summary>
     /// <returns></returns>
     public static Result CriticalError()
     {
-      return FailureResult.CriticalError();
+      return Result.Create(FailureType.CriticalError);
     }
 
     /// <summary>
@@ -268,7 +304,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result CriticalError(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.CriticalError(errorMessages);
+      var failureType = FailureType.CriticalError;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -278,7 +317,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result CriticalError(params IEnumerable<Error> errors)
     {
-      return FailureResult.CriticalError(errors);
+      return Result.Create(FailureType.CriticalError, errors);
     }
 
     /// <summary>
@@ -288,18 +327,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result CriticalError(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.CriticalError(exceptions);
+      var failureType = FailureType.CriticalError;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Unavailable"
+    #region Unavailable
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.Unavailable"/>.
     /// </summary>
     /// <returns></returns>
     public static Result Unavailable()
     {
-      return FailureResult.Unavailable();
+      return Result.Create(FailureType.Unavailable);
     }
 
     /// <summary>
@@ -309,7 +351,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unavailable(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Unavailable(errorMessages);
+      var failureType = FailureType.Unavailable;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -319,7 +364,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unavailable(params IEnumerable<Error> errors)
     {
-      return FailureResult.Unavailable(errors);
+      return Result.Create(FailureType.Unavailable, errors);
     }
 
     /// <summary>
@@ -329,18 +374,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result Unavailable(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Unavailable(exceptions);
+      var failureType = FailureType.Unavailable;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "GatewayError"
+    #region GatewayError
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.GatewayError"/>.
     /// </summary>
     /// <returns></returns>
     public static Result GatewayError()
     {
-      return FailureResult.GatewayError();
+      return Result.Create(FailureType.GatewayError);
     }
 
     /// <summary>
@@ -350,7 +398,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result GatewayError(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.GatewayError(errorMessages);
+      var failureType = FailureType.GatewayError;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -360,7 +411,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result GatewayError(params IEnumerable<Error> errors)
     {
-      return FailureResult.GatewayError(errors);
+      return Result.Create(FailureType.GatewayError, errors);
     }
 
     /// <summary>
@@ -370,18 +421,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result GatewayError(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.GatewayError(exceptions);
+      var failureType = FailureType.GatewayError;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "RateLimited"
+    #region RateLimited
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.RateLimited"/>.
     /// </summary>
     /// <returns></returns>
     public static Result RateLimited()
     {
-      return FailureResult.RateLimited();
+      return Result.Create(FailureType.RateLimited);
     }
 
     /// <summary>
@@ -391,7 +445,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result RateLimited(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.RateLimited(errorMessages);
+      var failureType = FailureType.RateLimited;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -401,7 +458,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result RateLimited(params IEnumerable<Error> errors)
     {
-      return FailureResult.RateLimited(errors);
+      return Result.Create(FailureType.RateLimited, errors);
     }
 
     /// <summary>
@@ -411,18 +468,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result RateLimited(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.RateLimited(exceptions);
+      var failureType = FailureType.RateLimited;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "TimedOut"
+    #region TimedOut
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.TimedOut"/>.
     /// </summary>
     /// <returns></returns>
     public static Result TimedOut()
     {
-      return FailureResult.TimedOut();
+      return Result.Create(FailureType.TimedOut);
     }
 
     /// <summary>
@@ -432,7 +492,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result TimedOut(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.TimedOut(errorMessages);
+      var failureType = FailureType.TimedOut;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -442,7 +505,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result TimedOut(params IEnumerable<Error> errors)
     {
-      return FailureResult.TimedOut(errors);
+      return Result.Create(FailureType.TimedOut, errors);
     }
 
     /// <summary>
@@ -452,18 +515,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result TimedOut(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.TimedOut(exceptions);
+      var failureType = FailureType.TimedOut;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "PaymentRequired"
+    #region PaymentRequired
     /// <summary>
     /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.PaymentRequired"/>.
     /// </summary>
     /// <returns></returns>
     public static Result PaymentRequired()
     {
-      return FailureResult.PaymentRequired();
+      return Result.Create(FailureType.PaymentRequired);
     }
 
     /// <summary>
@@ -473,7 +539,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result PaymentRequired(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.PaymentRequired(errorMessages);
+      var failureType = FailureType.PaymentRequired;
+      return Result.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -483,7 +552,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result PaymentRequired(params IEnumerable<Error> errors)
     {
-      return FailureResult.PaymentRequired(errors);
+      return Result.Create(FailureType.PaymentRequired, errors);
     }
 
     /// <summary>
@@ -493,7 +562,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result PaymentRequired(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.PaymentRequired(exceptions);
+      var failureType = FailureType.PaymentRequired;
+      return Result.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
   }
@@ -507,7 +579,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Error()
     {
-      return FailureResult.Error();
+      return Result<TValue>.Create(FailureType.Error);
     }
 
     /// <summary>
@@ -517,7 +589,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Error(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Error(errorMessages);
+      var failureType = FailureType.Error;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -527,7 +602,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Error(params IEnumerable<Error> errors)
     {
-      return FailureResult.Error(errors);
+      return Result<TValue>.Create(FailureType.Error, errors);
     }
 
     /// <summary>
@@ -537,18 +612,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Error(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Error(exceptions);
+      var failureType = FailureType.Error;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Forbidden"
+    #region Forbidden
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.Forbidden"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> Forbidden()
     {
-      return FailureResult.Forbidden();
+      return Result<TValue>.Create(FailureType.Forbidden);
     }
 
     /// <summary>
@@ -558,7 +636,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Forbidden(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Forbidden(errorMessages);
+      var failureType = FailureType.Forbidden;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -568,7 +649,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Forbidden(params IEnumerable<Error> errors)
     {
-      return FailureResult.Forbidden(errors);
+      return Result<TValue>.Create(FailureType.Forbidden, errors);
     }
 
     /// <summary>
@@ -578,18 +659,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Forbidden(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Forbidden(exceptions);
+      var failureType = FailureType.Forbidden;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Unauthorized"
+    #region Unauthorized
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.Unauthorized"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> Unauthorized()
     {
-      return FailureResult.Unauthorized();
+      return Result<TValue>.Create(FailureType.Unauthorized);
     }
 
     /// <summary>
@@ -599,7 +683,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unauthorized(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Unauthorized(errorMessages);
+      var failureType = FailureType.Unauthorized;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -609,7 +696,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unauthorized(params IEnumerable<Error> errors)
     {
-      return FailureResult.Unauthorized(errors);
+      return Result<TValue>.Create(FailureType.Unauthorized, errors);
     }
 
     /// <summary>
@@ -619,18 +706,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unauthorized(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Unauthorized(exceptions);
+      var failureType = FailureType.Unauthorized;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Invalid"
+    #region Invalid
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.Invalid"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> Invalid()
     {
-      return FailureResult.Invalid();
+      return Result<TValue>.Create(FailureType.Invalid);
     }
 
     /// <summary>
@@ -640,7 +730,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Invalid(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Invalid(errorMessages);
+      var failureType = FailureType.Invalid;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -650,7 +743,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Invalid(params IEnumerable<Error> errors)
     {
-      return FailureResult.Invalid(errors);
+      return Result<TValue>.Create(FailureType.Invalid, errors);
     }
 
     /// <summary>
@@ -660,18 +753,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Invalid(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Invalid(exceptions);
+      var failureType = FailureType.Invalid;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "NotFound"
+    #region NotFound
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.NotFound"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> NotFound()
     {
-      return FailureResult.NotFound();
+      return Result<TValue>.Create(FailureType.NotFound);
     }
 
     /// <summary>
@@ -681,7 +777,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> NotFound(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.NotFound(errorMessages);
+      var failureType = FailureType.NotFound;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -691,7 +790,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> NotFound(params IEnumerable<Error> errors)
     {
-      return FailureResult.NotFound(errors);
+      return Result<TValue>.Create(FailureType.NotFound, errors);
     }
 
     /// <summary>
@@ -701,18 +800,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> NotFound(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.NotFound(exceptions);
+      var failureType = FailureType.NotFound;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Conflict"
+    #region Conflict
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.Conflict"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> Conflict()
     {
-      return FailureResult.Conflict();
+      return Result<TValue>.Create(FailureType.Conflict);
     }
 
     /// <summary>
@@ -722,7 +824,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Conflict(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Conflict(errorMessages);
+      var failureType = FailureType.Conflict;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -732,7 +837,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Conflict(params IEnumerable<Error> errors)
     {
-      return FailureResult.Conflict(errors);
+      return Result<TValue>.Create(FailureType.Conflict, errors);
     }
 
     /// <summary>
@@ -742,18 +847,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Conflict(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Conflict(exceptions);
+      var failureType = FailureType.Conflict;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "CriticalError"
+    #region CriticalError
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.CriticalError"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> CriticalError()
     {
-      return FailureResult.CriticalError();
+      return Result<TValue>.Create(FailureType.CriticalError);
     }
 
     /// <summary>
@@ -763,7 +871,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> CriticalError(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.CriticalError(errorMessages);
+      var failureType = FailureType.CriticalError;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -773,7 +884,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> CriticalError(params IEnumerable<Error> errors)
     {
-      return FailureResult.CriticalError(errors);
+      return Result<TValue>.Create(FailureType.CriticalError, errors);
     }
 
     /// <summary>
@@ -783,18 +894,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> CriticalError(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.CriticalError(exceptions);
+      var failureType = FailureType.CriticalError;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "Unavailable"
+    #region Unavailable
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.Unavailable"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> Unavailable()
     {
-      return FailureResult.Unavailable();
+      return Result<TValue>.Create(FailureType.Unavailable);
     }
 
     /// <summary>
@@ -804,7 +918,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unavailable(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.Unavailable(errorMessages);
+      var failureType = FailureType.Unavailable;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -814,7 +931,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unavailable(params IEnumerable<Error> errors)
     {
-      return FailureResult.Unavailable(errors);
+      return Result<TValue>.Create(FailureType.Unavailable, errors);
     }
 
     /// <summary>
@@ -824,18 +941,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> Unavailable(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.Unavailable(exceptions);
+      var failureType = FailureType.Unavailable;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "GatewayError"
+    #region GatewayError
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.GatewayError"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> GatewayError()
     {
-      return FailureResult.GatewayError();
+      return Result<TValue>.Create(FailureType.GatewayError);
     }
 
     /// <summary>
@@ -845,7 +965,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> GatewayError(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.GatewayError(errorMessages);
+      var failureType = FailureType.GatewayError;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -855,7 +978,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> GatewayError(params IEnumerable<Error> errors)
     {
-      return FailureResult.GatewayError(errors);
+      return Result<TValue>.Create(FailureType.GatewayError, errors);
     }
 
     /// <summary>
@@ -865,18 +988,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> GatewayError(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.GatewayError(exceptions);
+      var failureType = FailureType.GatewayError;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "RateLimited"
+    #region RateLimited
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.RateLimited"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> RateLimited()
     {
-      return FailureResult.RateLimited();
+      return Result<TValue>.Create(FailureType.RateLimited);
     }
 
     /// <summary>
@@ -886,7 +1012,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> RateLimited(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.RateLimited(errorMessages);
+      var failureType = FailureType.RateLimited;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -896,7 +1025,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> RateLimited(params IEnumerable<Error> errors)
     {
-      return FailureResult.RateLimited(errors);
+      return Result<TValue>.Create(FailureType.RateLimited, errors);
     }
 
     /// <summary>
@@ -906,18 +1035,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> RateLimited(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.RateLimited(exceptions);
+      var failureType = FailureType.RateLimited;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "TimedOut"
+    #region TimedOut
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.TimedOut"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> TimedOut()
     {
-      return FailureResult.TimedOut();
+      return Result<TValue>.Create(FailureType.TimedOut);
     }
 
     /// <summary>
@@ -927,7 +1059,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> TimedOut(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.TimedOut(errorMessages);
+      var failureType = FailureType.TimedOut;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -937,7 +1072,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> TimedOut(params IEnumerable<Error> errors)
     {
-      return FailureResult.TimedOut(errors);
+      return Result<TValue>.Create(FailureType.TimedOut, errors);
     }
 
     /// <summary>
@@ -947,18 +1082,21 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> TimedOut(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.TimedOut(exceptions);
+      var failureType = FailureType.TimedOut;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
 
-    #region "PaymentRequired"
+    #region PaymentRequired
     /// <summary>
     /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.PaymentRequired"/>.
     /// </summary>
     /// <returns></returns>
     public static Result<TValue> PaymentRequired()
     {
-      return FailureResult.PaymentRequired();
+      return Result<TValue>.Create(FailureType.PaymentRequired);
     }
 
     /// <summary>
@@ -968,7 +1106,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> PaymentRequired(params IEnumerable<string> errorMessages)
     {
-      return FailureResult.PaymentRequired(errorMessages);
+      var failureType = FailureType.PaymentRequired;
+      return Result<TValue>.Create(
+          failureType,
+          errorMessages.Select(x => x.ToError(failureType)));
     }
 
     /// <summary>
@@ -978,7 +1119,7 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> PaymentRequired(params IEnumerable<Error> errors)
     {
-      return FailureResult.PaymentRequired(errors);
+      return Result<TValue>.Create(FailureType.PaymentRequired, errors);
     }
 
     /// <summary>
@@ -988,7 +1129,10 @@ public static class ResultFailureExtensions
     /// <returns></returns>
     public static Result<TValue> PaymentRequired(params IEnumerable<Exception> exceptions)
     {
-      return FailureResult.PaymentRequired(exceptions);
+      var failureType = FailureType.PaymentRequired;
+      return Result<TValue>.Create(
+          failureType,
+          exceptions.Select(x => x.ToError(failureType)));
     }
     #endregion
   }

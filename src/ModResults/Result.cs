@@ -17,10 +17,26 @@ public sealed class Result : BaseModResult
     Failure = new Failure(failureType, errors);
   }
 
+  private Result(FailureType failureType, IEnumerable<Error> errors)
+  {
+    IsOk = false;
+    Failure = Failure.Create(failureType, errors);
+  }
+
   private Result(FailureType failureType)
   {
     IsOk = false;
     Failure = new Failure(failureType, null);
+  }
+
+  internal static Result Create(FailureType failureType, IEnumerable<Error> errors)
+  {
+    return new(failureType, errors);
+  }
+
+  internal static Result Create(FailureType failureType)
+  {
+    return new(failureType);
   }
 
   /// <summary>
@@ -126,7 +142,7 @@ public sealed class Result : BaseModResult
   /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result"/>.</param>
   public static implicit operator Result(FailureResult failedResult)
   {
-    return Fail(failedResult);
+    return failedResult.ToResult();
   }
 }
 
@@ -149,10 +165,26 @@ public sealed class Result<TValue> : BaseModResult<TValue>
     Failure = new Failure(failureType, errors);
   }
 
+  private Result(FailureType failureType, IEnumerable<Error> errors)
+  {
+    IsOk = false;
+    Failure = Failure.Create(failureType, errors);
+  }
+
   private Result(FailureType failureType)
   {
     IsOk = false;
     Failure = new Failure(failureType, null);
+  }
+
+  internal static Result<TValue> Create(FailureType failureType, IEnumerable<Error> errors)
+  {
+    return new(failureType, errors);
+  }
+
+  internal static Result<TValue> Create(FailureType failureType)
+  {
+    return new(failureType);
   }
 
   /// <summary>
@@ -264,6 +296,6 @@ public sealed class Result<TValue> : BaseModResult<TValue>
   /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result{TValue}"/>.</param>
   public static implicit operator Result<TValue>(FailureResult failedResult)
   {
-    return Fail(failedResult);
+    return failedResult.ToResult<TValue>();
   }
 }
