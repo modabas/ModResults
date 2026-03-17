@@ -19,6 +19,21 @@ public static class FailureResultExtensions
     public Result<TValue> ToResult<TValue>() where TValue : notnull => Result<TValue>.Fail(result);
     #endregion
 
+    #region "AsResult"
+    /// <summary>
+    /// Returns a <see cref="Result"/> that wraps the same state, Failure and Statements as the source <see cref="FailureResult"/>.
+    /// </summary>
+    /// <returns></returns>
+    public Result AsResult() => new(false, result.Failure, result.Statements);
+
+    /// <summary>
+    /// Returns a <see cref="Result{TValue}"/> that wraps the same state, Failure and Statements as the source <see cref="FailureResult"/>.
+    /// </summary>
+    /// <typeparam name="TValue"></typeparam>
+    /// <returns></returns>
+    public Result<TValue> AsResult<TValue>() where TValue : notnull => new(false, default, result.Failure, result.Statements);
+    #endregion
+
     #region "Error"
     /// <summary>
     /// Creates a failed <see cref="FailureResult"/> with failure type <see cref="FailureType.Error"/>.

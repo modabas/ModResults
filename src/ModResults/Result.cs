@@ -142,7 +142,7 @@ public sealed class Result : BaseModResult
   /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result"/>.</param>
   public static implicit operator Result(FailureResult failedResult)
   {
-    return failedResult.ToResult();
+    return failedResult.AsResult();
   }
 }
 
@@ -264,12 +264,12 @@ public sealed class Result<TValue> : BaseModResult<TValue>
   /// <param name="resultOfTValue">Source <see cref="Result{TValue}"/>.</param>
   public static implicit operator Result(Result<TValue> resultOfTValue)
   {
-    return resultOfTValue.ToResult();
+    return resultOfTValue.AsResult();
   }
 
   public static implicit operator Result<TValue>(Result<TValue, Failure> resultOfTValueAndFailure)
   {
-    return resultOfTValueAndFailure.ToResultOfTValue();
+    return resultOfTValueAndFailure.AsResultOfTValue();
   }
 
   /// <summary>
@@ -296,6 +296,6 @@ public sealed class Result<TValue> : BaseModResult<TValue>
   /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result{TValue}"/>.</param>
   public static implicit operator Result<TValue>(FailureResult failedResult)
   {
-    return failedResult.ToResult<TValue>();
+    return failedResult.AsResult<TValue>();
   }
 }
