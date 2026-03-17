@@ -137,7 +137,7 @@ public sealed class Result : BaseModResult
   }
 
   /// <summary>
-  /// Creates a <see cref="Result"/> in Failed state from input failed result.
+  /// Creates a <see cref="Result"/> in Failed state from input <see cref="FailureResult"/> .
   /// </summary>
   /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result"/>.</param>
   public static implicit operator Result(FailureResult failedResult)
@@ -291,7 +291,7 @@ public sealed class Result<TValue> : BaseModResult<TValue>
   }
 
   /// <summary>
-  /// Creates a <see cref="Result{TValue}"/> in Failed state from input failed result.
+  /// Creates a <see cref="Result{TValue}"/> in Failed state from input <see cref="FailureResult"/>.
   /// </summary>
   /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result{TValue}"/>.</param>
   public static implicit operator Result<TValue>(FailureResult failedResult)

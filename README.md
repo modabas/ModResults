@@ -25,7 +25,7 @@ ModResults implements the Result pattern, providing a structured way to represen
 ### Creating a Result or Result&lt;TValue&gt; Instance
 
 - **Success**: Use `Result.Ok()` or `Result<TValue>.Ok(TValue value)`.
-- **Failure**: Use static factory methods like `Result.NotFound()` or `Result<TValue>.Invalid()` to create failed results with a specific failure type. Also, `FailureResult` class has same set of static factory methods to serve as a helper for returning failed `Result<TValue>` instances without the need to specify `TValue` directly. `FailureResult` can be converted to either `Result` or `Result<TValue>` via implicit operators or explicit `ToResult()` and `ToResult<TValue>()` methods.
+- **Failure**: Use static factory methods like `Result.NotFound()` or `Result<TValue>.Invalid()` to create failed results with a specific failure type. Also, `FailureResult` class has same set of static factory methods to serve as a helper for returning failed `Result<TValue>` instances without the need to specify `TValue` directly. `FailureResult` can be converted to either `Result` or `Result<TValue>` via implicit operators or explicit `AsResult()`, `AsResult<TValue>()`, `ToResult()` and `ToResult<TValue>()` methods.
 
 For each failure type (like Error, Forbidden, Unauthorized, etc.), there are several overloads that creates a failed result with the given FailureType:
 - No parameters:

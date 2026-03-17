@@ -21,16 +21,18 @@ The `FailureResult` class serves as a helper for returning failed `Result<TValue
 - `FailureType` enum to `FailureResult`,
 - `Exception` to failed `Result` or `Result<TValue>` with FailureType set to CriticalError,
 - `Exception` to `FailureResult` with FailureType set to CriticalError,
-- `Result<TValue>` to `Result`.
-- `FailureResult` to failed `Result` or `Result<TValue>` copying all Failure information, Errors, Facts, and Warnings.
+- `Result<TValue>` as `Result` that wraps same state, Failure and Statements in target result type.
+- `FailureResult` as failed `Result` or `Result<TValue>` that wraps same state, Failure and Statements in target result type.
 
 ### QoL Features
 
 - `Result.Ok(TValue value)` static method for creating a successful `Result<TValue>` instead of calling `Result<TValue>.Ok(TValue value)`,
 - Static factory methods for creating failed results with specific failure types, such as `Result.NotFound()`, `Result<TValue>.Invalid()`, etc.
 - Static `Fail` method to create a failed `Result` or `Result<TValue>` from another `Result` or `Result<TValue>` instance, copying all Failure information, Errors, Facts, and Warnings.
-- `Result<TValue>` to `Result` using `ToResult()` method,
+- `Result<TValue>` to `Result` using `ToResult()` method (in same state, copies contents of Failure and Statement objects of source),
+- `Result<TValue>` as `Result` using `AsResult()` method (in same state, uses same Failure and Statement objects of source),
+- `FailureResult` to `Result<TValue>` and `Result` using `ToResult<TValue>()` and `ToResult()` methods (in same state, copies contents of Failure and Statement objects of source),
+- `FailureResult` as `Result<TValue>` and `Result` using `AsResult<TValue>()` and `AsResult()` methods (in same state, uses same Failure and Statement objects of source),
 - `Result` to `Result<TValue>` using `ToResult()` method with a factory function for `TValue`,
-- `FailureResult` to `Result<TValue>` and `Result` using `ToResult<TValue>()` and `ToResult()` methods,
 - Extension methods like `ToResultAsync()` or `MapAsync()` for asynchronous conversions,
 - Extension methods to check items in Error, Fact, Warning collections and to add new items to Fact and Warning collections.
