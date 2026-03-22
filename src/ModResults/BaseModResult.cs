@@ -2,7 +2,8 @@
 
 namespace ModResults;
 
-public abstract class BaseModResult : BaseResult<Failure>, IModResult<Failure>
+public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Failure>
+  where TSelf : BaseModResult<TSelf>
 {
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
   public override bool IsOk { get; init; }
@@ -67,9 +68,190 @@ public abstract class BaseModResult : BaseResult<Failure>, IModResult<Failure>
   {
     return IsFailed && this.HasErrorWithException(exceptionType, includeAssignableTo);
   }
+
+  /// <summary>
+  /// Adds a collection of <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="facts"></param>
+  /// <returns></returns>
+  public TSelf WithFacts(
+    IReadOnlyList<Fact> facts)
+  {
+    Statements.AddFacts(facts);
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds a collection of <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="facts"></param>
+  /// <returns></returns>
+  public TSelf WithFacts(
+    IEnumerable<Fact> facts)
+  {
+    Statements.AddFacts(facts);
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds a collection of string messages as a collection of <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="messages"></param>
+  /// <returns></returns>
+  public TSelf WithFacts(
+    IEnumerable<string> messages)
+  {
+    Statements.AddFacts(messages.Select(m => new Fact(m)));
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds all <see cref="Fact"/>s of another result object.
+  /// </summary>
+  /// <param name="fromResult"></param>
+  /// <returns></returns>
+  public TSelf WithFactsFrom(
+    BaseResult fromResult)
+  {
+    if (fromResult.HasFacts())
+    {
+      WithFacts(fromResult.Statements.Facts);
+    }
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds a <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="fact"></param>
+  /// <returns></returns>
+  public TSelf WithFact(Fact fact)
+  {
+    Statements.AddFact(fact);
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds a string message as a <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="message"></param>
+  /// <returns></returns>
+  public TSelf WithFact(string message)
+  {
+    Statements.AddFact(new Fact(message));
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds a collection of <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="warnings"></param>
+  /// <returns></returns>
+  public TSelf WithWarnings(
+    IReadOnlyList<Warning> warnings)
+  {
+    Statements.AddWarnings(warnings);
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds a collection of <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="warnings"></param>
+  /// <returns></returns>
+  public TSelf WithWarnings(
+    IEnumerable<Warning> warnings)
+  {
+    Statements.AddWarnings(warnings);
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds a collection of string messages as a collection of <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="messages"></param>
+  /// <returns></returns>
+  public TSelf WithWarnings(
+    IEnumerable<string> messages)
+  {
+    Statements.AddWarnings(messages.Select(m => new Warning(m)));
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds all <see cref="Warning"/>s of another result object.
+  /// </summary>
+  /// <param name="fromResult"></param>
+  /// <returns></returns>
+  public TSelf WithWarningsFrom(
+    BaseResult fromResult)
+  {
+    if (fromResult.HasWarnings())
+    {
+      WithWarnings(fromResult.Statements.Warnings);
+    }
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds a <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="warning"></param>
+  /// <returns></returns>
+  public TSelf WithWarning(Warning warning)
+  {
+    Statements.AddWarning(warning);
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds a string message as a <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// </summary>
+  /// <param name="message"></param>
+  /// <returns></returns>
+  public TSelf WithWarning(string message)
+  {
+    Statements.AddWarning(new Warning(message));
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of a <see cref="Statements"/> object.
+  /// </summary>
+  /// <param name="statements"></param>
+  /// <returns></returns>
+  public TSelf WithStatements(
+    Statements statements)
+  {
+    if (statements.HasFacts())
+    {
+      WithFacts(statements.Facts);
+    }
+    if (statements.HasWarnings())
+    {
+      WithWarnings(statements.Warnings);
+    }
+    return (TSelf)this;
+  }
+
+  /// <summary>
+  /// Adds all <see cref="Fact"/>s and <see cref="Warning"/>s of another result object.
+  /// </summary>
+  /// <param name="fromResult"></param>
+  /// <returns></returns>
+  public TSelf WithStatementsFrom(
+    BaseResult fromResult)
+  {
+    if (fromResult.HasStatements())
+    {
+      return WithStatements(fromResult.Statements);
+    }
+    return (TSelf)this;
+  }
 }
 
-public abstract class BaseModResult<TValue> : BaseModResult, IModResult<TValue, Failure>
+public abstract class BaseModResult<TSelf, TValue> : BaseModResult<TSelf>, IModResult<TValue, Failure>
+  where TSelf : BaseModResult<TSelf, TValue>
   where TValue : notnull
 {
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
