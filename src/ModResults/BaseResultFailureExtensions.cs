@@ -8,6 +8,22 @@ public static class BaseResultFailureExtensions
   extension(BaseResult<Failure> result)
   {
     /// <summary>
+    /// Converts to a <see cref="FailureResult"/>, copying over Failure and Statements information.
+    /// If source result has no Failure (in Ok state), the returned FailureResult will have a Failure with type set to Unspecified and no errors.
+    /// </summary>
+    /// <returns></returns>
+    public FailureResult ToFailureResult() => FailureResult.FromResult(result);
+
+    /// <summary>
+    /// Returns a <see cref="FailureResult"/> that wraps the same state, Failure and Statements as the source result.
+    /// If source result has no Failure (in Ok state), the returned FailureResult will have a Failure with type set to Unspecified and no errors.
+    /// </summary>
+    /// <returns></returns>
+    public FailureResult AsFailureResult() => new(
+      result.Failure is null ? Failure.Create(FailureType.Unspecified) : result.Failure,
+      result.HasStatements() ? result.Statements : null);
+
+    /// <summary>
     /// Dumps the state, failure type, errors, facts and warnings of the result as a formatted string.
     /// </summary>
     /// <returns></returns>

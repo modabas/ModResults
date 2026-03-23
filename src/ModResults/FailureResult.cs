@@ -27,7 +27,7 @@ public sealed class FailureResult : BaseBusinessResult<FailureResult>
   private FailureResult(FailureType failureType)
   {
     IsOk = false;
-    Failure = new Failure(failureType, null);
+    Failure = Failure.Create(failureType);
   }
 
   internal static FailureResult Create(FailureType failureType, IEnumerable<Error> errors)

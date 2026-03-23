@@ -26,7 +26,7 @@ public sealed class Result : BaseBusinessResult<Result>
   private Result(FailureType failureType)
   {
     IsOk = false;
-    Failure = new Failure(failureType, null);
+    Failure = Failure.Create(failureType);
   }
 
   internal static Result Create(FailureType failureType, IEnumerable<Error> errors)
@@ -174,7 +174,7 @@ public sealed class Result<TValue> : BaseBusinessResult<Result<TValue>, TValue>
   private Result(FailureType failureType)
   {
     IsOk = false;
-    Failure = new Failure(failureType, null);
+    Failure = Failure.Create(failureType);
   }
 
   internal static Result<TValue> Create(FailureType failureType, IEnumerable<Error> errors)

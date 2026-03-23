@@ -55,4 +55,9 @@ public sealed class Failure
   {
     return new Failure(type, errors);
   }
+
+  internal static Failure Create(FailureType type)
+  {
+    return new Failure(type, null);
+  }
 }

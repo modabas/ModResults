@@ -24,14 +24,21 @@ public static class FailureResultExtensions
     /// Returns a <see cref="Result"/> that wraps the same state, Failure and Statements as the source <see cref="FailureResult"/>.
     /// </summary>
     /// <returns></returns>
-    public Result AsResult() => new(false, result.Failure, result.Statements);
+    public Result AsResult() => new(
+      false,
+      result.Failure,
+      result.HasStatements() ? result.Statements : null);
 
     /// <summary>
     /// Returns a <see cref="Result{TValue}"/> that wraps the same state, Failure and Statements as the source <see cref="FailureResult"/>.
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
     /// <returns></returns>
-    public Result<TValue> AsResult<TValue>() where TValue : notnull => new(false, default, result.Failure, result.Statements);
+    public Result<TValue> AsResult<TValue>() where TValue : notnull => new(
+      false,
+      default,
+      result.Failure,
+      result.HasStatements() ? result.Statements : null);
     #endregion
 
     #region "Error"
