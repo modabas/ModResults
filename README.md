@@ -11,7 +11,7 @@ ModResults implements the Result pattern, providing a structured way to represen
 - **Easy-to-Use**: Simplifies error handling and result management with a clear API.
 - **Serialization**: System.Text.Json serialization support without need for special configuration. Microsoft.Orleans serialization support via `ModResults.Orleans` package.
 - **Ready-to-Use Implementations**:
-  - `Result` and `Result<TValue>` with a default `Failure` state.
+  - `Result` and `Result<TValue>` with a default `Failure` type.
   - `Result<TValue, TFailure>` for custom failure states.
 - **📦 Extension Packages for Various Scenarios**: 
   - `ModResults.FluentValidation` bridges FluentValidation with ModResults for unified validation error handling.
@@ -25,7 +25,7 @@ ModResults implements the Result pattern, providing a structured way to represen
 ### Creating a Result or Result&lt;TValue&gt; Instance
 
 - **Success**: Use `Result.Ok()` or `Result<TValue>.Ok(TValue value)`.
-- **Failure**: Use static factory methods like `Result.NotFound()` or `Result<TValue>.Invalid()` to create failed results with a specific failure type.
+- **Failure**: Use static factory methods like `Result.NotFound()` or `Result<TValue>.Invalid()` to create failed results with a specific failure type. Also, `FailureResult` class has same set of static factory methods to serve as a helper for returning failed `Result<TValue>` instances without the need to specify `TValue` directly. `FailureResult` can be converted to either `Result` or `Result<TValue>` via implicit operators or explicit `AsResult()`, `AsResult<TValue>()`, `ToResult()` and `ToResult<TValue>()` methods.
 
 For each failure type (like Error, Forbidden, Unauthorized, etc.), there are several overloads that creates a failed result with the given FailureType:
 - No parameters:
@@ -45,7 +45,7 @@ public async Task<Result<GetBookByIdResponse>> GetBookById(GetBookByIdRequest re
     var entity = await db.Books.FirstOrDefaultAsync(b => b.Id == req.Id, ct);
 
     return entity is null ?
-      Result<GetBookByIdResponse>.NotFound() :
+      FailureResult.NotFound() :
       Result.Ok(new GetBookByIdResponse(
         Id: entity.Id,
         Title: entity.Title,

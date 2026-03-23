@@ -9,7 +9,7 @@ public sealed class Statements
   }
 
   /// <summary>
-  /// Warning collection.
+  /// Gets a read-only list of warnings associated with the current statements instance.
   /// </summary>
   public IReadOnlyList<Warning> Warnings => GetWarnings().AsReadOnly();
 
@@ -29,8 +29,9 @@ public sealed class Statements
     return _facts ??= [];
   }
 
+
   /// <summary>
-  /// Fact collection.
+  /// Gets a read-only collection of facts associated with the current statements instance.
   /// </summary>
   public IReadOnlyList<Fact> Facts => GetFacts().AsReadOnly();
 

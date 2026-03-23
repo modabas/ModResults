@@ -64,5 +64,31 @@ public static class ErrorExtensions
     {
       return error.Code?.Equals(code, comparisonType) ?? false;
     }
+
+    /// <summary>
+    /// Gets the default error code for the specified <see cref="FailureType"/>.
+    /// </summary>
+    /// <param name="failureType"></param>
+    /// <returns></returns>
+    public static string? GetDefaultCode(FailureType failureType)
+    {
+      return failureType switch
+      {
+        FailureType.Unspecified => "Failure.Unspecified",
+        FailureType.Error => "Failure.Error",
+        FailureType.Forbidden => "Failure.Forbidden",
+        FailureType.Unauthorized => "Failure.Unauthorized",
+        FailureType.Invalid => "Failure.Invalid",
+        FailureType.NotFound => "Failure.NotFound",
+        FailureType.Conflict => "Failure.Conflict",
+        FailureType.CriticalError => "Failure.CriticalError",
+        FailureType.Unavailable => "Failure.Unavailable",
+        FailureType.GatewayError => "Failure.GatewayError",
+        FailureType.RateLimited => "Failure.RateLimited",
+        FailureType.TimedOut => "Failure.TimedOut",
+        FailureType.PaymentRequired => "Failure.PaymentRequired",
+        _ => null,
+      };
+    }
   }
 }

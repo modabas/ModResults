@@ -109,24 +109,29 @@ public static partial class ResultConversionExtensions
     }
   }
 
-  extension<TValue>(Result<TValue> result) where TValue : notnull
+  extension<TSourceValue>(Result<TSourceValue> result) where TSourceValue : notnull
   {
     /// <summary>
-    /// Converts a <see cref="Result{TValue}"/> to a <see cref="Result"/>, copying over Statements.
-    /// If source <see cref="Result{TValue}"/> is in Fail state, the returned <see cref="Result"/> will be in Fail state with the same <see cref="Failure"/> information.
+    /// Returns a <see cref="Result"/> that wraps the same state, Failure and Statements as the source <see cref="Result{TSourceValue}"/>.
     /// </summary>
     /// <returns></returns>
-    public Result ToResult(
-  )
+    public Result AsResult()
     {
-      return result.Map<TValue, Result>(
+      return new(result.IsOk, result.Failure, result.Statements);
+    }
+
+    /// <summary>
+    /// Converts a <see cref="Result{TSourceValue}"/> to a <see cref="Result"/>, copying over Statements.
+    /// If source <see cref="Result{TSourceValue}"/> is in Fail state, the returned <see cref="Result"/> will be in Fail state with the same <see cref="Failure"/> information.
+    /// </summary>
+    /// <returns></returns>
+    public Result ToResult()
+    {
+      return result.Map<TSourceValue, Result>(
         okResult => Result.Ok().WithStatementsFrom(okResult),
         failResult => Result.Fail(failResult));
     }
-  }
 
-  extension<TSourceValue>(Result<TSourceValue> result) where TSourceValue : notnull
-  {
     /// <summary>
     /// Converts a <see cref="Result{TSourceValue}"/> to a <see cref="Result{TTargetValue}"/>, copying over Statements.
     /// If source <see cref="Result{TSourceValue}"/> is in Ok state, the returned <see cref="Result{TTargetValue}"/> will be in Ok state with the result of value function as value.
@@ -222,16 +227,24 @@ public static partial class ResultConversionExtensions
 
   extension<TValue>(Result<TValue, Failure> result) where TValue : notnull
   {
-    public Result ToResult(
-)
+    public Result AsResult()
+    {
+      return new(result.IsOk, result.Failure, result.Statements);
+    }
+
+    public Result<TValue> AsResultOfTValue()
+    {
+      return new(result.IsOk, result.Value, result.Failure, result.Statements);
+    }
+
+    public Result ToResult()
     {
       return result.Map<TValue, Failure, Result>(
         okResult => Result.Ok().WithStatementsFrom(okResult),
         failResult => Result.Fail(failResult));
     }
 
-    public Result<TValue> ToResultOfTValue(
-  )
+    public Result<TValue> ToResultOfTValue()
     {
       return result.Map<TValue, Failure, Result<TValue>>(
         okResult => Result<TValue>.Ok(result.Value!).WithStatementsFrom(okResult),

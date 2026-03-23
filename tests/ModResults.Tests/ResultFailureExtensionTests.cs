@@ -1,12 +1,12 @@
 ﻿namespace ModResults.Tests;
 
-public class FailedResultTests
+public class ResultFailureExtensionTests
 {
   private readonly Error _error1, _error2;
   private readonly InvalidOperationException _ex1;
   private readonly ApplicationException _ex2;
 
-  public FailedResultTests()
+  public ResultFailureExtensionTests()
   {
     _error1 = new Error("Error 1");
     _error2 = new Error("Error 2", code: "E2");

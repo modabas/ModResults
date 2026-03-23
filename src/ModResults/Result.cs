@@ -1,23 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace ModResults;
+﻿namespace ModResults;
 
 /// <summary>
 /// A business result that represents the outcome of an operation, encapsulating either success or failure states, along with associated error messages and additional information.
 /// </summary>
-public sealed partial class Result : BaseResult<Failure>
+public sealed class Result : BaseBusinessResult<Result>
 {
-  [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public override bool IsOk { get; init; }
-
-  [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public override bool IsFailed => !IsOk;
-
-  /// <summary>
-  /// Contains failure info for a failed <see cref="Result"/> instance. Not null when <see cref="IsFailed"/> is true.
-  /// </summary>
-  public override Failure? Failure { get; init; }
-
   private Result()
   {
     IsOk = true;
@@ -40,6 +27,16 @@ public sealed partial class Result : BaseResult<Failure>
   {
     IsOk = false;
     Failure = new Failure(failureType, null);
+  }
+
+  internal static Result Create(FailureType failureType, IEnumerable<Error> errors)
+  {
+    return new(failureType, errors);
+  }
+
+  internal static Result Create(FailureType failureType)
+  {
+    return new(failureType);
   }
 
   /// <summary>
@@ -120,33 +117,42 @@ public sealed partial class Result : BaseResult<Failure>
     return new Result(result.Failure.Type, null)
       .WithStatementsFrom(result);
   }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result"/> with failure type <see cref="FailureType.CriticalError"/> containing an error constructed from specified exception.
+  /// </summary>
+  /// <param name="exception">The <see cref="Exception"/> that will used to construct an error instance from.</param>
+  public static implicit operator Result(Exception exception)
+  {
+    return Result.CriticalError(exception);
+  }
+
+  /// <summary>
+  /// Creates a <see cref="Result"/> in Failed state with input failure type.
+  /// </summary>
+  /// <param name="failureType">Failure type that will be encapsulated in a Failed <see cref="Result"/>.</param>
+  public static implicit operator Result(FailureType failureType)
+  {
+    return new Result(failureType);
+  }
+
+  /// <summary>
+  /// Creates a <see cref="Result"/> in Failed state from input <see cref="FailureResult"/> .
+  /// </summary>
+  /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result"/>.</param>
+  public static implicit operator Result(FailureResult failedResult)
+  {
+    return failedResult.AsResult();
+  }
 }
 
 /// <summary>
 /// A business result that represents the outcome of an operation, encapsulating either successful value of type <typeparamref name="TValue"/> or failure states, along with associated error messages and additional information.
 /// </summary>
 /// <typeparam name="TValue"></typeparam>
-public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
+public sealed class Result<TValue> : BaseBusinessResult<Result<TValue>, TValue>
   where TValue : notnull
 {
-  [MemberNotNullWhen(returnValue: true, nameof(Value))]
-  [MemberNotNullWhen(returnValue: false, nameof(Failure))]
-  public override bool IsOk { get; init; }
-
-  [MemberNotNullWhen(returnValue: false, nameof(Value))]
-  [MemberNotNullWhen(returnValue: true, nameof(Failure))]
-  public override bool IsFailed => !IsOk;
-
-  /// <summary>
-  /// Contains encapsulated value for an Ok <see cref="Result{TValue}"/> instance. Not null when <see cref="IsOk"/> is true.
-  /// </summary>
-  public override TValue? Value { get; init; }
-
-  /// <summary>
-  /// Contains failure info for a failed <see cref="Result{TValue}"/> instance. Not null when <see cref="IsFailed"/> is true.
-  /// </summary>
-  public override Failure? Failure { get; init; }
-
   private Result(TValue value)
   {
     IsOk = true;
@@ -169,6 +175,16 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
   {
     IsOk = false;
     Failure = new Failure(failureType, null);
+  }
+
+  internal static Result<TValue> Create(FailureType failureType, IEnumerable<Error> errors)
+  {
+    return new(failureType, errors);
+  }
+
+  internal static Result<TValue> Create(FailureType failureType)
+  {
+    return new(failureType);
   }
 
   /// <summary>
@@ -248,11 +264,38 @@ public sealed partial class Result<TValue> : BaseResult<TValue, Failure>
   /// <param name="resultOfTValue">Source <see cref="Result{TValue}"/>.</param>
   public static implicit operator Result(Result<TValue> resultOfTValue)
   {
-    return resultOfTValue.ToResult();
+    return resultOfTValue.AsResult();
   }
 
   public static implicit operator Result<TValue>(Result<TValue, Failure> resultOfTValueAndFailure)
   {
-    return resultOfTValueAndFailure.ToResultOfTValue();
+    return resultOfTValueAndFailure.AsResultOfTValue();
+  }
+
+  /// <summary>
+  /// Creates a failed <see cref="Result{TValue}"/> with failure type <see cref="FailureType.CriticalError"/> containing an error constructed from specified exception.
+  /// </summary>
+  /// <param name="exception">The <see cref="Exception"/> that will used to construct an error instance from.</param>
+  public static implicit operator Result<TValue>(Exception exception)
+  {
+    return Result<TValue>.CriticalError(exception);
+  }
+
+  /// <summary>
+  /// Creates a <see cref="Result{TValue}"/> in Failed state with input failure type.
+  /// </summary>
+  /// <param name="failureType">Failure type that will be encapsulated in a Failed <see cref="Result{TValue}"/>.</param>
+  public static implicit operator Result<TValue>(FailureType failureType)
+  {
+    return new Result<TValue>(failureType);
+  }
+
+  /// <summary>
+  /// Creates a <see cref="Result{TValue}"/> in Failed state from input <see cref="FailureResult"/>.
+  /// </summary>
+  /// <param name="failedResult"><see cref="FailureResult"/> instance that will be converted to a Failed <see cref="Result{TValue}"/>.</param>
+  public static implicit operator Result<TValue>(FailureResult failedResult)
+  {
+    return failedResult.AsResult<TValue>();
   }
 }
