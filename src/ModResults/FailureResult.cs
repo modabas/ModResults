@@ -62,6 +62,27 @@ public sealed class FailureResult : BaseBusinessResult<FailureResult>
   }
 
   /// <summary>
+  /// Creates a <see cref="FailureResult"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>, copying over Statements and any Failure information.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <returns></returns>
+  public static FailureResult FromResult(BaseResult<Failure> result)
+  {
+    if (result.Failure is null)
+    {
+      return new FailureResult(FailureType.Unspecified)
+        .WithStatementsFrom(result);
+    }
+    if (result.Failure.HasErrors())
+    {
+      return new FailureResult(result.Failure.Type, result.Failure.Errors)
+        .WithStatementsFrom(result);
+    }
+    return new FailureResult(result.Failure.Type)
+      .WithStatementsFrom(result);
+  }
+
+  /// <summary>
   /// Creates a <see cref="FailureResult"/> with failure type <see cref="FailureType.CriticalError"/> containing an error constructed from specified exception.
   /// </summary>
   /// <param name="exception">The <see cref="Exception"/> that will used to construct an error instance from.</param>
