@@ -2,8 +2,8 @@
 
 namespace ModResults;
 
-public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Failure>
-  where TSelf : BaseModResult<TSelf>
+public abstract class BaseBusinessResult<TSelf> : BaseResult<Failure>, IModResult<Failure>
+  where TSelf : BaseBusinessResult<TSelf>
 {
   [MemberNotNullWhen(returnValue: false, nameof(Failure))]
   public override bool IsOk { get; init; }
@@ -70,7 +70,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a collection of <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a collection of <see cref="Fact"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="facts"></param>
   /// <returns></returns>
@@ -82,7 +82,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a collection of <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a collection of <see cref="Fact"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="facts"></param>
   /// <returns></returns>
@@ -94,7 +94,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a collection of string messages as a collection of <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a collection of string messages as a collection of <see cref="Fact"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="messages"></param>
   /// <returns></returns>
@@ -121,7 +121,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a <see cref="Fact"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="fact"></param>
   /// <returns></returns>
@@ -132,7 +132,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a string message as a <see cref="Fact"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a string message as a <see cref="Fact"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="message"></param>
   /// <returns></returns>
@@ -143,7 +143,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a collection of <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a collection of <see cref="Warning"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="warnings"></param>
   /// <returns></returns>
@@ -155,7 +155,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a collection of <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a collection of <see cref="Warning"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="warnings"></param>
   /// <returns></returns>
@@ -167,7 +167,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a collection of string messages as a collection of <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a collection of string messages as a collection of <see cref="Warning"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="messages"></param>
   /// <returns></returns>
@@ -194,7 +194,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a <see cref="Warning"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="warning"></param>
   /// <returns></returns>
@@ -205,7 +205,7 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 
   /// <summary>
-  /// Adds a string message as a <see cref="Warning"/> to the <see cref="BaseModResult{TSelf}"/>.
+  /// Adds a string message as a <see cref="Warning"/> to the <see cref="BaseBusinessResult{TSelf}"/>.
   /// </summary>
   /// <param name="message"></param>
   /// <returns></returns>
@@ -250,8 +250,8 @@ public abstract class BaseModResult<TSelf> : BaseResult<Failure>, IModResult<Fai
   }
 }
 
-public abstract class BaseModResult<TSelf, TValue> : BaseModResult<TSelf>, IModResult<TValue, Failure>
-  where TSelf : BaseModResult<TSelf, TValue>
+public abstract class BaseBusinessResult<TSelf, TValue> : BaseBusinessResult<TSelf>, IModResult<TValue, Failure>
+  where TSelf : BaseBusinessResult<TSelf, TValue>
   where TValue : notnull
 {
   [MemberNotNullWhen(returnValue: true, nameof(Value))]
