@@ -62,24 +62,35 @@ public sealed class FailureResult : BaseBusinessResult<FailureResult>
   }
 
   /// <summary>
-  /// Creates a <see cref="FailureResult"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>, copying over Statements and any Failure information.
+  /// Creates a <see cref="FailureResult"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>.
+  /// If source result has no Failure (in Ok state), the returned FailureResult will have a Failure with type set to Unspecified and no errors.
   /// </summary>
   /// <param name="result"></param>
+  /// <param name="wrapSourceProperties">If <see langword="true"/>, wraps Failure and Statement objects of the source result; otherwise, copies over Statement and any Failure information from source.</param>
   /// <returns></returns>
-  public static FailureResult FromResult(BaseResult<Failure> result)
+  public static FailureResult From(BaseResult<Failure> result, bool wrapSourceProperties = true)
   {
-    if (result.Failure is null)
+    if (wrapSourceProperties)
     {
-      return new FailureResult(FailureType.Unspecified)
+      return new(
+        result.Failure is null ? Failure.Create(FailureType.Unspecified) : result.Failure,
+        result.HasStatements() ? result.Statements : null);
+    }
+    else
+    {
+      if (result.Failure is null)
+      {
+        return new FailureResult(FailureType.Unspecified)
+          .WithStatementsFrom(result);
+      }
+      if (result.Failure.HasErrors())
+      {
+        return new FailureResult(result.Failure.Type, result.Failure.Errors)
+          .WithStatementsFrom(result);
+      }
+      return new FailureResult(result.Failure.Type)
         .WithStatementsFrom(result);
     }
-    if (result.Failure.HasErrors())
-    {
-      return new FailureResult(result.Failure.Type, result.Failure.Errors)
-        .WithStatementsFrom(result);
-    }
-    return new FailureResult(result.Failure.Type)
-      .WithStatementsFrom(result);
   }
 
   /// <summary>

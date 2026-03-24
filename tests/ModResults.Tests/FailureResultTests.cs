@@ -110,7 +110,7 @@ public class FailureResultTests
       default,
       new Failure(FailureType.Forbidden, errors),
       new Statements(facts, warnings));
-    var result = resultOfT.ToFailureResult();
+    var result = FailureResult.From(resultOfT, false);
 
     // Act
     var isOk = result.IsOk;
@@ -153,7 +153,7 @@ public class FailureResultTests
       default,
       new Failure(FailureType.Forbidden, errors),
       new Statements(facts, warnings));
-    var result = resultOfT.AsFailureResult();
+    var result = FailureResult.From(resultOfT);
 
     // Act
     var isOk = result.IsOk;
@@ -195,7 +195,7 @@ public class FailureResultTests
       default,
       new Failure(FailureType.Forbidden, null),
       new Statements(facts, warnings));
-    var result = resultOfT.ToFailureResult();
+    var result = FailureResult.From(resultOfT, false);
 
     // Act
     var isOk = result.IsOk;
@@ -234,7 +234,7 @@ public class FailureResultTests
       default,
       new Failure(FailureType.Forbidden, null),
       new Statements(facts, warnings));
-    var result = resultOfT.AsFailureResult();
+    var result = FailureResult.From(resultOfT);
 
     // Act
     var isOk = result.IsOk;
@@ -275,7 +275,7 @@ public class FailureResultTests
       new Statements(facts, warnings));
 
     // Act
-    var result = resultOfT.ToFailureResult();
+    var result = FailureResult.From(resultOfT, false);
 
     // Assert
     Assert.False(result.IsOk);
@@ -311,7 +311,7 @@ public class FailureResultTests
       new Statements(facts, warnings));
 
     // Act
-    var result = resultOfT.AsFailureResult();
+    var result = FailureResult.From(resultOfT);
 
     // Assert
     Assert.False(result.IsOk);
