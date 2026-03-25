@@ -63,6 +63,28 @@ A result can be either in an Ok or Failed state.
 
 >**Note**: When using nullable contexts, the compiler will not generate "may be null" warnings in these cases, as the library leverages conditional attributes to assist null-state analysis.
 
+Checking the state of a result to run some business logic is straightforward:
+
+``` csharp
+public async Task<Result<PerformGetBookByIdResponse>> PerformGetBookById(GetBookByIdRequest req, CancellationToken ct)
+{
+    var result = await GetBookById(req, ct);
+
+    if (result.IsFailed)
+    {
+        // Handle failure case,
+        Console.WriteLine($"GetBookById has failed.");
+        // Return the failure information as a failed Result<PerformGetBookByIdResponse>
+        // FailureResult can be implicitly converted to Result<TAnyValue>, so we can return it directly.
+        return FailureResult.From(result);
+    }
+    // Handle success case, access value via result.Value
+    // ...
+}
+```
+
+Sometimes, you may want to convert a `Result<TValue>` to a `Result` (which doesn't hold a value object, just state and information related to it) while preserving the failure information. You can do this using the implicit operator or the `AsResult()`/`ToResult()` methods:
+
 ``` csharp
 public async Task<Result> PerformGetBookById(GetBookByIdRequest req, CancellationToken ct)
 {
@@ -75,7 +97,30 @@ public async Task<Result> PerformGetBookById(GetBookByIdRequest req, Cancellatio
     {
         Console.WriteLine($"GetBookById has failed.");
     }
+    // Implicitly convert Result<GetBookByIdResponse> to Result, preserving state and any failure information.
     return result
+}
+```
+
+Other times, you may want to convert a `Result<TSourceValue>` to a `Result<TTargetValue>` while preserving the failure information. You can do this using the `AsResult<TTargetValue>()`/`ToResult<TTargetValue>()` methods or any similar overloads with same name:
+
+``` csharp
+public async Task<Result<PerformGetBookByIdResponse>> PerformGetBookById(GetBookByIdRequest req, CancellationToken ct)
+{
+    var result = await GetBookById(req, ct);
+
+    // Convert Result<GetBookByIdResponse> to Result<PerformGetBookByIdResponse>, 
+    // preserving state and any failure information.
+    // Factory parameter will be called only if the source result is in Ok state,
+    // and it will receive the value of type GetBookByIdResponse (TSourceValue)
+    // to create a value of type PerformGetBookByIdResponse (TTargetValue).
+    return result.AsResult<PerformGetBookByIdResponse>(v => 
+    {
+        // Construct a PerformGetBookByIdResponse using the value of type GetBookByIdResponse (v) and return it. 
+        // This factory will only be called if the result is in Ok state, 
+        // otherwise the failure information will be preserved and returned as a failed Result<PerformGetBookByIdResponse>.
+        return new PerformGetBookById(v.Name);
+    });
 }
 ```
 
