@@ -23,6 +23,15 @@ public sealed class Statements
     return _warnings is not null && _warnings.Count > 0;
   }
 
+  /// <summary>
+  /// Gets the current collection of warnings if it has been initialized.
+  /// </summary>
+  /// <returns>The current <see cref="Warning"/> list instance if it has been initialized; otherwise, <see langword="null"/>.</returns>
+  internal List<Warning>? PeekWarnings()
+  {
+    return _warnings;
+  }
+
   private List<Fact>? _facts;
   private List<Fact> GetFacts()
   {
@@ -42,6 +51,15 @@ public sealed class Statements
   public bool HasFacts()
   {
     return _facts is not null && _facts.Count > 0;
+  }
+
+  /// <summary>
+  /// Gets the current collection of facts if it has been initialized.
+  /// </summary>
+  /// <returns>The current <see cref="Fact"/> list instance if it has been initialized; otherwise, <see langword="null"/>.</returns>
+  internal List<Fact>? PeekFacts()
+  {
+    return _facts;
   }
 
   /// <summary>

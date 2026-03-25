@@ -9,14 +9,14 @@ public static class FailureResultExtensions
     /// Converts a <see cref="FailureResult"/> to a <see cref="Result"/>, copying over Failure and Statements information.
     /// </summary>
     /// <returns></returns>
-    public Result ToResult() => Result.Fail(result);
+    public Result ToResult() => Result.Fail(result, false);
 
     /// <summary>
     /// Converts a <see cref="FailureResult"/> to a <see cref="Result{TValue}"/>, copying over Failure and Statements information.
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
     /// <returns></returns>
-    public Result<TValue> ToResult<TValue>() where TValue : notnull => Result<TValue>.Fail(result);
+    public Result<TValue> ToResult<TValue>() where TValue : notnull => Result<TValue>.Fail(result, false);
     #endregion
 
     #region "AsResult"
@@ -24,14 +24,21 @@ public static class FailureResultExtensions
     /// Returns a <see cref="Result"/> that wraps the same state, Failure and Statements as the source <see cref="FailureResult"/>.
     /// </summary>
     /// <returns></returns>
-    public Result AsResult() => new(false, result.Failure, result.Statements);
+    public Result AsResult() => new(
+      false,
+      result.Failure,
+      result.PeekStatements());
 
     /// <summary>
     /// Returns a <see cref="Result{TValue}"/> that wraps the same state, Failure and Statements as the source <see cref="FailureResult"/>.
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
     /// <returns></returns>
-    public Result<TValue> AsResult<TValue>() where TValue : notnull => new(false, default, result.Failure, result.Statements);
+    public Result<TValue> AsResult<TValue>() where TValue : notnull => new(
+      false,
+      default,
+      result.Failure,
+      result.PeekStatements());
     #endregion
 
     #region "Error"

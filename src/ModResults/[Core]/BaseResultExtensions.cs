@@ -40,7 +40,7 @@ public static class BaseResultExtensions
       string code,
       StringComparison comparisonType = Definitions.DefaultComparisonType)
     {
-      return result.HasFacts() && result.Statements.Facts.Any(f => f.HasCode(code, comparisonType));
+      return result.PeekStatements()?.PeekFacts()?.Any(f => f.HasCode(code, comparisonType)) ?? false;
     }
 
     /// <summary>
@@ -76,11 +76,7 @@ public static class BaseResultExtensions
       string code,
       StringComparison comparisonType)
     {
-      if (result.HasFacts())
-      {
-        return result.Statements.Facts.Where(f => f.HasCode(code, comparisonType));
-      }
-      return [];
+      return result.PeekStatements()?.PeekFacts()?.Where(f => f.HasCode(code, comparisonType)) ?? [];
     }
 
     /// <summary>
@@ -93,7 +89,7 @@ public static class BaseResultExtensions
       string code,
       StringComparison comparisonType = Definitions.DefaultComparisonType)
     {
-      return result.HasWarnings() && result.Statements.Warnings.Any(p => p.HasCode(code, comparisonType));
+      return result.PeekStatements()?.PeekWarnings()?.Any(p => p.HasCode(code, comparisonType)) ?? false;
     }
 
     /// <summary>
@@ -129,11 +125,7 @@ public static class BaseResultExtensions
       string code,
       StringComparison comparisonType)
     {
-      if (result.HasWarnings())
-      {
-        return result.Statements.Warnings.Where(w => w.HasCode(code, comparisonType));
-      }
-      return [];
+      return result.PeekStatements()?.PeekWarnings()?.Where(w => w.HasCode(code, comparisonType)) ?? [];
     }
   }
 }

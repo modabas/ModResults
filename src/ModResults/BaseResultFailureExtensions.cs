@@ -50,8 +50,7 @@ public static class BaseResultFailureExtensions
       string code,
       StringComparison comparisonType = Definitions.DefaultComparisonType)
     {
-      return (result.Failure?.HasErrors() ?? false) &&
-        result.Failure.Errors.Any(e => e.HasCode(code, comparisonType));
+      return result.Failure?.PeekErrors()?.Any(e => e.HasCode(code, comparisonType)) ?? false;
     }
 
     /// <summary>
@@ -87,11 +86,7 @@ public static class BaseResultFailureExtensions
       string code,
       StringComparison comparisonType)
     {
-      if ((result.Failure?.HasErrors() ?? false))
-      {
-        return result.Failure.Errors.Where(e => e.HasCode(code, comparisonType));
-      }
-      return [];
+      return result.Failure?.PeekErrors()?.Where(e => e.HasCode(code, comparisonType)) ?? [];
     }
 
     /// <summary>
@@ -104,8 +99,7 @@ public static class BaseResultFailureExtensions
       bool includeAssignableTo = false)
       where TException : Exception
     {
-      return (result.Failure?.HasErrors() ?? false) &&
-        result.Failure.Errors.Any(e => e.HasException<TException>(includeAssignableTo));
+      return result.Failure?.PeekErrors()?.Any(e => e.HasException<TException>(includeAssignableTo)) ?? false;
     }
 
     /// <summary>
@@ -140,11 +134,7 @@ public static class BaseResultFailureExtensions
     private IEnumerable<Error> GetErrorsWithExceptionInternal<TException>(
       bool includeAssignableTo = false) where TException : Exception
     {
-      if ((result.Failure?.HasErrors() ?? false))
-      {
-        return result.Failure.Errors.Where(e => e.HasException<TException>(includeAssignableTo));
-      }
-      return [];
+      return result.Failure?.PeekErrors()?.Where(e => e.HasException<TException>(includeAssignableTo)) ?? [];
     }
 
     /// <summary>
@@ -157,8 +147,7 @@ public static class BaseResultFailureExtensions
       Type exceptionType,
       bool includeAssignableTo = false)
     {
-      return (result.Failure?.HasErrors() ?? false) &&
-        result.Failure.Errors.Any(e => e.HasException(exceptionType, includeAssignableTo));
+      return result.Failure?.PeekErrors()?.Any(e => e.HasException(exceptionType, includeAssignableTo)) ?? false;
     }
 
     /// <summary>
@@ -194,11 +183,7 @@ public static class BaseResultFailureExtensions
       Type exceptionType,
       bool includeAssignableTo = false)
     {
-      if ((result.Failure?.HasErrors() ?? false))
-      {
-        return result.Failure.Errors.Where(e => e.HasException(exceptionType, includeAssignableTo));
-      }
-      return [];
+      return result.Failure?.PeekErrors()?.Where(e => e.HasException(exceptionType, includeAssignableTo)) ?? [];
     }
   }
 }

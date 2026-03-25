@@ -18,6 +18,12 @@ public sealed class FailureResult : BaseBusinessResult<FailureResult>
   [NotNull]
   public override Failure? Failure { get; init; }
 
+  private FailureResult(FailureType failureType, IReadOnlyList<Error>? errors)
+  {
+    IsOk = false;
+    Failure = new Failure(failureType, errors);
+  }
+
   private FailureResult(FailureType failureType, IEnumerable<Error> errors)
   {
     IsOk = false;
@@ -27,7 +33,7 @@ public sealed class FailureResult : BaseBusinessResult<FailureResult>
   private FailureResult(FailureType failureType)
   {
     IsOk = false;
-    Failure = new Failure(failureType, null);
+    Failure = Failure.Create(failureType);
   }
 
   internal static FailureResult Create(FailureType failureType, IEnumerable<Error> errors)
@@ -59,6 +65,33 @@ public sealed class FailureResult : BaseBusinessResult<FailureResult>
     IsOk = false;
     Failure = failure;
     Statements = statements!;
+  }
+
+  /// <summary>
+  /// Creates a <see cref="FailureResult"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>.
+  /// If source result has no Failure (in Ok state), the returned FailureResult will have a Failure with type set to Unspecified and no errors.
+  /// </summary>
+  /// <param name="result"></param>
+  /// <param name="wrapSourceProperties">If <see langword="true"/>, wraps Failure and Statement objects of the source result; otherwise, copies over Statement and any Failure information from source.</param>
+  /// <returns></returns>
+  public static FailureResult From(BaseResult<Failure> result, bool wrapSourceProperties = true)
+  {
+    if (wrapSourceProperties)
+    {
+      return new(
+        result.Failure is null ? Failure.Create(FailureType.Unspecified) : result.Failure,
+        result.PeekStatements());
+    }
+    else
+    {
+      if (result.Failure is null)
+      {
+        return new FailureResult(FailureType.Unspecified)
+          .WithStatementsFrom(result);
+      }
+      return new FailureResult(result.Failure.Type, result.Failure.PeekErrors())
+        .WithStatementsFrom(result);
+    }
   }
 
   /// <summary>

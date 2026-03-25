@@ -171,7 +171,7 @@ public class ResultOfTTests
       false,
       new Failure(FailureType.Unavailable, errors),
       new Statements(facts, warnings));
-    var resultOfT = Result<ValueStruct>.Fail(result2);
+    var resultOfT = Result<ValueStruct>.Fail(result2, false);
 
     // Act
     var isOk = resultOfT.IsOk;
@@ -265,7 +265,7 @@ public class ResultOfTTests
       new Statements(facts, warnings));
 
     // Act
-    var resultOfT = Result<ValueRecord>.Fail(result2);
+    var resultOfT = Result<ValueRecord>.Fail(result2, false);
 
     // Assert
     Assert.False(resultOfT.IsOk);

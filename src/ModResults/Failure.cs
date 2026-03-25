@@ -28,6 +28,15 @@ public sealed class Failure
   }
 
   /// <summary>
+  /// Gets the current collection of errors if it has been initialized.
+  /// </summary>
+  /// <returns>The current <see cref="Error"/> list instance if it has been initialized; otherwise, <see langword="null"/>.</returns>
+  internal List<Error>? PeekErrors()
+  {
+    return _errors;
+  }
+
+  /// <summary>
   /// Type of failure.
   /// </summary>
   public FailureType Type { get; }
@@ -54,5 +63,10 @@ public sealed class Failure
   internal static Failure Create(FailureType type, IEnumerable<Error> errors)
   {
     return new Failure(type, errors);
+  }
+
+  internal static Failure Create(FailureType type)
+  {
+    return new Failure(type, null);
   }
 }
