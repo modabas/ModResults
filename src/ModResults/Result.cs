@@ -98,24 +98,36 @@ public sealed class Result : BaseBusinessResult<Result>
   }
 
   /// <summary>
-  /// Creates a failed <see cref="Result"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>, copying over Statements and any Failure information.
+  /// Creates a failed <see cref="Result"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>.
+  /// If source result has no Failure (in Ok state), the returned FailureResult will have a Failure with type set to Unspecified and no errors.
   /// </summary>
   /// <param name="result"></param>
+  /// <param name="wrapSourceProperties">If <see langword="true"/>, wraps Failure and Statement objects of the source result; otherwise, copies over Statement and any Failure information from source.</param>
   /// <returns></returns>
-  public static Result Fail(BaseResult<Failure> result)
+  public static Result Fail(BaseResult<Failure> result, bool wrapSourceProperties = true)
   {
-    if (result.Failure is null)
+    if (wrapSourceProperties)
     {
-      return new Result(FailureType.Unspecified)
+      return new(
+        false,
+        result.Failure is null ? Failure.Create(FailureType.Unspecified) : result.Failure,
+        result.PeekStatements());
+    }
+    else
+    {
+      if (result.Failure is null)
+      {
+        return new Result(FailureType.Unspecified)
+          .WithStatementsFrom(result);
+      }
+      if (result.Failure.HasErrors())
+      {
+        return new Result(result.Failure.Type, result.Failure.Errors)
+          .WithStatementsFrom(result);
+      }
+      return new Result(result.Failure.Type, null)
         .WithStatementsFrom(result);
     }
-    if (result.Failure.HasErrors())
-    {
-      return new Result(result.Failure.Type, result.Failure.Errors)
-        .WithStatementsFrom(result);
-    }
-    return new Result(result.Failure.Type, null)
-      .WithStatementsFrom(result);
   }
 
   /// <summary>
@@ -229,24 +241,37 @@ public sealed class Result<TValue> : BaseBusinessResult<Result<TValue>, TValue>
   }
 
   /// <summary>
-  /// Creates a failed <see cref="Result{TValue}"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>, copying over Statements and any Failure information.
+  /// Creates a failed <see cref="Result{TValue}"/> from another result instance whose failure property is of type <see cref="ModResults.Failure"/>.
+  /// If source result has no Failure (in Ok state), the returned FailureResult will have a Failure with type set to Unspecified and no errors.
   /// </summary>
   /// <param name="result"></param>
+  /// <param name="wrapSourceProperties">If <see langword="true"/>, wraps Failure and Statement objects of the source result; otherwise, copies over Statement and any Failure information from source.</param>
   /// <returns></returns>
-  public static Result<TValue> Fail(BaseResult<Failure> result)
+  public static Result<TValue> Fail(BaseResult<Failure> result, bool wrapSourceProperties = true)
   {
-    if (result.Failure is null)
+    if (wrapSourceProperties)
     {
-      return new Result<TValue>(FailureType.Unspecified)
+      return new(
+        false,
+        default,
+        result.Failure is null ? Failure.Create(FailureType.Unspecified) : result.Failure,
+        result.PeekStatements());
+    }
+    else
+    {
+      if (result.Failure is null)
+      {
+        return new Result<TValue>(FailureType.Unspecified)
+          .WithStatementsFrom(result);
+      }
+      if (result.Failure.HasErrors())
+      {
+        return new Result<TValue>(result.Failure.Type, result.Failure.Errors)
+          .WithStatementsFrom(result);
+      }
+      return new Result<TValue>(result.Failure.Type, null)
         .WithStatementsFrom(result);
     }
-    if (result.Failure.HasErrors())
-    {
-      return new Result<TValue>(result.Failure.Type, result.Failure.Errors)
-        .WithStatementsFrom(result);
-    }
-    return new Result<TValue>(result.Failure.Type, null)
-      .WithStatementsFrom(result);
   }
 
   /// <summary>

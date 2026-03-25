@@ -74,7 +74,7 @@ public sealed class FailureResult : BaseBusinessResult<FailureResult>
     {
       return new(
         result.Failure is null ? Failure.Create(FailureType.Unspecified) : result.Failure,
-        result.HasStatements() ? result.Statements : null);
+        result.PeekStatements());
     }
     else
     {

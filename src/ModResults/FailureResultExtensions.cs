@@ -27,7 +27,7 @@ public static class FailureResultExtensions
     public Result AsResult() => new(
       false,
       result.Failure,
-      result.HasStatements() ? result.Statements : null);
+      result.PeekStatements());
 
     /// <summary>
     /// Returns a <see cref="Result{TValue}"/> that wraps the same state, Failure and Statements as the source <see cref="FailureResult"/>.
@@ -38,7 +38,7 @@ public static class FailureResultExtensions
       false,
       default,
       result.Failure,
-      result.HasStatements() ? result.Statements : null);
+      result.PeekStatements());
     #endregion
 
     #region "Error"

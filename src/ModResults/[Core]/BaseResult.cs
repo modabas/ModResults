@@ -52,6 +52,15 @@ public abstract class BaseResult : IModResult
   }
 
   /// <summary>
+  /// Gets the current collection of statements if it has been initialized.
+  /// </summary>
+  /// <returns>The current <see cref="Statements"/> instance if it has been initialized; otherwise, <see langword="null"/>.</returns>
+  public Statements? PeekStatements()
+  {
+    return _statements;
+  }
+
+  /// <summary>
   /// Determines whether the current result contains any facts under statements property without initializing the statements property or its facts property.
   /// </summary>
   /// <returns><see langword="true"/> if the result contains at least one fact; otherwise, <see langword="false"/>.</returns>
