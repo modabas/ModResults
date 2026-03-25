@@ -55,7 +55,7 @@ public abstract class BaseResult : IModResult
   /// Gets the current collection of statements if it has been initialized.
   /// </summary>
   /// <returns>The current <see cref="Statements"/> instance if it has been initialized; otherwise, <see langword="null"/>.</returns>
-  public Statements? PeekStatements()
+  internal Statements? PeekStatements()
   {
     return _statements;
   }

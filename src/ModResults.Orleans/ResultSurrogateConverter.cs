@@ -18,7 +18,7 @@ public sealed class ResultSurrogateConverter :
     {
       IsOk = value.IsOk,
       Failure = value.Failure,
-      Statements = value.PeekStatements()
+      Statements = value.HasStatements() ? value.Statements : null
     };
   }
 }
@@ -45,7 +45,7 @@ public sealed class ResultSurrogateConverter<TValue> :
       IsOk = value.IsOk,
       Failure = value.Failure,
       Value = value.Value,
-      Statements = value.PeekStatements()
+      Statements = value.HasStatements() ? value.Statements : null
     };
   }
 }

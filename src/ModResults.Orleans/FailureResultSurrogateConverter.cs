@@ -16,7 +16,7 @@ public sealed class FailureResultSurrogateConverter :
     return new FailureResultSurrogate()
     {
       Failure = value.Failure,
-      Statements = value.PeekStatements()
+      Statements = value.HasStatements() ? value.Statements : null
     };
   }
 }
