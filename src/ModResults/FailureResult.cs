@@ -18,6 +18,12 @@ public sealed class FailureResult : BaseBusinessResult<FailureResult>
   [NotNull]
   public override Failure? Failure { get; init; }
 
+  private FailureResult(FailureType failureType, IReadOnlyList<Error>? errors)
+  {
+    IsOk = false;
+    Failure = new Failure(failureType, errors);
+  }
+
   private FailureResult(FailureType failureType, IEnumerable<Error> errors)
   {
     IsOk = false;
@@ -83,12 +89,7 @@ public sealed class FailureResult : BaseBusinessResult<FailureResult>
         return new FailureResult(FailureType.Unspecified)
           .WithStatementsFrom(result);
       }
-      if (result.Failure.HasErrors())
-      {
-        return new FailureResult(result.Failure.Type, result.Failure.Errors)
-          .WithStatementsFrom(result);
-      }
-      return new FailureResult(result.Failure.Type)
+      return new FailureResult(result.Failure.Type, result.Failure.PeekErrors())
         .WithStatementsFrom(result);
     }
   }

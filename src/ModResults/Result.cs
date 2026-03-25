@@ -120,12 +120,7 @@ public sealed class Result : BaseBusinessResult<Result>
         return new Result(FailureType.Unspecified)
           .WithStatementsFrom(result);
       }
-      if (result.Failure.HasErrors())
-      {
-        return new Result(result.Failure.Type, result.Failure.Errors)
-          .WithStatementsFrom(result);
-      }
-      return new Result(result.Failure.Type, null)
+      return new Result(result.Failure.Type, result.Failure.PeekErrors())
         .WithStatementsFrom(result);
     }
   }
@@ -264,13 +259,9 @@ public sealed class Result<TValue> : BaseBusinessResult<Result<TValue>, TValue>
         return new Result<TValue>(FailureType.Unspecified)
           .WithStatementsFrom(result);
       }
-      if (result.Failure.HasErrors())
-      {
-        return new Result<TValue>(result.Failure.Type, result.Failure.Errors)
-          .WithStatementsFrom(result);
-      }
-      return new Result<TValue>(result.Failure.Type, null)
+      return new Result<TValue>(result.Failure.Type, result.Failure.PeekErrors())
         .WithStatementsFrom(result);
+
     }
   }
 
