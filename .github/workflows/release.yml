@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+  id-token: write
+
 env:
   COREPROJECTNAME: "ModResults"
   ORLEANSPROJECTNAME: "ModResults.Orleans"
