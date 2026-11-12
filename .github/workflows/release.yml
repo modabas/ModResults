@@ -19,11 +19,11 @@ jobs:
     timeout-minutes: 5
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         fetch-depth: 0
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v6
       with:
         dotnet-version: | 
           8.0.x
@@ -46,10 +46,10 @@ jobs:
       working-directory: src
 
     - name: Test
-      run: dotnet test ${{ env.CORETESTSPROJECTNAME }} --no-restore --verbosity normal
+      run: dotnet test --project ModResults.Tests/ModResults.Tests.csproj --no-restore --verbosity normal
       working-directory: tests
     - name: Test
-      run: dotnet test ${{ env.ORLEANSTESTSPROJECTNAME }} --no-restore --verbosity normal
+      run: dotnet test --project ModResults.Orleans.Tests/ModResults.Orleans.Tests.csproj --no-restore --verbosity normal
       working-directory: tests
 
     - name: Package nuget core
